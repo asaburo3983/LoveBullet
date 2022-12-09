@@ -1,25 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using SQLiteUnity;
 using UnityEngine.UI;
 using System.IO;
 
+//using SQLite;
+using SQLiteUnity;
 
 namespace Database
 {
     public class Load : SingletonMonoBehaviour<Load>
     {
-        //読み込みは外部で行う
-        static Load instance = null;
-        public static SC_LoadDB Instance
-        {
-            get { return instance; }
-        }
 
         [SerializeField]
-        private SQLite[] database;
+        //private SQLiteConnection db;
 
+        private SQLite[] database;
         [SerializeField]
         private List<string> databaseName = new List<string>();
 
@@ -27,9 +23,6 @@ namespace Database
         void Awake()
         {
             SingletonCheck(this, false);
-            instance = this;
-
-            LoadDatabase();
         }
         /// <summary>
         /// データベースの読み込み
@@ -43,7 +36,6 @@ namespace Database
             {
                 database[i] = new SQLite(databaseName[i], null, databasePath);
             }
-
         }
         /// <summary>
         /// 外部からDBの取得
@@ -54,21 +46,22 @@ namespace Database
         {
             return database[_dbNum];
         }
-        //キャッシュ処理サンプル
-        public void CacheLevelUpExp()
-        {
-            var db = SC_LoadDB.Instance.GetDatabase((int)DatabaseNumbar.LEVEL_UP);
-            var cmd = "SELECT level,levelUpExp FROM LevelUp";
-            var table = db.ExecuteQuery(cmd);
+        ////キャッシュ処理サンプル
+        //public void CacheLevelUpExp()
+        //{
+        //    var db = SC_LoadDB.Instance.GetDatabase((int)DatabaseNumbar.LEVEL_UP);
+        //    var cmd = "SELECT level,levelUpExp FROM LevelUp";
+        //    var table = db.ExecuteQuery(cmd);
 
-            int i = 0;
-            levelUpExp = new int[table.Rows.Count];
-            foreach (var row in table.Rows)
-            {
+        //    int i = 0;
+        //    levelUpExp = new int[table.Rows.Count];
+        //    foreach (var row in table.Rows)
+        //    {
 
-                levelUpExp[i] = (int)row["levelUpExp"];
-                i++;
-            }
-        }
+        //        levelUpExp[i] = (int)row["levelUpExp"];
+        //        i++;
+        //    }
+        //}
+
     }
 }
