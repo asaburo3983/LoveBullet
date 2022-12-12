@@ -9,6 +9,11 @@ using SQLiteUnity;
 
 namespace Database
 {
+    public enum Value
+    {
+        Card = 0,
+        Enemy = 1
+    }
     public class Load : SingletonMonoBehaviour<Load>
     {
 
@@ -22,7 +27,10 @@ namespace Database
         // Start is called before the first frame update
         void Awake()
         {
-            SingletonCheck(this, false);
+            if(SingletonCheck(this, false))
+            {
+                LoadDatabase();
+            }
         }
         /// <summary>
         /// データベースの読み込み
@@ -42,26 +50,12 @@ namespace Database
         /// </summary>
         /// <param name="_dbNum"></param>
         /// <returns></returns>
-        public SQLite GetDatabase(int _dbNum)
+        public SQLite GetDatabase(Value _dbNum)
         {
-            return database[_dbNum];
+            return database[(int)_dbNum];
         }
         ////キャッシュ処理サンプル
-        //public void CacheLevelUpExp()
-        //{
-        //    var db = SC_LoadDB.Instance.GetDatabase((int)DatabaseNumbar.LEVEL_UP);
-        //    var cmd = "SELECT level,levelUpExp FROM LevelUp";
-        //    var table = db.ExecuteQuery(cmd);
 
-        //    int i = 0;
-        //    levelUpExp = new int[table.Rows.Count];
-        //    foreach (var row in table.Rows)
-        //    {
-
-        //        levelUpExp[i] = (int)row["levelUpExp"];
-        //        i++;
-        //    }
-        //}
 
     }
 }
