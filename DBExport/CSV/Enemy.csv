@@ -1,0 +1,5 @@
+﻿Genre,Type,Strengeth,Name,Explanation,HP,HPFluctuationPlus,HPFluctuationMinus,ATFluctuationPlus,ATFluctuationMinus,Pattern1,Pattern2,Pattern3,Pattern4
+int,int,int,string,string,int,int,int,int,int,int,int,int,int
+0,2,1,ザコ,テスト用のザコだ,5,2,1,5,5,1,0,1,0
+0,2,3,ザコ,テスト用のザコだ,5,2,1,7,7,1,0,1,0
+0,2,5,ザコ,テスト用のザコだ,5,2,1,10,10,1,0,1,0

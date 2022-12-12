@@ -368,3 +368,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   databaseName:
   - Cards.db
+  - Enemy.db
+  - EnemyActivePattern.db
+  - EnemyAddventPattern.db

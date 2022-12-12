@@ -12,7 +12,9 @@ namespace Database
     public enum Value
     {
         Card = 0,
-        Enemy = 1
+        Enemy = 1,
+        EnemyActionPattern = 2,
+        EnemyAddventPattern=3
     }
     public class Load : SingletonMonoBehaviour<Load>
     {
