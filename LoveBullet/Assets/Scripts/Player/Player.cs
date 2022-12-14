@@ -37,17 +37,50 @@ public class Player : SingletonMonoBehaviour<Player>
     /// </summary>
     public static void ResetAP()
     {
-        instance.gameState.AP = instance.gameState.APMax;
+        instance.gameState.AP.Value = instance.gameState.APMax.Value;
     }
+    public static void PlusAP(int _AP)
+    {
+        instance.gameState.AP.Value += _AP;
+    }
+    public static void MinusAP(int _AP)
+    {
+        instance.gameState.AP.Value -= _AP;
+    }
+    /// <summary>
+    /// DF管理
+    /// </summary>
+    public static void ResetDF()
+    {
+        instance.gameState.DF.Value = 0;
+    }
+    public static void PlusDF(int _value)
+    {
+        instance.gameState.DF.Value += _value;
+    }
+    public static void MinusDF(int _value)
+    {
+        instance.gameState.DF.Value -= _value;
+    }
+    /// <summary>
+    /// プレイヤーにダメージを与える処理
+    /// </summary>
+    /// <param name="_damage"></param>
+    public static void ReceiveDamage(int _damage)
+    {
+        var state = instance.gameState;
+        state.hp.Value -= (_damage - state.DF.Value);
+
+        if (state.hp.Value <= 0)
+        {
+            //死亡処理 TODO
+        }
+    }
+
     private void Awake()
     {
         SingletonCheck(this);
 
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        SingletonCheck(this);
     }
 
     // Update is called once per frame

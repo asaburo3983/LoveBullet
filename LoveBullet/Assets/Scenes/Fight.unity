@@ -367,58 +367,6 @@ PrefabInstance:
       propertyPath: card
       value: 
       objectReference: {fileID: 1504316179}
-    - target: {fileID: 499071320224782343, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
-      propertyPath: enemyBase
-      value: 
-      objectReference: {fileID: 2868265613186992015, guid: 3ca6c3a4941cfec4098d7780c7dd4ed9, type: 3}
-    - target: {fileID: 499071320224782343, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
-      propertyPath: enemyPos.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 499071320224782343, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
-      propertyPath: startDecksId.Array.size
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 499071320224782343, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
-      propertyPath: enemyPos.Array.data[1].x
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 499071320224782343, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
-      propertyPath: enemyPos.Array.data[2].x
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 499071320224782343, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
-      propertyPath: enemyPos.Array.data[3].x
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 499071320224782343, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
-      propertyPath: enemyPos.Array.data[4].x
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 499071320224782343, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
-      propertyPath: startDecksId.Array.data[0]
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 499071320224782343, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
-      propertyPath: startDecksId.Array.data[1]
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 499071320224782343, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
-      propertyPath: startDecksId.Array.data[2]
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 499071320224782343, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
-      propertyPath: startDecksId.Array.data[3]
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 499071320224782343, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
-      propertyPath: startDecksId.Array.data[4]
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 499071320224782343, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
-      propertyPath: startDecksId.Array.data[5]
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 4136505638310519120, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
       propertyPath: m_Name
       value: SystemManager

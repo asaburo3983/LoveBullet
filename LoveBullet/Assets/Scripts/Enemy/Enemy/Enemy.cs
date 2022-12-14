@@ -35,7 +35,7 @@ namespace Enemy
             public ReactiveProperty<int> DFWeaken;
             public ReactiveProperty<bool> acted;
         }
-        [SerializeField]InGameState gameState;
+        public InGameState gameState;
         [System.Serializable]
         public struct UI
         {
@@ -48,8 +48,15 @@ namespace Enemy
         }
         [SerializeField] UI ui;
 
-        
 
+        private void Start()
+        {
+            //死亡処理
+            gameState.hp.Where(x => x <= 0).Subscribe(x =>
+            {
+                Destroy(gameObject);//削除処理だけ入れておく
+            }).AddTo(this);
+        }
         /// <summary>
         /// ステータス値を代入して
         /// UIなどにデータを代入する
@@ -76,7 +83,6 @@ namespace Enemy
             //エネミー番号に対応したグラフィックを入れる
         }
 
-
         public static State GetEnemyState(int _id)
         {
             if (_id < 0 || _id >= CacheData.instance.enemyStates.Count)
@@ -84,6 +90,34 @@ namespace Enemy
                 Debug.LogError("データ外を参照しようとしています");
             }
            return CacheData.instance.enemyStates[_id];
+        }
+
+        /// <summary>
+        /// 敵が行動する
+        /// </summary>
+        public void Action()
+        {
+            var playerState = Player.instance.gameState;
+            var activeId = state.pattern[gameState.turn.Value];
+            var actiovePattern = CacheData.instance.enemyActivePattern[activeId];
+
+            //TODO とりあえず攻撃と防御処理だけ作成
+            Player.ReceiveDamage(actiovePattern.AT);//攻撃
+            gameState.DF.Value += actiovePattern.DF;//防御
+
+            gameState.turn.Value = (gameState.turn.Value + 1) % state.pattern.Count;//敵内部ターン増加
+
+            gameState.acted.Value = true;//行動終了
+
+        }
+        public void ReceiveDamage(int _damage)
+        {
+            gameState.hp.Value -= (_damage - gameState.DF.Value);
+
+        }
+        public void ResetDF()
+        {
+            gameState.DF.Value = 0;
         }
     }
 }

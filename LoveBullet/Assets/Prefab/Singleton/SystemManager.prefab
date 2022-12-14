@@ -29,7 +29,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4136505638310519121}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &499071320224782343
 MonoBehaviour:
@@ -44,7 +44,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startDeckGenre: 0
+  startDecksId: 010000000100000001000000020000000200000003000000
+  deckList: []
+  deckInCards: []
+  gunInCards: []
+  trashInCards: []
   card: {fileID: 0}
+  explanationCardNum: 0
+  shotInput: 0
+  reloadInput: 0
+  cockingInput: 0
+  floor: 0
+  whoTurn:
+    value: 0
+  shotTarget: 0
+  enemyBase: {fileID: 2868265613186992015, guid: 3ca6c3a4941cfec4098d7780c7dd4ed9, type: 3}
+  enemyPos:
+  - {x: 0, y: 0, z: 0}
+  - {x: 2, y: 0, z: 0}
+  - {x: 4, y: 0, z: 0}
+  - {x: 6, y: 0, z: 0}
+  - {x: 8, y: 0, z: 0}
 --- !u!1 &4136505637693180342
 GameObject:
   m_ObjectHideFlags: 0
@@ -136,6 +156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a7582997c217b74dbc22fb533e923a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardStates: []
 --- !u!1 &4136505638310519120
 GameObject:
   m_ObjectHideFlags: 0
@@ -165,59 +186,7 @@ Transform:
   m_Children:
   - {fileID: 4136505637693180343}
   - {fileID: 4136505638118608653}
-  - {fileID: 6410838419546233063}
   - {fileID: 255871637671462582}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &6255115706661191057
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6410838419546233063}
-  - component: {fileID: 3928109411645471942}
-  m_Layer: 0
-  m_Name: Fight
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6410838419546233063
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6255115706661191057}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4136505638310519121}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3928109411645471942
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6255115706661191057}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 225ba70fe074b98459fa6db881d45400, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyBase: {fileID: 2868265613186992015, guid: 3ca6c3a4941cfec4098d7780c7dd4ed9, type: 3}
-  enemyPos:
-  - {x: 0, y: 0, z: 0}
-  - {x: 2, y: 0, z: 0}
-  - {x: 4, y: 0, z: 0}
-  - {x: 6, y: 0, z: 0}
-  - {x: 8, y: 0, z: 0}
-  deck: {fileID: 0}

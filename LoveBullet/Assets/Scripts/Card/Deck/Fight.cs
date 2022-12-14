@@ -36,13 +36,13 @@ namespace Card
 
         [Header("その他ルール系")]
         [SerializeField,ReadOnly] int floor;
-        [SerializeField,ReadOnly]TURN whoTurn;
+        [SerializeField,ReadOnly] ReactiveProperty<TURN> whoTurn;
         [SerializeField,ReadOnly]int shotTarget = 0;
 
         [Header("敵処理系")]
         public GameObject enemyBase;
         public List<Vector3> enemyPos;
-        List<Enemy.Enemy.State> enemys = new List<Enemy.Enemy.State>();
+        List<Enemy.Enemy.State> enemysState = new List<Enemy.Enemy.State>();
         List<Enemy.Enemy> enemyObjects = new List<Enemy.Enemy>();
         
 
@@ -55,6 +55,22 @@ namespace Card
                 plState = player.gameState;
 
                 InitializeStartDeck();
+                whoTurn.Value = TURN.Player;
+
+                //ターン切り替え処理
+                whoTurn.Where(x => x == Fight.TURN.Player).Subscribe(x =>
+                {
+                    EndTurn_Enemy();
+                    StartTurn_Player();
+                }
+                ).AddTo(this);
+                whoTurn.Where(x => x == Fight.TURN.Enemy).Subscribe(x => {
+                    EndTurn_Player();
+                    StartTurn_Enemy();
+                    }).AddTo(this);
+
+                //TODO 戦闘はじめ処理仮置き
+                StartFight();
             }
         }
 
@@ -66,7 +82,7 @@ namespace Card
                 card.Initialize(gunInCards[explanationCardNum]);
             }
 
-            if (whoTurn == TURN.Player)
+            if (whoTurn.Value == TURN.Player)
             {
                 //各自処理（入力は別で行う）
                 Reload(6);
@@ -75,15 +91,11 @@ namespace Card
 
                 Cocking();
 
-                //APが0になるとターンを終了する
-                if (plState.AP.Value <= 0)
-                {
-                    EndTurn_Player();
-                }
+                TurnEnd_Player();
             }
-            else if(whoTurn == TURN.Enemy)
+            else if(whoTurn.Value == TURN.Enemy)
             {
-
+                TurnEnd_Enemy();
             }
 
 
@@ -93,12 +105,10 @@ namespace Card
 
         void StartFight()
         {
-            plState.AP.Value = 3;
-            plState.APMax.Value = 3;
 
             Player.ResetAP();
 
-            whoTurn = TURN.Player;
+            whoTurn.Value = TURN.Player;
 
             StartFight_ShuffleCard();
 
@@ -107,23 +117,64 @@ namespace Card
         void StartTurn_Player()
         {
             Player.ResetAP();
-
+            Player.ResetDF();
         }
         void EndTurn_Player()
         {
-            whoTurn = TURN.Enemy;
+            whoTurn.Value = TURN.Enemy;
+            
         }
         void StartTurn_Enemy()
         {
-            foreach(var enemy in enemys)
+            //エネミー側で削除されていた場合リストから削除しておく
+            for(int i=0;i< enemyObjects.Count; i++)
             {
-                enemy.
+                if (enemyObjects[i] == null)
+                {
+                    enemyObjects.RemoveAt(i);
+                }
             }
-            gameState.acted.Value = false;
+            foreach (var enemy in enemyObjects)
+            {
+                enemy.gameState.acted.Value = false;//すべての敵を行動済みを解除する
+                enemy.Action();//敵に順番に行動させる
+                enemy.ResetDF();//DFをリセットする
+            }
         }
         void EndTurn_Enemy()
         {
 
+        }
+
+        /// <summary>
+        /// プレイヤーターンの終了　APが０になった際
+        /// </summary>
+        void TurnEnd_Player()
+        {
+            //APが0になるとターンを終了する
+            if (plState.AP.Value <= 0)
+            {
+                whoTurn.Value = TURN.Enemy;
+            }
+        }
+        /// <summary>
+        /// エネミーターンの終了　すべてのエネミーが行動済みになった際
+        /// </summary>
+        void TurnEnd_Enemy()
+        {
+            //すべての敵が行動済みならターンを変更する
+            bool endTurn = true;
+            foreach (var enemy in enemyObjects)
+            {
+                if (enemy.gameState.acted.Value == false)
+                {
+                    endTurn = false;
+                }
+            }
+            if (endTurn)
+            {
+                whoTurn.Value = TURN.Player;
+            }
         }
 
         #region Card
@@ -181,7 +232,7 @@ namespace Card
         public void Reload(int bulletNum = 6)
         {
             if (reloadInput==false) { return; }
-            plState.AP.Value -= plState.reloadAP;
+            Player.MinusAP(plState.reloadAP);
 
             //リボルバー内を空に 中身があるならTrushに移動させる
             foreach(var card in gunInCards)
@@ -213,18 +264,17 @@ namespace Card
         public void Shot(int target = 0, bool allTarget = false)
         {
             if (shotInput==false) { return; }
-           
+
 
             //AP減少
-            plState.AP.Value -= gunInCards[0].AP;
+            Player.MinusAP(gunInCards[0].AP);
             //空のカードの場合の処理を入れるかも
             if (gunInCards[0].id == 0)
             {
-                //敵にダメージなり与える処理はかかない
             }
             else
             {
-                //敵にダメージなり与える処理
+                CardSkill();
             }
             //捨て札にカードを入れてリボルバーから抜く
             if (gunInCards[0].id != 0) trashInCards.Add(gunInCards[0]);//からの弾丸の場合捨て札に置かない
@@ -242,7 +292,7 @@ namespace Card
         {
             if (cockingInput==false) { return; }
 
-            plState.AP.Value -= plState.cockingAP;
+            Player.MinusAP(plState.cockingAP);
 
             var zeroCard = gunInCards[0];
             gunInCards.RemoveAt(0);
@@ -285,6 +335,17 @@ namespace Card
             trashInCards.Clear();
         }
 
+        /// <summary>
+        /// 弾丸の能力を使用する
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="allTarget"></param>
+        void CardSkill(int target = 0, bool allTarget = false)
+        {
+            //敵にダメージなり与える処理
+            enemyObjects[target].ReceiveDamage(gunInCards[0].AT);//敵へ攻撃処理
+            plState.DF.Value += gunInCards[0].DF;//プレイヤーへ防御追加
+        }
         #endregion
 
         #region Enemy
@@ -294,7 +355,7 @@ namespace Card
         void AdventEnemys()
         {
             //敵をリセットする
-            enemys.Clear();
+            enemysState.Clear();
 
             //敵の出現条件について
             //とりあえず指定パターンで出限させる（後にDB化して指定パターンの中でもランダムで出現させるなどを行う）
@@ -306,11 +367,11 @@ namespace Card
             {
                 enemyCount++;
                 if (enemyId == -1) continue;
-                enemys.Add(Enemy.Enemy.GetEnemyState(enemyId));
+                enemysState.Add(Enemy.Enemy.GetEnemyState(enemyId));
                 //敵生成
                 var enemy = Instantiate(enemyBase, enemyPos[enemyCount - 1], Quaternion.identity);
                 var script = enemy.GetComponent<Enemy.Enemy>();
-                script.Initialize(enemys[enemyId]);
+                script.Initialize(enemysState[enemyId]);
 
                 enemyObjects.Add(script);
             }
