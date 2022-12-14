@@ -20,7 +20,6 @@ namespace Database
     {
 
         [SerializeField]
-        //private SQLiteConnection db;
 
         private SQLite[] database;
         [SerializeField]

@@ -8,6 +8,11 @@ namespace Enemy
     {
         public List<int> enemysId = new List<int>();
 
+        public static int GetGroupMax(int _floor)
+        {
+            var pattern = CacheData.instance.enemyAddventPattern;
+            return pattern[_floor].enemysId.Count / 5;
+        }
         /// <summary>
         /// 敵グループを階層とグループ番号から得る
         /// </summary>
@@ -17,8 +22,8 @@ namespace Enemy
         public static List<int> GetGroup(int _floor, int _groupNum)
         {
             var pattern = CacheData.instance.enemyAddventPattern;
-            if (pattern[_floor].enemysId.Count / 5 <= _groupNum || _groupNum <= 0) {
-                Debug.LogError("敵グループをデータ外の値でさんしょうしようとしています");
+            if (GetGroupMax(_floor) <= _groupNum || _groupNum < 0) {
+                Debug.LogError("敵グループをデータ外の値で参照しようとしています");
                 return null; 
             }
             List<int> group = new List<int>();

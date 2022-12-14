@@ -6,7 +6,7 @@ namespace Card
 {
     public class Search
     {
-        public static State GetCard(int id)
+        public static Card.State GetCard(int id)
         {
             return CacheData.instance.cardStates[id];
         }
@@ -22,28 +22,28 @@ namespace Card
         /// <param name="AT"></param>
         /// <param name="DF"></param>
         /// <returns></returns>
-        public static List<State> GetCards(
-        List<State> cards=null,
-        GENRE genre = GENRE.Max,
-        TYPE type = TYPE.Max,
+        public static List<Card.State> GetCards(
+        List<Card.State> cards=null,
+        Card.GENRE genre = Card.GENRE.Max,
+        Card.TYPE type = Card.TYPE.Max,
         string name = null,
         int AP = -1,
         int AT = -1,
         int DF = -1)
         {
-            List<State> rt_cards = new List<State>();
-            List<State> searchCards = cards;
+            List<Card.State> rt_cards = new List<Card.State>();
+            List<Card.State> searchCards = cards;
             searchCards = cards ?? CacheData.instance.cardStates;//カードプールの指定がなければすべてのデータから探索
 
             foreach (var card in searchCards)
             {
                 bool correct = true;
 
-                if (genre != GENRE.Max && card.genre != genre)
+                if (genre != Card.GENRE.Max && card.genre != genre)
                 {
                     correct = false;
                 }
-                if (type != TYPE.Max && card.type != type)
+                if (type != Card.TYPE.Max && card.type != type)
                 {
                     correct = false;
                 }
