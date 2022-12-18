@@ -619,7 +619,7 @@ Transform:
   m_GameObject: {fileID: 2868265613186992015}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 1}
   m_Children:
   - {fileID: 2868265611589633137}
   - {fileID: 2868265612071867890}
@@ -649,6 +649,8 @@ MonoBehaviour:
       value: 0
     DFWeaken:
       value: 0
+    acted:
+      value: 0
   ui:
     turn: {fileID: 2868265611839536730}
     name: {fileID: 2868265611857794169}
@@ -656,6 +658,7 @@ MonoBehaviour:
     DF: {fileID: 2868265613345796764}
     ATWeaken: {fileID: 2868265612372925799}
     DFWeaken: {fileID: 2868265611935754120}
+  spriteRendere: {fileID: 2868265612071867885}
 --- !u!1 &2868265613345796764
 GameObject:
   m_ObjectHideFlags: 0

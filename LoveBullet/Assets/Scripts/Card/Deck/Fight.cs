@@ -5,7 +5,7 @@ using UniRx;
 
 namespace Card
 {
-    
+
     public class Fight : SingletonMonoBehaviour<Fight>
     {
         enum TURN
@@ -15,12 +15,14 @@ namespace Card
         }
 
         [Header("ÉJÅ[Éhä«óùån")]
-        [SerializeField]Card.GENRE startDeckGenre;
-        [SerializeField] List<int> startDecksId=new List<int>();
+        [SerializeField] Card.GENRE startDeckGenre;
+        [SerializeField] List<int> startDecksId = new List<int>();
         [SerializeField] List<Card.State> deckList = new List<Card.State>();
         [SerializeField] List<Card.State> deckInCards = new List<Card.State>();
+
         [SerializeField] List<Card.State> gunInCards = new List<Card.State>();
-        [SerializeField] List<Card.State> trashInCards = new List<Card.State>();
+        public List<Card.State> GunInCards {get{ return gunInCards; } }
+       [SerializeField] List<Card.State> trashInCards = new List<Card.State>();
 
         Player player;
         Player.InGameState plState;
@@ -113,6 +115,8 @@ namespace Card
             StartFight_ShuffleCard();
 
             AdventEnemys();
+
+            reloadInput = true;
         }
         void StartTurn_Player()
         {
@@ -342,6 +346,7 @@ namespace Card
         /// <param name="allTarget"></param>
         void CardSkill(int target = 0, bool allTarget = false)
         {
+            if (enemyObjects.Count <= 0) { Debug.LogError("ìGÇ™ë∂ç›ÇµÇ»Ç¢èÛë‘Ç≈ÉXÉLÉãÇî≠ìÆÇµÇƒÇ¢Ç‹Ç∑"); return; }
             //ìGÇ…É_ÉÅÅ[ÉWÇ»ÇËó^Ç¶ÇÈèàóù
             enemyObjects[target].ReceiveDamage(gunInCards[0].AT);//ìGÇ÷çUåÇèàóù
             plState.DF.Value += gunInCards[0].DF;//ÉvÉåÉCÉÑÅ[Ç÷ñhå‰í«â¡

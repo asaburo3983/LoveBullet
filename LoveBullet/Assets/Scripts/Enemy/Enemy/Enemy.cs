@@ -9,6 +9,7 @@ namespace Enemy
     { 
         public class State
         {
+            public int number;
             public int type;
             public int strengeth;
 
@@ -48,14 +49,23 @@ namespace Enemy
         }
         [SerializeField] UI ui;
 
+        [SerializeField] SpriteRenderer spriteRendere;
 
         private void Start()
         {
+
             //死亡処理
             gameState.hp.Where(x => x <= 0).Subscribe(x =>
             {
                 Destroy(gameObject);//削除処理だけ入れておく
             }).AddTo(this);
+        }
+        //TODo 仮でテクスチャを設定する
+        void SetTexture()
+        {
+            //リソースのから仮テクスチャを読み込んで入れる
+            var path= "Enemy/Enemy"+ state.number.ToString();
+            spriteRendere.sprite = Resources.Load<Sprite>(path);
         }
         /// <summary>
         /// ステータス値を代入して
@@ -81,6 +91,7 @@ namespace Enemy
             Rough.SetText(ui.DFWeaken, gameState.DFWeaken.Value);
 
             //エネミー番号に対応したグラフィックを入れる
+            SetTexture();
         }
 
         public static State GetEnemyState(int _id)

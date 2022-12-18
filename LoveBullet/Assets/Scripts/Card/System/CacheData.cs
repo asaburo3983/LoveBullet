@@ -72,8 +72,10 @@ public class CacheData : SingletonMonoBehaviour<CacheData>
         foreach (var row in table.Rows)
         {
             Enemy.Enemy.State state = new Enemy.Enemy.State();
+
+            state.number = (int)row["Number"];
             state.type = (int)row["Type"];
-            state.type = (int)row["Strengeth"];
+            state.strengeth = (int)row["Strengeth"];
 
             state.name = (string)row["Name"];
             state.explanation = (string)row["Explanation"];
