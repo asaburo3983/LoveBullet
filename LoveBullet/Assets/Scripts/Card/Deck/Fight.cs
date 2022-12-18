@@ -32,20 +32,20 @@ namespace Card
         [SerializeField] int explanationCardNum = 0;
 
         [Header("“ü—ÍŒn")]
-        [SerializeField] bool shotInput;
-        [SerializeField] bool reloadInput;
-        [SerializeField] bool cockingInput;
+        [SerializeField] public bool shotInput;
+        [SerializeField] public bool reloadInput;
+        [SerializeField] public bool cockingInput;
 
         [Header("‚»‚Ì‘¼ƒ‹[ƒ‹Œn")]
         [SerializeField,ReadOnly] int floor;
         [SerializeField,ReadOnly] ReactiveProperty<TURN> whoTurn;
-        [SerializeField,ReadOnly]int shotTarget = 0;
+        [SerializeField] public int shotTarget = 0;
 
         [Header("“Gˆ—Œn")]
         public GameObject enemyBase;
         public List<Vector3> enemyPos;
         List<Enemy.Enemy.State> enemysState = new List<Enemy.Enemy.State>();
-        List<Enemy.Enemy> enemyObjects = new List<Enemy.Enemy>();
+        public List<Enemy.Enemy> enemyObjects = new List<Enemy.Enemy>();
         
 
         // Start is called before the first frame update
@@ -82,6 +82,16 @@ namespace Card
             //í“¬‚ÌƒJ[ƒhî•ñ‚ğ•\¦
             if (gunInCards.Count > 0) {
                 card.Initialize(gunInCards[explanationCardNum]);
+            }
+
+            //ƒ^[ƒQƒbƒg•â³
+            if (enemyObjects.Count <= shotTarget)
+            {
+                shotTarget = 0;
+            }
+            else if (shotTarget < 0)
+            {
+                shotTarget = enemyObjects.Count - 1;
             }
 
             if (whoTurn.Value == TURN.Player)
@@ -260,6 +270,7 @@ namespace Card
             reloadInput = false;
         }
 
+
         /// <summary>
         /// “G‚ÉUŒ‚‚ğ—^‚¦‚éˆ—
         /// </summary>
@@ -278,7 +289,7 @@ namespace Card
             }
             else
             {
-                CardSkill();
+                CardSkill(shotTarget);
             }
             //Ì‚ÄD‚ÉƒJ[ƒh‚ğ“ü‚ê‚ÄƒŠƒ{ƒ‹ƒo[‚©‚ç”²‚­
             if (gunInCards[0].id != 0) trashInCards.Add(gunInCards[0]);//‚©‚ç‚Ì’eŠÛ‚Ìê‡Ì‚ÄD‚É’u‚©‚È‚¢
