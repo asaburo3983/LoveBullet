@@ -27,12 +27,12 @@ namespace Enemy
         [System.Serializable]
         public struct InGameState
         {
-            public ReactiveProperty<int> turn;
-            public ReactiveProperty<int> hp;
-            public ReactiveProperty<int> DF;
-            public ReactiveProperty<int> ATWeaken;
-            public ReactiveProperty<int> DFWeaken;
-            public ReactiveProperty<bool> acted;
+            public IntReactiveProperty turn;
+            public IntReactiveProperty hp;
+            public IntReactiveProperty DF;
+            public IntReactiveProperty ATWeaken;
+            public IntReactiveProperty DFWeaken;
+            public int stan;
         }
         public InGameState gameState;
         [System.Serializable]
@@ -51,7 +51,6 @@ namespace Enemy
 
         private void Start()
         {
-
             //死亡処理
             gameState.hp.Where(x => x <= 0).Subscribe(x =>
             {
@@ -64,6 +63,9 @@ namespace Enemy
             //リソースのから仮テクスチャを読み込んで入れる
             var path= "Texture/Fight/Enemy/Enemy"+ state.number.ToString();
             spriteRendere.sprite = Resources.Load<Sprite>(path);
+
+            GetComponent<BoxCollider2D>().size = spriteRendere.bounds.size;
+
         }
         /// <summary>
         /// ステータス値を代入して
@@ -78,7 +80,6 @@ namespace Enemy
             gameState.DF.Value = 0;
             gameState.ATWeaken.Value = 0;
             gameState.DFWeaken.Value = 0;
-            gameState.acted.Value = false;
 
             //とりあえずテキスト代入
             Rough.SetText(ui.turn, gameState.turn.Value);
@@ -116,17 +117,45 @@ namespace Enemy
 
             gameState.turn.Value = (gameState.turn.Value + 1) % state.pattern.Count;//敵内部ターン増加
 
-            gameState.acted.Value = true;//行動終了
-
         }
         public void ReceiveDamage(int _damage)
         {
             gameState.hp.Value -= (_damage - gameState.DF.Value);
-
         }
+
+        public void ReceiveStan(int _stan)
+        {
+            gameState.stan += _stan;
+        }
+
+        public void ReceiveATWeaken(int _weak)
+        {
+            gameState.ATWeaken.Value += _weak;
+        }
+
+        public void ReceiveDFWeaken(int _weak)
+        {
+            gameState.DFWeaken.Value += _weak;
+        }
+
+        public void ProgressTurn(int _progressTurn)
+        {
+            if (gameState.stan > 0) {
+                gameState.stan--;
+            }
+            else {
+                gameState.turn.Value -= _progressTurn;
+            }
+        }
+
         public void ResetDF()
         {
             gameState.DF.Value = 0;
+        }
+
+        public void ReceiveBullet()
+        {
+            Card.Fight.instance.Fire(this);
         }
     }
 }

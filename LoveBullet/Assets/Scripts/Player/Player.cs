@@ -1,4 +1,3 @@
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,20 +6,31 @@ using UniRx;
 public class Player : SingletonMonoBehaviour<Player>
 {
     [System.Serializable]
+    public struct ReductionRate
+    {
+        [Header("0% ~ 100%"),Header("デバフ時の倍率")]
+        [Range(0, 100)] public int AT;
+        [Header("100% ~ 200%"), Range(100, 200)] public int DF;
+    }
+    [SerializeField] ReductionRate rate;
+    public ReductionRate Rate => rate;
+
+    [System.Serializable]
     public struct InGameState
     {
-        public ReactiveProperty<int> hp;
-        public ReactiveProperty<int> AP;
-        public ReactiveProperty<int> APMax;
-        public ReactiveProperty<int> DF;
-        public ReactiveProperty<int> ATWeaken;
-        public ReactiveProperty<int> DFWeaken;
+        public IntReactiveProperty hp;
+        public IntReactiveProperty DF;
+        public IntReactiveProperty ATWeaken;
+        public IntReactiveProperty DFWeaken;
 
         public int reloadAP;
         public int cockingAP;
 
+        public int freeCocking;
     }
     public InGameState gameState = new InGameState();
+
+
     [System.Serializable]
     public struct UI
     {
@@ -32,21 +42,6 @@ public class Player : SingletonMonoBehaviour<Player>
     }
     [SerializeField] UI ui;
 
-    /// <summary>
-    /// APを最大値に戻す
-    /// </summary>
-    public static void ResetAP()
-    {
-        instance.gameState.AP.Value = instance.gameState.APMax.Value;
-    }
-    public static void PlusAP(int _AP)
-    {
-        instance.gameState.AP.Value += _AP;
-    }
-    public static void MinusAP(int _AP)
-    {
-        instance.gameState.AP.Value -= _AP;
-    }
     /// <summary>
     /// DF管理
     /// </summary>

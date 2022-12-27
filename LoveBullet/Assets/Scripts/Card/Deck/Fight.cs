@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using System.Linq;
 using UniRx;
 
 namespace Card
@@ -8,12 +10,6 @@ namespace Card
 
     public class Fight : SingletonMonoBehaviour<Fight>
     {
-        enum TURN
-        {
-            Player,
-            Enemy,
-        }
-
         [Header("カード管理系")]
         [SerializeField] Card.GENRE startDeckGenre;
         [SerializeField] List<int> startDecksId = new List<int>();
@@ -38,17 +34,15 @@ namespace Card
 
         [Header("その他ルール系")]
         [SerializeField,ReadOnly] int floor;
-        [SerializeField,ReadOnly] ReactiveProperty<TURN> whoTurn;
-        [SerializeField] public int shotTarget = 0;
 
         [Header("敵処理系")]
         public GameObject enemyBase;
         public List<Vector3> enemyPos;
         List<Enemy.Enemy.State> enemysState = new List<Enemy.Enemy.State>();
         public List<Enemy.Enemy> enemyObjects = new List<Enemy.Enemy>();
-        
 
-        // Start is called before the first frame update
+        #region InitFunction
+
         void Start()
         {
             if (SingletonCheck(this))
@@ -57,71 +51,14 @@ namespace Card
                 plState = player.gameState;
 
                 InitializeStartDeck();
-                whoTurn.Value = TURN.Player;
-
-                //ターン切り替え処理
-                whoTurn.Where(x => x == Fight.TURN.Player).Subscribe(x =>
-                {
-                    EndTurn_Enemy();
-                    StartTurn_Player();
-                }
-                ).AddTo(this);
-                whoTurn.Where(x => x == Fight.TURN.Enemy).Subscribe(x => {
-                    EndTurn_Player();
-                    StartTurn_Enemy();
-                    }).AddTo(this);
 
                 //TODO 戦闘はじめ処理仮置き
                 StartFight();
             }
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-            //戦闘のカード情報を表示
-            if (gunInCards.Count > 0) {
-                card.Initialize(gunInCards[explanationCardNum]);
-            }
-
-            //ターゲット補正
-            if (enemyObjects.Count <= shotTarget)
-            {
-                shotTarget = 0;
-            }
-            else if (shotTarget < 0)
-            {
-                shotTarget = enemyObjects.Count - 1;
-            }
-
-            if (whoTurn.Value == TURN.Player)
-            {
-                //各自処理（入力は別で行う）
-                Reload(6);
-
-                Shot();
-
-                Cocking();
-
-                TurnEnd_Player();
-            }
-            else if(whoTurn.Value == TURN.Enemy)
-            {
-                TurnEnd_Enemy();
-            }
-
-
-
-        }
-
-
         void StartFight()
         {
-
-            Player.ResetAP();
-
-            whoTurn.Value = TURN.Player;
-
             StartFight_ShuffleCard();
 
             AdventEnemys();
@@ -130,14 +67,9 @@ namespace Card
         }
         void StartTurn_Player()
         {
-            Player.ResetAP();
             Player.ResetDF();
         }
-        void EndTurn_Player()
-        {
-            whoTurn.Value = TURN.Enemy;
-            
-        }
+
         void StartTurn_Enemy()
         {
             //エネミー側で削除されていた場合リストから削除しておく
@@ -150,46 +82,123 @@ namespace Card
             }
             foreach (var enemy in enemyObjects)
             {
-                enemy.gameState.acted.Value = false;//すべての敵を行動済みを解除する
                 enemy.Action();//敵に順番に行動させる
                 enemy.ResetDF();//DFをリセットする
             }
         }
-        void EndTurn_Enemy()
-        {
 
-        }
+        #endregion
+
+        #region Action
 
         /// <summary>
-        /// プレイヤーターンの終了　APが０になった際
+        /// 攻撃処理
         /// </summary>
-        void TurnEnd_Player()
+        /// <param name="_enemy"></param>
+        public void Fire(Enemy.Enemy _enemy)
         {
-            //APが0になるとターンを終了する
-            if (plState.AP.Value <= 0)
-            {
-                whoTurn.Value = TURN.Enemy;
+            var _card = gunInCards[0];
+            int _damage = _card.AT;
+
+            // 攻撃デバフが存在する場合、値の補正を行う
+            if (plState.ATWeaken.Value > 0) {
+                _damage *= player.Rate.AT;
+                _damage /= 100;
             }
-        }
-        /// <summary>
-        /// エネミーターンの終了　すべてのエネミーが行動済みになった際
-        /// </summary>
-        void TurnEnd_Enemy()
-        {
-            //すべての敵が行動済みならターンを変更する
-            bool endTurn = true;
-            foreach (var enemy in enemyObjects)
-            {
-                if (enemy.gameState.acted.Value == false)
-                {
-                    endTurn = false;
+            
+            // 攻撃処理
+            if (gunInCards[0].Whole) {
+
+                // 全体攻撃
+                foreach(var _eObj in enemyObjects) {
+                    _eObj.ReceiveDamage(_damage);
+                    _eObj.ReceiveStan(_card.Stan);
+                    _eObj.ReceiveATWeaken(_card.ATWeaken);
+                    _eObj.ReceiveDFWeaken(_card.DFWeaken);
                 }
             }
-            if (endTurn)
-            {
-                whoTurn.Value = TURN.Player;
+            else {
+                // 単体攻撃
+                _enemy.ReceiveDamage(_damage);
+                _enemy.ReceiveStan(_card.Stan);
+                _enemy.ReceiveATWeaken(_card.ATWeaken);
+                _enemy.ReceiveDFWeaken(_card.DFWeaken);
+            }
+
+            // プレイヤーステータス加減
+            int _progress = _card.AP;
+            plState.DF.Value += _card.DF;
+            plState.freeCocking += _card.Cocking;
+            plState.ATWeaken.Value = Mathf.Clamp(plState.ATWeaken.Value - 1, 0, 9999);
+            plState.DFWeaken.Value = Mathf.Clamp(plState.DFWeaken.Value - 1, 0, 9999);
+
+
+            // 強制リロードするか
+            if (_card.Reload > 0) {
+                for(int i= _card.Reload; i > 0; i--) {
+                    Reload();
+                }
+            }
+            else {
+                //捨て札にカードを入れてリボルバーから抜く
+                if (_card.id != 0) trashInCards.Add(_card);//からの弾丸の場合捨て札に置かない
+                gunInCards.RemoveAt(0);
+
+                //５番に空の弾を入れる必要がある
+                gunInCards.Add(Search.GetCard(0));
+            }
+
+            // エネミーのターン経過処理
+            ProgressTurn(_progress);
+        }
+
+
+        /// <summary>
+        /// ターンを進行する
+        /// </summary>
+        /// <param name="_progressTurn">経過するターン</param>
+        public void ProgressTurn(int _progressTurn)
+        {
+            foreach(var _enemy in enemyObjects) {
+                _enemy.ProgressTurn(_progressTurn);
             }
         }
+
+        /// <summary>
+        /// プレイヤーの被ダメージ処理
+        /// </summary>
+        /// <param name="_damage"></param>
+        public void ReceiveDamage(int _damage)
+        {
+            int dmg = _damage;
+            // 防御デバフが存在する場合、値の補正を行う
+            if (plState.DFWeaken.Value > 0) {
+                dmg *= player.Rate.DF;
+                dmg /= 100;
+            }
+
+            // 防御バフがある場合、ダメージ減算
+            if (dmg <= plState.DF.Value) {
+                plState.DF.Value -= dmg;
+            }
+            else {
+                plState.hp.Value -= dmg - plState.DF.Value;
+            }
+        }
+
+        /// <summary>
+        /// プレイヤーの被デバフ処理
+        /// </summary>
+        /// <param name="_atk"></param>
+        /// <param name="_def"></param>
+        public void ReceiveWeaken(int _atk,int _def)
+        {
+            plState.ATWeaken.Value += _atk;
+            plState.DFWeaken.Value += _def;
+        }
+
+
+        #endregion
 
         #region Card
 
@@ -215,30 +224,13 @@ namespace Card
             trashInCards.Clear();
 
             //デッキリストをシャッフルしてデッキに入れる
-            List<int> matchId = new List<int>();
-            for (int i = 0; i < deckList.Count; i++)
-            {
-                bool match = false;
-                int rand = -1;
-                //ランダムのあたいが被らないようにする
-                //TODO 現在処理不可を考えない処理
-                do
-                {
-                    match = false;
-                    rand = Random.Range(0, deckList.Count);
-                    for (int h = 0; h < matchId.Count; h++)
-                    {
-                        if (matchId[h] == rand)
-                        {
-                            match = true;
-                        }
-                    }
-                }
-                while (match == true);
-                matchId.Add(rand);
-                deckInCards.Add(deckList[rand]);
-            }
+            deckInCards = deckList.OrderBy(a => Guid.NewGuid()).ToList();
+
+            reloadInput = true;
+            Reload();
         }
+
+
         /// <summary>
         /// リボルバーをリロードする
         /// </summary>
@@ -246,7 +238,6 @@ namespace Card
         public void Reload(int bulletNum = 6)
         {
             if (reloadInput==false) { return; }
-            Player.MinusAP(plState.reloadAP);
 
             //リボルバー内を空に 中身があるならTrushに移動させる
             foreach(var card in gunInCards)
@@ -254,6 +245,8 @@ namespace Card
                 if (card.id != 0) trashInCards.Add(card);
             }
             gunInCards.Clear();
+
+
             //デッキ内カードが込める弾の個数より少ない時
             if (deckInCards.Count < bulletNum)
             {
@@ -279,18 +272,6 @@ namespace Card
         public void Shot(int target = 0, bool allTarget = false)
         {
             if (shotInput==false) { return; }
-
-
-            //AP減少
-            Player.MinusAP(gunInCards[0].AP);
-            //空のカードの場合の処理を入れるかも
-            if (gunInCards[0].id == 0)
-            {
-            }
-            else
-            {
-                CardSkill(shotTarget);
-            }
             //捨て札にカードを入れてリボルバーから抜く
             if (gunInCards[0].id != 0) trashInCards.Add(gunInCards[0]);//からの弾丸の場合捨て札に置かない
             gunInCards.RemoveAt(0);
@@ -307,7 +288,6 @@ namespace Card
         {
             if (cockingInput==false) { return; }
 
-            Player.MinusAP(plState.cockingAP);
 
             var zeroCard = gunInCards[0];
             gunInCards.RemoveAt(0);
@@ -319,31 +299,11 @@ namespace Card
         /// </summary>
         public void ResetTrush()
         {
-            //デッキリストをシャッフルしてデッキに入れる
-            List<int> matchId = new List<int>();
-            for (int i = 0; i < trashInCards.Count; i++)
-            {
-                bool match = false;
-                int rand = -1;
-                //ランダムのあたいが被らないようにする
-                //TODO 現在処理不可を考えない処理
-                do
-                {
-                    match = false;
-                    rand = Random.Range(0, trashInCards.Count);
-                    for (int h = 0; h < matchId.Count; h++)
-                    {
-                        if (matchId[h] == rand)
-                        {
-                            match = true;
-                        }
-                    }
-                }
-                while (match == true);
-                matchId.Add(rand);
-
-                //トラッシュのカードを山に戻す
-                deckInCards.Add(trashInCards[rand]);
+            // トラッシュリストをシャッフルしてデッキに入れる
+            trashInCards = trashInCards.OrderBy(a => Guid.NewGuid()).ToList();
+            
+            foreach(var _cards in trashInCards) {
+                deckInCards.Add(_cards);
             }
 
             //トラッシュのカードをなくす
@@ -375,7 +335,7 @@ namespace Card
 
             //敵の出現条件について
             //とりあえず指定パターンで出限させる（後にDB化して指定パターンの中でもランダムで出現させるなどを行う）
-            var rand = Random.Range(0, Enemy.AddventPattern.GetGroupMax(floor));
+            var rand = UnityEngine.Random.Range(0, Enemy.AddventPattern.GetGroupMax(floor));
             var enemyGroup = Enemy.AddventPattern.GetGroup(floor, rand);
 
             int enemyCount = 0;
