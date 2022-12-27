@@ -1185,17 +1185,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b9dbbf8337603e49acd9a52e0bccb11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rate:
+    AT: 50
+    DF: 150
   gameState:
     hp:
-      value: 5
+      value: 10
     DF:
-      value: 3
+      value: 0
     ATWeaken:
-      value: 3
+      value: 1
     DFWeaken:
-      value: 3
+      value: 0
     reloadAP: 1
     cockingAP: 1
+    freeCocking: 0
   ui:
     hp: {fileID: 0}
     AP: {fileID: 0}
