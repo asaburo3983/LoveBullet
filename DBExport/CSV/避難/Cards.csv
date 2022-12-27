@@ -1,5 +1,0 @@
-Genre,Type,Name,Explanation,AP,AT,DF,ATWeaken,DFWeaken,Value0,Value1,Value2,Value3,Value4
-int,int,string,string,int,int,int,int,int,int,int,int,int,int
-0,0,バレット,基本的な構えから発射される攻撃,1,6,0,0,0,0,0,0,0,0
-0,1,バレットガード,自身に弾丸を打ち込み決意を高める,1,0,5,0,0,0,0,0,0,0
-0,0,ウィークバレット,敵を３ターンDF弱体化させる,2,9,0,0,3,0,0,0,0,0
