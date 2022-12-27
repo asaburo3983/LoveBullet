@@ -64,7 +64,7 @@ namespace Enemy
         void SetTexture()
         {
             //リソースのから仮テクスチャを読み込んで入れる
-            var path= "Enemy/Enemy"+ state.number.ToString();
+            var path= "Texture/Fight/Enemy/Enemy"+ state.number.ToString();
             spriteRendere.sprite = Resources.Load<Sprite>(path);
         }
         /// <summary>
