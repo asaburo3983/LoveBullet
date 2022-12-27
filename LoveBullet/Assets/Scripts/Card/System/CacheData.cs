@@ -82,8 +82,6 @@ public class CacheData : SingletonMonoBehaviour<CacheData>
             state.hpMax = (int)row["HP"];
             state.hpFluctuationPlus = (int)row["HPFluctuationPlus"];
             state.hpFluctuationMinus = (int)row["HPFluctuationMinus"];
-            state.ATFluctuationPlus = (int)row["ATFluctuationPlus"];
-            state.ATFluctuationMinus = (int)row["ATFluctuationMinus"];
 
             state.pattern.Add((int)row["Pattern1"]);
             state.pattern.Add((int)row["Pattern2"]);
@@ -138,7 +136,7 @@ public class CacheData : SingletonMonoBehaviour<CacheData>
         {
             Enemy.AddventPattern state = new Enemy.AddventPattern();
 
-            for(int i=0;i< (table.Columns.Count - 1); i++)
+            for(int i=0;i< (table.Columns.Count - 2); i++)
             {
                 string enemyTag = "Enemy" + (i+1).ToString();
                 state.enemysId.Add((int)row[enemyTag]);

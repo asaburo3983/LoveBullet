@@ -19,8 +19,6 @@ namespace Enemy
             public int hpFluctuationPlus;
             public int hpFluctuationMinus;
 
-            public int ATFluctuationPlus;
-            public int ATFluctuationMinus;
             public List<int> pattern = new List<int>();
             public List<int> value = new List<int>();
         }

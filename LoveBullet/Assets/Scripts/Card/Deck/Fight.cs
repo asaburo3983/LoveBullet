@@ -387,7 +387,7 @@ namespace Card
                 //ìGê∂ê¨
                 var enemy = Instantiate(enemyBase, enemyPos[enemyCount - 1], Quaternion.identity);
                 var script = enemy.GetComponent<Enemy.Enemy>();
-                script.Initialize(enemysState[enemyId]);
+                script.Initialize(enemysState[enemyId-1]);
 
                 enemyObjects.Add(script);
             }
