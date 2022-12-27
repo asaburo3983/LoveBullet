@@ -48,6 +48,8 @@ public class CacheData : SingletonMonoBehaviour<CacheData>
             state.AP = (int)row["AP"];
             state.AT = (int)row["AT"];
             state.DF = (int)row["DF"];
+            state.rank = (int)row["Rank"];
+
             state.ATWeaken = (int)row["ATWeaken"];
             state.DFWeaken = (int)row["DFWeaken"];
             state.value.Add((int)row["Value0"]);
