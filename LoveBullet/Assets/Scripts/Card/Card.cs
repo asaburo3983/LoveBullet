@@ -26,6 +26,7 @@ namespace Card
             public GENRE genre;
             public TYPE type;
             public string name;
+            public int rank;
             public string explanation;
             public int AP;
             public int AT;
