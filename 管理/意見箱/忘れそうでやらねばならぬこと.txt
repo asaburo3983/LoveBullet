@@ -1,0 +1,7 @@
+プログラムパッケージのライセンス表記
+
+　UniRx
+
+  SQLite
+
+  DTween
