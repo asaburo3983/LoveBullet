@@ -19,6 +19,12 @@ namespace Card
 
             Max
         }
+        public enum ATTACK_TYPE
+        {
+            solo,
+            all
+        }
+
         [System.Serializable]
         public class State
         {
@@ -31,8 +37,14 @@ namespace Card
             public int AP;
             public int AT;
             public int DF;
+            public int Stan;
             public int ATWeaken;
             public int DFWeaken;
+            public bool Whole;      // 全体攻撃
+            public int Cocking;     // コッキング回数
+            public int Reload;      // 強制リロード回数
+            public int Scrap;       // 廃棄
+            public int SelfDamage;  // 自傷
             public List<int> value = new List<int>();
         }
         State state;
@@ -48,7 +60,7 @@ namespace Card
             public GameObject ATWeaken;
             public GameObject DFWeaken;
         }
-        [SerializeField] UI ui;
+        public UI ui;
 
 
 

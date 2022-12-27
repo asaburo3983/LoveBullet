@@ -36,9 +36,8 @@ public class CacheData : SingletonMonoBehaviour<CacheData>
         var table = db.ExecuteQuery(cmd);
 
         int idCount = 0;
-        foreach (var row in table.Rows)
-        {
-            Card.Card.State state=new Card.Card.State();
+        foreach (var row in table.Rows) {
+            Card.Card.State state = new Card.Card.State();
             state.id = idCount;
             state.genre = (Card.Card.GENRE)row["Genre"];
             state.type = (Card.Card.TYPE)row["Type"];
@@ -52,6 +51,12 @@ public class CacheData : SingletonMonoBehaviour<CacheData>
 
             state.ATWeaken = (int)row["ATWeaken"];
             state.DFWeaken = (int)row["DFWeaken"];
+            state.Whole = (int)row["Whole"] == 1;
+            state.Cocking = (int)row["Cocking"];
+            state.Reload = (int)row["Reload"];
+            state.Scrap = (int)row["Scrap"];
+            state.SelfDamage = (int)row["SelfDamage"];
+
             state.value.Add((int)row["Value0"]);
             state.value.Add((int)row["Value1"]);
             state.value.Add((int)row["Value2"]);

@@ -1897,10 +1897,6 @@ MonoBehaviour:
   gameState:
     hp:
       value: 5
-    AP:
-      value: 3
-    APMax:
-      value: 3
     DF:
       value: 3
     ATWeaken:
