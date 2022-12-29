@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1293512617579391495}
   - component: {fileID: 1293512617579391488}
   m_Layer: 0
-  m_Name: CurdUI
+  m_Name: CardUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

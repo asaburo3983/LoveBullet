@@ -13,7 +13,7 @@ public class ResultManager : SingletonMonoBehaviour<ResultManager>
     public ReactiveProperty<bool> result = new ReactiveProperty<bool>();
     public bool isResult => result.Value;
     [SerializeField, Header("キャンバス設定")]
-    GameObject resultCanvas;
+    public GameObject resultCanvas;
     [SerializeField] float canvasFadeTime;
     [SerializeField] GameObject cardSelectCanvas;
     [SerializeField] GameObject lovePointCanvas;
@@ -45,7 +45,7 @@ public class ResultManager : SingletonMonoBehaviour<ResultManager>
     string moveScene;
     private void Awake()
     {
-        if (SingletonCheck(this, false))
+        if (SingletonCheck(this, true))
         {
 
 
@@ -67,7 +67,7 @@ public class ResultManager : SingletonMonoBehaviour<ResultManager>
     // Start is called before the first frame update
     void Start()
     {
-
+        resultCanvas.SetActive(false);
         resultCanvas.GetComponent<CanvasGroup>().alpha = 0;
     }
 
@@ -78,6 +78,7 @@ public class ResultManager : SingletonMonoBehaviour<ResultManager>
     }
     void StartResult_Effect()
     {
+        resultCanvas.SetActive(true);
         //リザルト画面をフェードさせて表示する
         resultCanvas.GetComponent<CanvasGroup>().DOFade(1, canvasFadeTime);
     }
