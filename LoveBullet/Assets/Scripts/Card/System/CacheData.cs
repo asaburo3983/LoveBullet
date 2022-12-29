@@ -121,6 +121,8 @@ public class CacheData : SingletonMonoBehaviour<CacheData>
             state.DF = (int)row["DF"];
             state.ATWeaken = (int)row["ATWeaken"];
             state.DFWeaken = (int)row["DFWeaken"];
+            state.Turn = (int)row["Turn"];
+            state.Fluctuation = (int)row["FluctuationPlus"];
 
             state.value.Add((int)row["Value1"]);
             state.value.Add((int)row["Value2"]);
