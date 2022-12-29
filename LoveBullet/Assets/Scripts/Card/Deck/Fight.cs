@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using System.Linq;
 using UniRx;
+using DG.Tweening;
 
 namespace Card
 {
@@ -27,19 +28,25 @@ namespace Card
         [SerializeField] Card card;
         [SerializeField] int explanationCardNum = 0;
 
-        [Header("入力系")]
-        [SerializeField] public bool shotInput;
-        [SerializeField] public bool reloadInput;
-        [SerializeField] public bool cockingInput;
-
         [Header("その他ルール系")]
         [SerializeField,ReadOnly] int floor;
+        [SerializeField] int reloadCost = 1;
+        [SerializeField] int cockingCost = 1;
 
         [Header("敵処理系")]
         public GameObject enemyBase;
         public List<Vector3> enemyPos;
         List<Enemy.Enemy.State> enemysState = new List<Enemy.Enemy.State>();
         public List<Enemy.Enemy> enemyObjects = new List<Enemy.Enemy>();
+        [SerializeField,ReadOnly]int targetId = 0;
+        public int TargetId => targetId;
+
+        // TweenAnimation
+        Tween fireTw = null;
+
+        [Header("アニメーション")]
+        [SerializeField] float fireMoveDist = 1.0f;
+        [SerializeField] float fireMoveTime = 0.1f;
 
         #region InitFunction
 
@@ -62,8 +69,6 @@ namespace Card
             StartFight_ShuffleCard();
 
             AdventEnemys();
-
-            reloadInput = true;
         }
         void StartTurn_Player()
         {
@@ -150,9 +155,13 @@ namespace Card
 
             // エネミーのターン経過処理
             ProgressTurn(_progress);
+
+            // プレイヤーアニメーション
+            if (fireTw != null) fireTw.Kill(true);
+            fireTw = player.transform.DOLocalMoveX(player.transform.localPosition.x + fireMoveDist, fireMoveTime)
+                .SetLoops(2, LoopType.Yoyo).OnComplete(() => fireTw = null);
         }
-
-
+        
         /// <summary>
         /// ターンを進行する
         /// </summary>
@@ -198,6 +207,26 @@ namespace Card
         }
 
 
+        // ターゲット再指定
+        public void SetTarget(int _id)
+        {
+            targetId = _id;
+        }
+
+        public void SetTarget(Enemy.Enemy _enemy)
+        {
+            targetId = enemyObjects.IndexOf(_enemy);
+        }
+
+
+        /// <summary>
+        /// 現在ターゲットIDへの攻撃処理
+        /// </summary>
+        public void Fire()
+        {
+            Fire(enemyObjects[targetId]);
+        }
+
         #endregion
 
         #region Card
@@ -226,7 +255,6 @@ namespace Card
             //デッキリストをシャッフルしてデッキに入れる
             deckInCards = deckList.OrderBy(a => Guid.NewGuid()).ToList();
 
-            reloadInput = true;
             Reload();
         }
 
@@ -237,8 +265,6 @@ namespace Card
         /// <param name="bulletNum"></param>
         public void Reload(int bulletNum = 6)
         {
-            if (reloadInput==false) { return; }
-
             //リボルバー内を空に 中身があるならTrushに移動させる
             foreach(var card in gunInCards)
             {
@@ -252,7 +278,6 @@ namespace Card
             {
                 //山札がないので捨て札をシャッフルして山札に加える
                 ResetTrush();
-                bulletNum = deckInCards.Count;
             }
             //デッキからカード追加
             for (int i = 0; i < bulletNum; i++)
@@ -260,7 +285,8 @@ namespace Card
                 gunInCards.Add(deckInCards[0]);
                 deckInCards.RemoveAt(0);
             }
-            reloadInput = false;
+
+            ProgressTurn(reloadCost);
         }
 
 
@@ -271,11 +297,9 @@ namespace Card
         /// <param name="allTarget"></param>
         public void Shot(int target = 0, bool allTarget = false)
         {
-            if (shotInput==false) { return; }
             //捨て札にカードを入れてリボルバーから抜く
             if (gunInCards[0].id != 0) trashInCards.Add(gunInCards[0]);//からの弾丸の場合捨て札に置かない
             gunInCards.RemoveAt(0);
-            shotInput = false;
 
             //５番に空の弾を入れる必要がある
             gunInCards.Add(Search.GetCard(0));
@@ -286,13 +310,11 @@ namespace Card
         /// </summary>
         public void Cocking()
         {
-            if (cockingInput==false) { return; }
-
-
             var zeroCard = gunInCards[0];
             gunInCards.RemoveAt(0);
             gunInCards.Add(zeroCard);
-            cockingInput = false;
+
+            ProgressTurn(cockingCost);
         }
         /// <summary>
         /// 捨て札にあるスキルを再度山に戻す

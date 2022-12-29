@@ -652,6 +652,7 @@ MonoBehaviour:
     DFWeaken:
       value: 0
     stan: 0
+    currentIdx: 0
   ui:
     turn: {fileID: 2868265611839536730}
     name: {fileID: 2868265611857794169}
@@ -705,7 +706,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 2868265613186992009}
           m_TargetAssemblyTypeName: Enemy.Enemy, Assembly-CSharp
-          m_MethodName: ReceiveBullet
+          m_MethodName: SetTarget
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

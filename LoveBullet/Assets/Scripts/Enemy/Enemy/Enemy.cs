@@ -33,6 +33,7 @@ namespace Enemy
             public IntReactiveProperty ATWeaken;
             public IntReactiveProperty DFWeaken;
             public int stan;
+            [ReadOnly]public int currentIdx;
         }
         public InGameState gameState;
         [System.Serializable]
@@ -52,10 +53,35 @@ namespace Enemy
         private void Start()
         {
             //死亡処理
-            gameState.hp.Where(x => x <= 0).Subscribe(x =>
-            {
-                Destroy(gameObject);//削除処理だけ入れておく
+            gameState.hp.Where(x => x <= 0).Subscribe(x => {
+
+                var fight = Card.Fight.instance;
+                int _id = fight.enemyObjects.IndexOf(this);
+                
+                // 削除に伴いターゲットのIDを変更する
+                if(fight.TargetId == _id) {
+
+                    if(fight.enemyObjects.Count - 1 == _id) {
+                        fight.SetTarget(0);
+                    }
+                }
+                else if(fight.TargetId > _id) {
+                    fight.SetTarget(fight.TargetId - 1);
+                }
+
+                Destroy(gameObject);
             }).AddTo(this);
+
+            // エネミー行動処理
+            gameState.turn.Pairwise()
+                .Where(x => x.Previous > 0)
+                .Where(x => x.Current <= 0)
+                .Subscribe(x => {
+                    Action();
+                }).AddTo(this);
+
+            // 初期ターン数設定
+            gameState.turn.Value = CacheData.instance.enemyActivePattern[state.pattern[gameState.currentIdx]].Turn;
         }
         //TODo 仮でテクスチャを設定する
         void SetTexture()
@@ -108,18 +134,34 @@ namespace Enemy
         public void Action()
         {
             var playerState = Player.instance.gameState;
-            var activeId = state.pattern[gameState.turn.Value];
+            var activeId = state.pattern[gameState.currentIdx];
             var actiovePattern = CacheData.instance.enemyActivePattern[activeId];
 
             //TODO とりあえず攻撃と防御処理だけ作成
             Player.ReceiveDamage(actiovePattern.AT);//攻撃
             gameState.DF.Value += actiovePattern.DF;//防御
 
-            gameState.turn.Value = (gameState.turn.Value + 1) % state.pattern.Count;//敵内部ターン増加
+            // 行動順を一つずらす
+            gameState.currentIdx++;
+            gameState.currentIdx %= state.pattern.Count;
+
+            // 行動までのターン設定
+            var act = CacheData.instance.enemyActivePattern[gameState.currentIdx];
+            gameState.turn.Value = act.Turn + Random.Range(0,act.Fluctuation);
 
         }
         public void ReceiveDamage(int _damage)
         {
+
+            // 防御バフ計算
+            if(_damage< gameState.DF.Value) {
+                gameState.DF.Value -= _damage;
+                return;
+            }
+            else {
+                _damage -= gameState.DF.Value;
+                gameState.DF.Value = 0;
+            }
             gameState.hp.Value -= (_damage - gameState.DF.Value);
         }
 
@@ -153,9 +195,14 @@ namespace Enemy
             gameState.DF.Value = 0;
         }
 
-        public void ReceiveBullet()
+        public void SetTarget()
         {
-            Card.Fight.instance.Fire(this);
+            Card.Fight.instance.SetTarget(this);
+        }
+
+        private void OnDestroy()
+        {
+            Card.Fight.instance.enemyObjects.Remove(this);
         }
     }
 }
