@@ -11,7 +11,7 @@ public class ResultManager : SingletonMonoBehaviour<ResultManager>
     ReactiveProperty<bool> startResult_Debug = new ReactiveProperty<bool>();
 
     public ReactiveProperty<bool> result = new ReactiveProperty<bool>();
-
+    public bool isResult => result.Value;
     [SerializeField, Header("キャンバス設定")]
     GameObject resultCanvas;
     [SerializeField] float canvasFadeTime;
@@ -47,8 +47,7 @@ public class ResultManager : SingletonMonoBehaviour<ResultManager>
     {
         if (SingletonCheck(this, false))
         {
-            //デバッグ用
-            StartResult(50, true);
+
 
             Debug.LogWarning("現在、ターンボーナス、取得できるカード種類数、取得できるカード数は固定されています");
             turnBounus = 1.5f;
@@ -56,9 +55,6 @@ public class ResultManager : SingletonMonoBehaviour<ResultManager>
             getCardValueQuantity = 3;
 
             mode.Value = false;
-
-            result.Where(x => x).Subscribe(x => StartResult_Effect()).AddTo(this);
-            result.Where(x => !x).Subscribe(x => EndResult_Effect()).AddTo(this);
 
             mode.Where(x => !x).Subscribe(x => CardMode()).AddTo(this);
             mode.Where(x => x).Subscribe(x => LoveMode()).AddTo(this);
@@ -73,7 +69,6 @@ public class ResultManager : SingletonMonoBehaviour<ResultManager>
     {
 
         resultCanvas.GetComponent<CanvasGroup>().alpha = 0;
-
     }
 
     // Update is called once per frame
@@ -111,6 +106,8 @@ public class ResultManager : SingletonMonoBehaviour<ResultManager>
 
         //取得LovePointを設定する
         SetLovePoint(_lovePoint,_turnBounus);
+
+        StartResult_Effect();
     }
 
     /// <summary>
@@ -119,6 +116,7 @@ public class ResultManager : SingletonMonoBehaviour<ResultManager>
     public void EndResult()
     {
         result.Value = false;
+        EndResult_Effect();
     }
     /// <summary>
     /// モードを切り替える
@@ -167,11 +165,11 @@ public class ResultManager : SingletonMonoBehaviour<ResultManager>
                 if (rankTmp == cardRank)
                 {
                     getCards.Add(CacheData.instance.cardStates[num]);
-                    break;
+                   
                 }
             }
 
-            //とりあえずステートを入れる
+            //todoとりあえずステートを入れる
             canvasCardObjects[i].GetComponent<Card.CanvasCard>().Initialize(getCards[i]);
         }
     }
