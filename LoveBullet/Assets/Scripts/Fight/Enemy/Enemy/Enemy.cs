@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
+using UnityEngine.UI;
 
 namespace Enemy
 {
@@ -27,6 +28,7 @@ namespace Enemy
         [System.Serializable]
         public struct InGameState
         {
+            public IntReactiveProperty maxHP;
             public IntReactiveProperty turn;
             public IntReactiveProperty hp;
             public IntReactiveProperty DF;
@@ -36,22 +38,18 @@ namespace Enemy
             [ReadOnly]public int currentIdx;
         }
         public InGameState gameState;
-        [System.Serializable]
-        public struct UI
-        {
-            public GameObject turn;
-            public GameObject name;
-            public GameObject hp;
-            public GameObject DF;
-            public GameObject ATWeaken;
-            public GameObject DFWeaken;
-        }
-        [SerializeField] UI ui;
 
-        [SerializeField] SpriteRenderer spriteRendere;
+
+        [SerializeField] Image image;
 
         private void Start()
         {
+            if (state == null)
+            {
+                Debug.LogError("エネミーはイニシャライズされずに生成されました");
+                Destroy(this.gameObject);
+                return;
+            }
             //死亡処理
             gameState.hp.Where(x => x <= 0).Subscribe(x => {
 
@@ -88,9 +86,9 @@ namespace Enemy
         {
             //リソースのから仮テクスチャを読み込んで入れる
             var path= "Texture/Fight/Enemy/Enemy"+ state.number.ToString();
-            spriteRendere.sprite = Resources.Load<Sprite>(path);
+            image.sprite = Resources.Load<Sprite>(path);
 
-            GetComponent<BoxCollider2D>().size = spriteRendere.bounds.size;
+            //GetComponent<BoxCollider2D>().size = image.bounds.size;
 
         }
         /// <summary>
@@ -102,18 +100,11 @@ namespace Enemy
         {
             state = _state;
             gameState.turn.Value = 0;
+            gameState.maxHP.Value = state.hpMax;
             gameState.hp.Value = state.hpMax;
             gameState.DF.Value = 0;
             gameState.ATWeaken.Value = 0;
             gameState.DFWeaken.Value = 0;
-
-            //とりあえずテキスト代入
-            Rough.SetText(ui.turn, gameState.turn.Value);
-            Rough.SetText(ui.name, state.name);
-            Rough.SetText(ui.hp, gameState.hp.Value);
-            Rough.SetText(ui.DF, gameState.DF.Value);
-            Rough.SetText(ui.ATWeaken, gameState.ATWeaken.Value);
-            Rough.SetText(ui.DFWeaken, gameState.DFWeaken.Value);
 
             //エネミー番号に対応したグラフィックを入れる
             SetTexture();

@@ -11,6 +11,8 @@ namespace Card
 
     public class Fight : SingletonMonoBehaviour<Fight>
     {
+        [SerializeField] Transform fightCanvas;
+
         [Header("ÉJÅ[Éhä«óùån")]
         [SerializeField] Card.GENRE startDeckGenre;
         [SerializeField] List<int> startDecksId = new List<int>();
@@ -378,7 +380,7 @@ namespace Card
                 if (enemyId == -1) continue;
                 enemysState.Add(Enemy.Enemy.GetEnemyState(enemyId));
                 //ìGê∂ê¨
-                var enemy = Instantiate(enemyBase, enemyPos[enemyCount], Quaternion.identity);
+                var enemy = Instantiate(enemyBase, enemyPos[enemyCount], Quaternion.identity, fightCanvas);
                 var script = enemy.GetComponent<Enemy.Enemy>();
                 script.Initialize(enemysState[enemyCount]);
 

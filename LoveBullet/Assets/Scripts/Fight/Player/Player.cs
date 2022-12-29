@@ -18,6 +18,7 @@ public class Player : SingletonMonoBehaviour<Player>
     [System.Serializable]
     public struct InGameState
     {
+        public IntReactiveProperty maxHP;
         public IntReactiveProperty hp;
         public IntReactiveProperty DF;
         public IntReactiveProperty ATWeaken;
@@ -75,7 +76,7 @@ public class Player : SingletonMonoBehaviour<Player>
     private void Awake()
     {
         SingletonCheck(this);
-
+        gameState.maxHP.Value = gameState.hp.Value;
     }
 
     // Update is called once per frame
