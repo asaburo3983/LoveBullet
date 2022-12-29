@@ -246,55 +246,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &732905017
+--- !u!1 &907518144 stripped
 GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 2030418340275872373, guid: c989f76afdd94314984b22eb10b4cbb0, type: 3}
+  m_PrefabInstance: {fileID: 3164393796596288810}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 732905019}
-  - component: {fileID: 732905018}
-  m_Layer: 0
-  m_Name: LovePointManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &732905018
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+--- !u!1 &1061204841 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6858028251252986460, guid: c989f76afdd94314984b22eb10b4cbb0, type: 3}
+  m_PrefabInstance: {fileID: 3164393796596288810}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 732905017}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d055f2628ad3bf14ab4289800655a04f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lovePointR:
-    value: 0
-  lovePointG:
-    value: 0
-  lovePointB:
-    value: 0
---- !u!4 &732905019
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+--- !u!1 &1063551626 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3164393796459592552, guid: c989f76afdd94314984b22eb10b4cbb0, type: 3}
+  m_PrefabInstance: {fileID: 3164393796596288810}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 732905017}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3034.9106, y: 764.4831, z: -131.58281}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1366599738 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3164393795946001105, guid: c989f76afdd94314984b22eb10b4cbb0, type: 3}
+  m_PrefabInstance: {fileID: 3164393796596288810}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1531445036 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4822576271809404888, guid: 1d2ae2144f3127f4084dcb2154281010, type: 3}
@@ -306,6 +277,68 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f67816340075bdc44837954a91727f2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1884845545 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3164393795426032899, guid: c989f76afdd94314984b22eb10b4cbb0, type: 3}
+  m_PrefabInstance: {fileID: 3164393796596288810}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1125305714290441143
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1125305714899715468, guid: 56e7aa71688f1014bbf5a2ed6a2479e9, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1125305714899715468, guid: 56e7aa71688f1014bbf5a2ed6a2479e9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3034.9106
+      objectReference: {fileID: 0}
+    - target: {fileID: 1125305714899715468, guid: 56e7aa71688f1014bbf5a2ed6a2479e9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 764.4831
+      objectReference: {fileID: 0}
+    - target: {fileID: 1125305714899715468, guid: 56e7aa71688f1014bbf5a2ed6a2479e9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -131.58281
+      objectReference: {fileID: 0}
+    - target: {fileID: 1125305714899715468, guid: 56e7aa71688f1014bbf5a2ed6a2479e9, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1125305714899715468, guid: 56e7aa71688f1014bbf5a2ed6a2479e9, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1125305714899715468, guid: 56e7aa71688f1014bbf5a2ed6a2479e9, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1125305714899715468, guid: 56e7aa71688f1014bbf5a2ed6a2479e9, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1125305714899715468, guid: 56e7aa71688f1014bbf5a2ed6a2479e9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1125305714899715468, guid: 56e7aa71688f1014bbf5a2ed6a2479e9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1125305714899715468, guid: 56e7aa71688f1014bbf5a2ed6a2479e9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1125305714899715470, guid: 56e7aa71688f1014bbf5a2ed6a2479e9, type: 3}
+      propertyPath: m_Name
+      value: LovePointManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 56e7aa71688f1014bbf5a2ed6a2479e9, type: 3}
 --- !u!1001 &3164393796596288810
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -411,6 +444,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c989f76afdd94314984b22eb10b4cbb0, type: 3}
+--- !u!1 &3164393796596288812 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3164393796792422801, guid: c989f76afdd94314984b22eb10b4cbb0, type: 3}
+  m_PrefabInstance: {fileID: 3164393796596288810}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4822576270815174900
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -418,6 +456,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4822576271809404888, guid: 1d2ae2144f3127f4084dcb2154281010, type: 3}
+      propertyPath: resultCanvas
+      value: 
+      objectReference: {fileID: 1884845545}
+    - target: {fileID: 4822576271809404888, guid: 1d2ae2144f3127f4084dcb2154281010, type: 3}
+      propertyPath: lovePointCanvas
+      value: 
+      objectReference: {fileID: 1063551626}
+    - target: {fileID: 4822576271809404888, guid: 1d2ae2144f3127f4084dcb2154281010, type: 3}
+      propertyPath: cardSelectCanvas
+      value: 
+      objectReference: {fileID: 1366599738}
+    - target: {fileID: 4822576271809404888, guid: 1d2ae2144f3127f4084dcb2154281010, type: 3}
+      propertyPath: canvasCardObjects.Array.data[0]
+      value: 
+      objectReference: {fileID: 3164393796596288812}
+    - target: {fileID: 4822576271809404888, guid: 1d2ae2144f3127f4084dcb2154281010, type: 3}
+      propertyPath: canvasCardObjects.Array.data[1]
+      value: 
+      objectReference: {fileID: 1061204841}
+    - target: {fileID: 4822576271809404888, guid: 1d2ae2144f3127f4084dcb2154281010, type: 3}
+      propertyPath: canvasCardObjects.Array.data[2]
+      value: 
+      objectReference: {fileID: 907518144}
     - target: {fileID: 4822576271809404894, guid: 1d2ae2144f3127f4084dcb2154281010, type: 3}
       propertyPath: m_Name
       value: ResultManager

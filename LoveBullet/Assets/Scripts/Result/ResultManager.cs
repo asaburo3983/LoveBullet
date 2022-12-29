@@ -27,6 +27,8 @@ public class ResultManager : SingletonMonoBehaviour<ResultManager>
 
     [SerializeField, Header("取得できるカード数")]
     int getCardQuantity = 1;
+    [SerializeField]
+    List<GameObject> canvasCardObjects = new List<GameObject>();
 
     [SerializeField, ReadOnly]
     int getCardValueQuantity = 3;
@@ -35,6 +37,7 @@ public class ResultManager : SingletonMonoBehaviour<ResultManager>
     [SerializeField] public ReactiveProperty<int> getLovePointMulti = new ReactiveProperty<int>();
 
     ReactiveProperty<bool> mode=new ReactiveProperty<bool>();
+    public bool Mode => mode.Value;
     
     List<Card.Card.State> getCards = new List<Card.Card.State>();
 
@@ -167,6 +170,9 @@ public class ResultManager : SingletonMonoBehaviour<ResultManager>
                     break;
                 }
             }
+
+            //とりあえずステートを入れる
+            canvasCardObjects[i].GetComponent<Card.CanvasCard>().Initialize(getCards[i]);
         }
     }
 
