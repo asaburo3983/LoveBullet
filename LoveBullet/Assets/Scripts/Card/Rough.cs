@@ -7,6 +7,7 @@ public class Rough
 {
     public static void SetText(GameObject _ui, int _value)
     {
+        if (_ui == null){ return; }
         if (_ui.TryGetComponent<TextMesh>(out TextMesh comp))
         {
             comp.text = _value.ToString();
@@ -19,6 +20,7 @@ public class Rough
     }
     public static void SetText(GameObject _ui, string _value)
     {
+        if (_ui == null){ return; }
         if (_ui.TryGetComponent<TextMesh>(out TextMesh comp))
         {
             comp.text = _value;

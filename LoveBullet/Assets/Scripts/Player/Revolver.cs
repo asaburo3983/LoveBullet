@@ -16,7 +16,7 @@ public class Revolver : MonoBehaviour
     void Update()
     {
         for(int i = 0; i < 6; i++) {
-            transform.GetChild(i).gameObject.SetActive(fight.GunInCards[i].id != 0);
+            //transform.GetChild(i).gameObject.SetActive(fight.GunInCards[i].id != 0);
         }
     }
 }

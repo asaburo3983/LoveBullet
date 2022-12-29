@@ -50,21 +50,32 @@ namespace Card
 
         #region InitFunction
 
+        private void Awake()
+        {
+            if (SingletonCheck(this,true))
+            {
+            }
+        }
         void Start()
         {
-            if (SingletonCheck(this))
-            {
                 player = Player.instance;
                 plState = player.gameState;
 
                 InitializeStartDeck();
 
                 //TODO 戦闘はじめ処理仮置き
-                StartFight();
+                //StartFight();
+        }
+        private void Update()
+        {
+            if (enemyObjects.Count == 0 && ResultManager.instance.isResult == false)
+            {
+                //TODO仮置き
+                ResultManager.instance.StartResult(15, true);
             }
         }
-
-        void StartFight()
+        //戦闘を開始する
+        public void StartFight()
         {
             StartFight_ShuffleCard();
 
@@ -363,15 +374,17 @@ namespace Card
             int enemyCount = 0;
             foreach (var enemyId in enemyGroup)
             {
-                enemyCount++;
+               
                 if (enemyId == -1) continue;
                 enemysState.Add(Enemy.Enemy.GetEnemyState(enemyId));
                 //敵生成
-                var enemy = Instantiate(enemyBase, enemyPos[enemyCount - 1], Quaternion.identity);
+                var enemy = Instantiate(enemyBase, enemyPos[enemyCount], Quaternion.identity);
                 var script = enemy.GetComponent<Enemy.Enemy>();
-                script.Initialize(enemysState[enemyId-1]);
+                script.Initialize(enemysState[enemyCount]);
 
                 enemyObjects.Add(script);
+
+                enemyCount++;
             }
 
         }

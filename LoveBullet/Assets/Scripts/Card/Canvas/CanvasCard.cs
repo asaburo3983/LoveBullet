@@ -44,7 +44,7 @@ namespace Card
         public void Push()
         {
             var result = ResultManager.instance;
-            if (result.Mode == false) {
+            if (result.Mode == true) {
                 return;
             }
             Fight.instance.deckList.Add(state);
