@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Rough
 {
@@ -10,6 +11,11 @@ public class Rough
         {
             comp.text = _value.ToString();
         }
+        //Canvas‚Ì•û‚ÌText‚É“ü‚ê‚é
+        if (_ui.TryGetComponent<Text>(out Text comp2))
+        {
+            comp2.text = _value.ToString();
+        }
     }
     public static void SetText(GameObject _ui, string _value)
     {
@@ -17,5 +23,11 @@ public class Rough
         {
             comp.text = _value;
         }
+        //Canvas‚Ì•û‚ÌText‚É“ü‚ê‚é
+        if (_ui.TryGetComponent<Text>(out Text comp2))
+        {
+            comp2.text = _value;
+        }
     }
+
 }

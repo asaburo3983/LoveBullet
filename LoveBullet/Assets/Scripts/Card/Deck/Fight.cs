@@ -14,7 +14,7 @@ namespace Card
         [Header("ÉJÅ[Éhä«óùån")]
         [SerializeField] Card.GENRE startDeckGenre;
         [SerializeField] List<int> startDecksId = new List<int>();
-        [SerializeField] List<Card.State> deckList = new List<Card.State>();
+        public List<Card.State> deckList = new List<Card.State>();
         [SerializeField] List<Card.State> deckInCards = new List<Card.State>();
 
         [SerializeField] List<Card.State> gunInCards = new List<Card.State>();

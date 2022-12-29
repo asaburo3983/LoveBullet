@@ -47,7 +47,7 @@ namespace Card
             public int SelfDamage;  // é©èù
             public List<int> value = new List<int>();
         }
-        State state;
+        protected State state;
 
         [System.Serializable]
         public struct UI
@@ -79,6 +79,7 @@ namespace Card
             Rough.SetText(ui.AP, state.AP);
             Rough.SetText(ui.AT, state.AT);
             Rough.SetText(ui.DF, state.DF);
+            
             //Rough.SetText(ui.ATWeaken, state.ATWeaken);
             //Rough.SetText(ui.DFWeaken, state.DFWeaken);
 
