@@ -9,13 +9,11 @@ public class TargetIcon : MonoBehaviour
     void Start()
     {
         fight = Card.Fight.instance;
-        Debug.LogError("ターゲット処理バグってるのでコメントアウト中");
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-        //transform.position = fight.enemyObjects[fight.TargetId].transform.position;
+        transform.position = fight.enemyObjects[fight.TargetId].transform.position;
     }
 }

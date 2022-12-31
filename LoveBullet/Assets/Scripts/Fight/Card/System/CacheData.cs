@@ -51,6 +51,7 @@ public class CacheData : SingletonMonoBehaviour<CacheData>
 
             state.ATWeaken = (int)row["ATWeaken"];
             state.DFWeaken = (int)row["DFWeaken"];
+            state.Stan = (int)row["Stan"];
             state.Whole = (int)row["Whole"] == 1;
             state.Cocking = (int)row["Cocking"];
             state.Reload = (int)row["Reload"];

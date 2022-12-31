@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 
+[System.Serializable]
+public struct ReductionRate
+{
+    [Header("0% ~ 100%"), Header("デバフ時の倍率")]
+    [Range(0, 100)] public int AT;
+    [Header("100% ~ 200%"), Range(100, 200)] public int DF;
+}
+
 public class Player : SingletonMonoBehaviour<Player>
 {
-    [System.Serializable]
-    public struct ReductionRate
-    {
-        [Header("0% ~ 100%"),Header("デバフ時の倍率")]
-        [Range(0, 100)] public int AT;
-        [Header("100% ~ 200%"), Range(100, 200)] public int DF;
-    }
     [SerializeField] ReductionRate rate;
     public ReductionRate Rate => rate;
 

@@ -34,8 +34,9 @@ namespace Enemy
             public IntReactiveProperty DF;
             public IntReactiveProperty ATWeaken;
             public IntReactiveProperty DFWeaken;
-            public int stan;
+            public IntReactiveProperty stan;
             [ReadOnly]public int currentIdx;
+            public ReductionRate Rate;
         }
         public InGameState gameState;
 
@@ -128,8 +129,17 @@ namespace Enemy
             var activeId = state.pattern[gameState.currentIdx];
             var actiovePattern = CacheData.instance.enemyActivePattern[activeId];
 
+            int atk = actiovePattern.AT;
+
+            // çUåÇÉfÉoÉtÇ™ë∂ç›Ç∑ÇÈèÍçáÅAílÇÃï‚ê≥ÇçsÇ§
+            if (gameState.ATWeaken.Value > 0) {
+                atk *= gameState.Rate.AT;
+                atk /= 100;
+            }
+
+
             //TODO Ç∆ÇËÇ†Ç¶Ç∏çUåÇÇ∆ñhå‰èàóùÇæÇØçÏê¨
-            Player.ReceiveDamage(actiovePattern.AT);//çUåÇ
+            Player.ReceiveDamage(atk);//çUåÇ
             gameState.DF.Value += actiovePattern.DF;//ñhå‰
 
             // çsìÆèáÇàÍÇ¬Ç∏ÇÁÇ∑
@@ -144,21 +154,30 @@ namespace Enemy
         public void ReceiveDamage(int _damage)
         {
 
+            // ñhå‰ÉfÉoÉtåvéZ  äÑçáëùâ¡
+            int dmg = (_damage);
+            if (gameState.DFWeaken.Value > 0) {
+                dmg *= gameState.Rate.DF;
+                dmg /= 100;
+            }
+
             // ñhå‰ÉoÉtåvéZ
-            if(_damage< gameState.DF.Value) {
-                gameState.DF.Value -= _damage;
+            if (dmg < gameState.DF.Value) {
+                gameState.DF.Value -= dmg;
                 return;
             }
             else {
                 _damage -= gameState.DF.Value;
                 gameState.DF.Value = 0;
             }
-            gameState.hp.Value -= (_damage - gameState.DF.Value);
+
+
+            gameState.hp.Value -= dmg - gameState.DF.Value;
         }
 
         public void ReceiveStan(int _stan)
         {
-            gameState.stan += _stan;
+            gameState.stan.Value += _stan;
         }
 
         public void ReceiveATWeaken(int _weak)
@@ -173,12 +192,15 @@ namespace Enemy
 
         public void ProgressTurn(int _progressTurn)
         {
-            if (gameState.stan > 0) {
-                gameState.stan--;
+            if (gameState.stan.Value > 0) {
+                gameState.stan.Value--;
             }
             else {
                 gameState.turn.Value -= _progressTurn;
             }
+
+            gameState.ATWeaken.Value = Mathf.Clamp(gameState.ATWeaken.Value - 1, 0, 9999);
+            gameState.DFWeaken.Value = Mathf.Clamp(gameState.DFWeaken.Value - 1, 0, 9999);
         }
 
         public void ResetDF()
