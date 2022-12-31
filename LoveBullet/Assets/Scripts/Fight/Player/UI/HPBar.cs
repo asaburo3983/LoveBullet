@@ -9,7 +9,7 @@ namespace FightPlayer
     public class HPBar : MonoBehaviour
     {
         [SerializeField] RectTransform greenBar;
-        [SerializeField] Text hpText;
+
         float origineSizeX;
         float sizeX;
         Player player;
@@ -23,7 +23,6 @@ namespace FightPlayer
             greenBar.sizeDelta = new Vector2(sizeX, greenBar.sizeDelta.y);
             player.gameState.hp.Subscribe(x =>
             {
-                hpText.text = x.ToString() + "/" + player.gameState.maxHP.Value.ToString();
                 sizeX = origineSizeX * ((float)x / (float)player.gameState.maxHP.Value);
                 greenBar.sizeDelta = new Vector2(sizeX, greenBar.sizeDelta.y);
             }).AddTo(this);
