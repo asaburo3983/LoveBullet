@@ -314,6 +314,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8989461005316617763}
   - component: {fileID: 8989461005316617760}
+  - component: {fileID: 2229542144534243141}
   m_Layer: 0
   m_Name: HPBar
   m_TagString: Untagged
@@ -352,4 +353,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   greenBar: {fileID: 8989461003672040494}
+--- !u!114 &2229542144534243141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8989461005316617762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5287ef9bf8d454544a2099d64b934d1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   hpText: {fileID: 8989461003464166035}
