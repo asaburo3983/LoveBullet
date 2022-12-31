@@ -164,7 +164,7 @@ namespace Enemy
             int dmg = (_damage);
             if (gameState.DFWeaken.Value > 0) {
                 dmg *= gameState.Rate.DF;
-                dmg /= 100;
+                dmg = (int)((float)dmg/100.0f);
             }
 
             // ñhå‰ÉoÉtåvéZ
@@ -173,27 +173,27 @@ namespace Enemy
                 return;
             }
             else {
-                _damage -= gameState.DF.Value;
+                dmg -= gameState.DF.Value;
                 gameState.DF.Value = 0;
             }
 
 
-            gameState.hp.Value -= dmg - gameState.DF.Value;
+            gameState.hp.Value -= dmg;
         }
 
         public void ReceiveStan(int _stan)
         {
-            gameState.stan.Value += _stan;
+            gameState.stan.Value += _stan+1;
         }
 
         public void ReceiveATWeaken(int _weak)
         {
-            gameState.ATWeaken.Value += _weak;
+            gameState.ATWeaken.Value += _weak+1;
         }
 
         public void ReceiveDFWeaken(int _weak)
         {
-            gameState.DFWeaken.Value += _weak;
+            gameState.DFWeaken.Value += _weak+1;
         }
 
         public void ProgressTurn(int _progressTurn)
