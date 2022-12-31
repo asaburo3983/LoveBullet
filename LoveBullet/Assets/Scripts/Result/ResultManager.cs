@@ -7,8 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class ResultManager : SingletonMonoBehaviour<ResultManager>
 {
-    [SerializeField, Header("デバッグ用")]
-    ReactiveProperty<bool> startResult_Debug = new ReactiveProperty<bool>();
+    [SerializeField, Header("デバッグ用_カード種類選別用")]
+    List<int> getCardList_debug = new List<int>();
 
     public ReactiveProperty<bool> result = new ReactiveProperty<bool>();
     public bool isResult => result.Value;
@@ -103,6 +103,7 @@ public class ResultManager : SingletonMonoBehaviour<ResultManager>
         mode.Value = false;
 
         //取得できるカードを追加
+
         SetCards();
 
         //取得LovePointを設定する
@@ -143,6 +144,20 @@ public class ResultManager : SingletonMonoBehaviour<ResultManager>
     /// </summary>
     void SetCards()
     {
+        //デバッグ用カード選別処理
+        if (getCardList_debug.Count > 0)
+        {
+            for (int i = 0; i < getCardValueQuantity; i++)
+            {
+                var rand = Random.RandomRange(0, getCardList_debug.Count);
+                var num = getCardList_debug[rand];
+                getCards.Add(CacheData.instance.cardStates[num]);
+                canvasCardObjects[i].GetComponent<Card.CanvasCard>().Initialize(getCards[i]);
+            }
+            Debug.Log("デバッグ用のカード選別処理が入っているため、正規のカード取得処理ではありません");
+            return;
+        }
+        //デバッグなし
         for (int i = 0; i < getCardValueQuantity; i++)
         {
             int cardRank = 0;

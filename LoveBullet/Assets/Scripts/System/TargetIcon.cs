@@ -14,6 +14,7 @@ public class TargetIcon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = fight.enemyObjects[fight.TargetId].transform.position;
+        if(fight.TargetId>=0&& fight.enemyObjects.Count>0)
+         transform.position = fight.enemyObjects[fight.TargetId].transform.position;
     }
 }
