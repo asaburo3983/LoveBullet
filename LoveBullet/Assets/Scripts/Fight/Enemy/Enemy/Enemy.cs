@@ -120,6 +120,16 @@ namespace Enemy
            return CacheData.instance.enemyStates[_id];
         }
 
+        private void Update()
+        {
+            if (gameState.turn.Value <= 0) {
+                // 行動までのターン設定
+                var act = CacheData.instance.enemyActivePattern[gameState.currentIdx];
+                gameState.turn.Value = act.Turn + Random.Range(0, act.Fluctuation);
+            }
+
+        }
+
         /// <summary>
         /// 敵が行動する
         /// </summary>
@@ -145,10 +155,6 @@ namespace Enemy
             // 行動順を一つずらす
             gameState.currentIdx++;
             gameState.currentIdx %= state.pattern.Count;
-
-            // 行動までのターン設定
-            var act = CacheData.instance.enemyActivePattern[gameState.currentIdx];
-            gameState.turn.Value = act.Turn + Random.Range(0,act.Fluctuation);
 
         }
         public void ReceiveDamage(int _damage)

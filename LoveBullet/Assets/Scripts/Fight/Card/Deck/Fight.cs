@@ -19,9 +19,19 @@ namespace Card
         public List<Card.State> deckList = new List<Card.State>();
         [SerializeField] List<Card.State> deckInCards = new List<Card.State>();
 
-        [SerializeField] List<Card.State> gunInCards = new List<Card.State>();
-        public List<Card.State> GunInCards {get{ return gunInCards; } }
-       [SerializeField] List<Card.State> trashInCards = new List<Card.State>();
+        ReactiveCollection<Card.State> gunInCards = new ReactiveCollection<Card.State>();
+        public List<Card.State> GunInCards { get { return gunInCards.ToList(); } }
+        public ReactiveCollection<Card.State> gunInCardsReactive => gunInCards;
+
+        // デバッグ用の銃内のカード表示処理
+#if UNITY_EDITOR
+        [SerializeField]List<Card.State> GunInCard;
+        private void FixedUpdate()
+        {
+            GunInCard = gunInCards.ToList();
+        }
+#endif
+        [SerializeField] List<Card.State> trashInCards = new List<Card.State>();
 
         Player player;
         Player.InGameState plState;
@@ -160,10 +170,9 @@ namespace Card
             else {
                 //捨て札にカードを入れてリボルバーから抜く
                 if (_card.id != 0) trashInCards.Add(_card);//からの弾丸の場合捨て札に置かない
-                gunInCards.RemoveAt(0);
 
-                //５番に空の弾を入れる必要がある
-                gunInCards.Add(Search.GetCard(0));
+                gunInCards[0] = Search.GetCard(0);
+                gunInCards.Move(0, 5);
             }
 
             // エネミーのターン経過処理
@@ -302,31 +311,12 @@ namespace Card
             ProgressTurn(reloadCost);
         }
 
-
-        /// <summary>
-        /// 敵に攻撃を与える処理
-        /// </summary>
-        /// <param name="target"></param>
-        /// <param name="allTarget"></param>
-        public void Shot(int target = 0, bool allTarget = false)
-        {
-            //捨て札にカードを入れてリボルバーから抜く
-            if (gunInCards[0].id != 0) trashInCards.Add(gunInCards[0]);//からの弾丸の場合捨て札に置かない
-            gunInCards.RemoveAt(0);
-
-            //５番に空の弾を入れる必要がある
-            gunInCards.Add(Search.GetCard(0));
-        }
-
         /// <summary>
         /// コッキングしてリボルバー内の弾丸を１つずらす
         /// </summary>
         public void Cocking()
         {
-            var zeroCard = gunInCards[0];
-            gunInCards.RemoveAt(0);
-            gunInCards.Add(zeroCard);
-
+            gunInCards.Move(0, 5);
             ProgressTurn(cockingCost);
         }
         /// <summary>
