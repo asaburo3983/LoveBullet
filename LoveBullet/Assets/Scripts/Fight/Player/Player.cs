@@ -66,8 +66,11 @@ public class Player : SingletonMonoBehaviour<Player>
     public static void ReceiveDamage(int _damage)
     {
         var state = instance.gameState;
-        state.hp.Value -= (_damage - state.DF.Value);
-
+        var dmg = _damage - state.DF.Value;
+        if (dmg > 0) {
+            state.hp.Value -= dmg;
+        }
+        state.DF.Value -= _damage;
         if (state.hp.Value <= 0)
         {
             //Ž€–Sˆ— TODO

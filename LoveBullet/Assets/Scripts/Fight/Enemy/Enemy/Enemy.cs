@@ -183,17 +183,17 @@ namespace Enemy
 
         public void ReceiveStan(int _stan)
         {
-            gameState.stan.Value += _stan+1;
+            gameState.stan.Value += _stan;
         }
 
         public void ReceiveATWeaken(int _weak)
         {
-            gameState.ATWeaken.Value += _weak+1;
+            gameState.ATWeaken.Value += _weak;
         }
 
         public void ReceiveDFWeaken(int _weak)
         {
-            gameState.DFWeaken.Value += _weak+1;
+            gameState.DFWeaken.Value += _weak;
         }
 
         public void ProgressTurn(int _progressTurn)
