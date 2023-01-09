@@ -240,6 +240,8 @@ MonoBehaviour:
     Rate:
       AT: 50
       DF: 150
+  damageTime: 0.1
+  damageMove: 50
   image: {fileID: 1952692010616180876}
 --- !u!114 &798661159435654707
 MonoBehaviour:

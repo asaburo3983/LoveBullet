@@ -38,7 +38,9 @@ public class BulletUI : MonoBehaviour
                 cards[0].transform.parent.DOMove(firstPos[5], 0.1f).OnComplete(() => {
                     (cards[0], cards[1], cards[2], cards[3], cards[4], cards[5]) =
                     (cards[1], cards[2], cards[3], cards[4], cards[5], cards[0]);
+                    Card.Fight.instance.CockingFlg = false;
                 });
+
             });
 
             // ‚»‚Ì‘¼‚ÌƒJ[ƒh‚ğˆê‚Â‚¸‚ç‚·

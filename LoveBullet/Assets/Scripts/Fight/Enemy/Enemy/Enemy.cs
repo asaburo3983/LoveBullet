@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 using UnityEngine.UI;
+using DG.Tweening;
 
 namespace Enemy
 {
@@ -40,6 +41,10 @@ namespace Enemy
         }
         public InGameState gameState;
 
+
+        [SerializeField] float damageTime;
+        [SerializeField] float damageMove;
+        Tween damageTw;
 
         [SerializeField] Image image;
 
@@ -81,7 +86,10 @@ namespace Enemy
 
             // 初期ターン数設定
             gameState.turn.Value = CacheData.instance.enemyActivePattern[state.pattern[gameState.currentIdx]].Turn;
+
         }
+
+
         //TODo 仮でテクスチャを設定する
         void SetTexture()
         {
@@ -146,7 +154,7 @@ namespace Enemy
                 atk *= gameState.Rate.AT;
                 atk /= 100;
             }
-
+            
 
             //TODO とりあえず攻撃と防御処理だけ作成
             Player.ReceiveDamage(atk);//攻撃
@@ -155,10 +163,12 @@ namespace Enemy
             // 行動順を一つずらす
             gameState.currentIdx++;
             gameState.currentIdx %= state.pattern.Count;
-
         }
+
         public void ReceiveDamage(int _damage)
         {
+            if (_damage <= 0) return;
+
 
             // 防御デバフ計算  割合増加
             int dmg = (_damage);
@@ -179,6 +189,8 @@ namespace Enemy
 
 
             gameState.hp.Value -= dmg;
+
+            DamageAnimation();
         }
 
         public void ReceiveStan(int _stan)
@@ -196,7 +208,7 @@ namespace Enemy
             gameState.DFWeaken.Value += _weak;
         }
 
-        public void ProgressTurn(int _progressTurn)
+        public bool ProgressTurn(int _progressTurn)
         {
             if (gameState.stan.Value > 0) {
                 gameState.stan.Value--;
@@ -207,6 +219,9 @@ namespace Enemy
 
             gameState.ATWeaken.Value = Mathf.Clamp(gameState.ATWeaken.Value - 1, 0, 9999);
             gameState.DFWeaken.Value = Mathf.Clamp(gameState.DFWeaken.Value - 1, 0, 9999);
+
+            // Enemyが行動する場合,trueを返す
+            return gameState.turn.Value <= 0;
         }
 
         public void ResetDF()
@@ -222,6 +237,27 @@ namespace Enemy
         private void OnDestroy()
         {
             Card.Fight.instance.enemyObjects.Remove(this);
+            if (damageTw != null) damageTw.Kill();
+        }
+
+
+        public void AttackAnimation()
+        {
+            if (damageTw != null) {
+                damageTw.OnComplete(() => transform.DOLocalMoveX(1000.0f, 1).SetLoops(2, LoopType.Yoyo).OnComplete(() => Card.Fight.instance.actEnemy.Remove(this)));
+            }
+            else {
+                transform.DOLocalMoveX(1000.0f, 1).SetLoops(2, LoopType.Yoyo).OnComplete(() => Card.Fight.instance.actEnemy.Remove(this));
+            }
+         
+        }
+
+        public void DamageAnimation()
+        {
+            // 被ダメージのアニメーション
+            if (damageTw != null) damageTw.Kill(true);
+            damageTw = transform.DOLocalMoveX(transform.localPosition.x + damageMove, damageTime)
+                .SetLoops(2, LoopType.Yoyo).OnComplete(() => damageTw = null);
         }
     }
 }
