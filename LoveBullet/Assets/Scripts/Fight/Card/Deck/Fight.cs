@@ -44,6 +44,10 @@ namespace Card
         [SerializeField,ReadOnly] int floor;
         [SerializeField] int reloadCost = 1;
         [SerializeField] int cockingCost = 1;
+        [SerializeField, ReadOnly] bool playerTurn = true;
+        public bool PlayerTurn => playerTurn;
+        bool cocking = false;
+        public bool CockingFlg { get { return cocking; } set { cocking = value; } }
 
         [Header("敵処理系")]
         public GameObject enemyBase;
@@ -52,6 +56,8 @@ namespace Card
         public List<Enemy.Enemy> enemyObjects = new List<Enemy.Enemy>();
         [SerializeField,ReadOnly]int targetId = 0;
         public int TargetId => targetId;
+
+        public ReactiveCollection<Enemy.Enemy> actEnemy = new ReactiveCollection<Enemy.Enemy>();
 
         // TweenAnimation
         Tween fireTw = null;
@@ -70,13 +76,25 @@ namespace Card
         }
         void Start()
         {
-                player = Player.instance;
-                plState = player.gameState;
+            player = Player.instance;
+            plState = player.gameState;
+            playerTurn = true;
 
-                InitializeStartDeck();
+            InitializeStartDeck();
 
-                //TODO 戦闘はじめ処理仮置き
-                //StartFight();
+            //TODO 戦闘はじめ処理仮置き
+            //StartFight();
+
+            // 行動する敵を順番にアニメーションし、全てが終わると行動できるようにする
+            actEnemy.ObserveRemove().Subscribe(x => {
+                if (actEnemy.Count == 0) {
+                    playerTurn = true;
+                    return;
+                }
+                //敵の行動処理
+                actEnemy[0].AttackAnimation();
+            }).AddTo(this);
+
         }
         private void Update()
         {
@@ -125,6 +143,12 @@ namespace Card
         /// <param name="_enemy"></param>
         public void Fire(Enemy.Enemy _enemy)
         {
+            // ターン処理が実行可能かチェック
+            if (!playerTurn) return;
+
+            // コッキング中は再度処理しない
+            if (cocking) return;
+
             var _card = gunInCards[0];
             int _damage = _card.AT;
 
@@ -173,6 +197,7 @@ namespace Card
 
                 gunInCards[0] = Search.GetCard(0);
                 gunInCards.Move(0, 5);
+                cocking = true;
             }
 
             // エネミーのターン経過処理
@@ -190,9 +215,16 @@ namespace Card
         /// <param name="_progressTurn">経過するターン</param>
         public void ProgressTurn(int _progressTurn)
         {
+            bool _flg = true;
             foreach(var _enemy in enemyObjects) {
-                _enemy.ProgressTurn(_progressTurn);
+                if (_enemy.ProgressTurn(_progressTurn)) {
+                    _flg = playerTurn = false;
+                    actEnemy.Add(_enemy);
+                }
             }
+
+            // 敵を行動させる
+            if (!_flg) actEnemy[0].AttackAnimation();
         }
 
         /// <summary>
@@ -316,8 +348,15 @@ namespace Card
         /// </summary>
         public void Cocking()
         {
+            // ターン処理が実行可能かチェック
+            if (!playerTurn) return;
+
+            // コッキング中は再度処理しない
+            if (cocking) return;
+
             gunInCards.Move(0, 5);
             ProgressTurn(cockingCost);
+            cocking = true;
         }
         /// <summary>
         /// 捨て札にあるスキルを再度山に戻す
