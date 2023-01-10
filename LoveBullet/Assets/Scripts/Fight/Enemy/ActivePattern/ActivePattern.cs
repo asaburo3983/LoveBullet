@@ -7,6 +7,7 @@ namespace Enemy
     [System.Serializable]
     public class ActivePattern
     {
+        public string name;
         public string explanation;
         public int AT;
         public int DF;

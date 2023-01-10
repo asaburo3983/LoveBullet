@@ -62,7 +62,7 @@ public class BufferIconUI : MonoBehaviour
                 }).AddTo(this);
                 break;
             case BufferType.Armor:
-                enemy.gameState.DF.Subscribe(x => {
+                enemy.gameState.DFBuff.Subscribe(x => {
                     transform.GetChild(0).gameObject.SetActive(x > 0);
                     text.text = x.ToString();
                 }).AddTo(this);

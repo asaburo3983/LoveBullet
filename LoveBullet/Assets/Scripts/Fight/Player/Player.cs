@@ -70,7 +70,7 @@ public class Player : SingletonMonoBehaviour<Player>
         if (dmg > 0) {
             state.hp.Value -= dmg;
         }
-        state.DF.Value -= _damage;
+        state.DF.Value = Mathf.Clamp(state.DF.Value - _damage, 0, 9999);
         if (state.hp.Value <= 0)
         {
             //Ž€–Sˆ— TODO
