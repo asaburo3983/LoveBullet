@@ -116,7 +116,7 @@ public class CacheData : SingletonMonoBehaviour<CacheData>
         {
             Enemy.ActivePattern state = new Enemy.ActivePattern();
 
-
+            state.name = (string)row["Name"];
             state.explanation = (string)row["Explanation"];
             state.AT = (int)row["AT"];
             state.DF = (int)row["DF"];

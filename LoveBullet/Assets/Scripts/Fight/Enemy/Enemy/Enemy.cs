@@ -9,6 +9,7 @@ namespace Enemy
 {
     public class Enemy : MonoBehaviour
     { 
+        [System.Serializable]
         public class State
         {
             public int number;
@@ -24,7 +25,8 @@ namespace Enemy
             public List<int> pattern = new List<int>();
             public List<int> value = new List<int>();
         }
-        State state;
+        [SerializeField]State state;
+        public State enemyState => state;
 
         [System.Serializable]
         public struct InGameState
@@ -32,7 +34,8 @@ namespace Enemy
             public IntReactiveProperty maxHP;
             public IntReactiveProperty turn;
             public IntReactiveProperty hp;
-            public IntReactiveProperty DF;
+            public IntReactiveProperty ATBuff;
+            public IntReactiveProperty DFBuff;
             public IntReactiveProperty ATWeaken;
             public IntReactiveProperty DFWeaken;
             public IntReactiveProperty stan;
@@ -42,11 +45,23 @@ namespace Enemy
         public InGameState gameState;
 
 
-        [SerializeField] float damageTime;
-        [SerializeField] float damageMove;
-        Tween damageTw;
+        [System.Serializable]
+        class TwState
+        {
+            public float damageTime;
+            public float damageShake;
+            public float damageDelay;
+            public Tween damageTw;
 
-        [SerializeField] Image image;
+            public float atkTextTime;
+            public float atkTime;
+            public float atkMove;
+        }
+        [SerializeField] TwState tw;
+
+        [SerializeField] Image body;
+        [SerializeField] Text actText;
+        [SerializeField] FightEnemy.CountDown countDown;
 
         private void Start()
         {
@@ -73,7 +88,14 @@ namespace Enemy
                     fight.SetTarget(fight.TargetId - 1);
                 }
 
-                Destroy(gameObject);
+                fight.enemyObjects.Remove(this);
+                
+
+                transform.Find("UI").gameObject.SetActive(false);
+
+                body.DOColor(new Color(1, 1, 1, 0), 1.0f).OnComplete(() => {
+                    DOVirtual.DelayedCall(3.0f, () => Destroy(gameObject));
+                });
             }).AddTo(this);
 
             // エネミー行動処理
@@ -95,7 +117,7 @@ namespace Enemy
         {
             //リソースのから仮テクスチャを読み込んで入れる
             var path= "Texture/Fight/Enemy/Enemy"+ state.number.ToString();
-            image.sprite = Resources.Load<Sprite>(path);
+            body.sprite = Resources.Load<Sprite>(path);
 
             //GetComponent<BoxCollider2D>().size = image.bounds.size;
 
@@ -111,7 +133,7 @@ namespace Enemy
             gameState.turn.Value = 0;
             gameState.maxHP.Value = state.hpMax;
             gameState.hp.Value = state.hpMax;
-            gameState.DF.Value = 0;
+            gameState.DFBuff.Value = 0;
             gameState.ATWeaken.Value = 0;
             gameState.DFWeaken.Value = 0;
 
@@ -132,7 +154,7 @@ namespace Enemy
         {
             if (gameState.turn.Value <= 0) {
                 // 行動までのターン設定
-                var act = CacheData.instance.enemyActivePattern[gameState.currentIdx];
+                var act = CacheData.instance.enemyActivePattern[state.pattern[gameState.currentIdx]];
                 gameState.turn.Value = act.Turn + Random.Range(0, act.Fluctuation);
             }
 
@@ -158,7 +180,7 @@ namespace Enemy
 
             //TODO とりあえず攻撃と防御処理だけ作成
             Player.ReceiveDamage(atk);//攻撃
-            gameState.DF.Value += actiovePattern.DF;//防御
+            gameState.DFBuff.Value += actiovePattern.DF;//防御
 
             // 行動順を一つずらす
             gameState.currentIdx++;
@@ -178,13 +200,13 @@ namespace Enemy
             }
 
             // 防御バフ計算
-            if (dmg < gameState.DF.Value) {
-                gameState.DF.Value -= dmg;
+            if (dmg < gameState.DFBuff.Value) {
+                gameState.DFBuff.Value -= dmg;
                 return;
             }
             else {
-                dmg -= gameState.DF.Value;
-                gameState.DF.Value = 0;
+                dmg -= gameState.DFBuff.Value;
+                gameState.DFBuff.Value = 0;
             }
 
 
@@ -226,7 +248,7 @@ namespace Enemy
 
         public void ResetDF()
         {
-            gameState.DF.Value = 0;
+            gameState.DFBuff.Value = 0;
         }
 
         public void SetTarget()
@@ -236,28 +258,57 @@ namespace Enemy
 
         private void OnDestroy()
         {
-            Card.Fight.instance.enemyObjects.Remove(this);
-            if (damageTw != null) damageTw.Kill();
+            if (tw.damageTw != null) tw.damageTw.Kill();
         }
 
 
         public void AttackAnimation()
         {
-            if (damageTw != null) {
-                damageTw.OnComplete(() => transform.DOLocalMoveX(1000.0f, 1).SetLoops(2, LoopType.Yoyo).OnComplete(() => Card.Fight.instance.actEnemy.Remove(this)));
+            if (tw.damageTw != null) {
+                tw.damageTw.OnComplete(() => {
+                    AtkAnim();
+                });
             }
             else {
-                transform.DOLocalMoveX(1000.0f, 1).SetLoops(2, LoopType.Yoyo).OnComplete(() => Card.Fight.instance.actEnemy.Remove(this));
+                AtkAnim();
             }
-         
+
         }
+
+        void AtkAnim()
+        {
+            float _delay = 0;
+            if (tw.damageTw != null) {
+                _delay = tw.damageDelay;
+            }
+
+            DOVirtual.DelayedCall(_delay, () => {
+
+                actText.gameObject.SetActive(true);
+                actText.text = CacheData.instance.enemyActivePattern[state.pattern[(gameState.currentIdx + state.pattern.Count - 1) % state.pattern.Count]].name;
+
+                DOVirtual.DelayedCall(tw.atkTextTime, () => {
+                    actText.gameObject.SetActive(false);
+                    transform.DOLocalMoveX(transform.localPosition.x - tw.atkMove, tw.atkTime).SetLoops(2, LoopType.Yoyo).OnComplete(() => {
+                        Card.Fight.instance.actEnemy.Remove(this);
+                        countDown.Change();
+                        
+                    });
+
+                });
+            });
+        }
+
+
 
         public void DamageAnimation()
         {
             // 被ダメージのアニメーション
-            if (damageTw != null) damageTw.Kill(true);
-            damageTw = transform.DOLocalMoveX(transform.localPosition.x + damageMove, damageTime)
-                .SetLoops(2, LoopType.Yoyo).OnComplete(() => damageTw = null);
+            if (tw.damageTw != null) tw.damageTw.Kill(true);
+
+            tw.damageTw = transform.DOShakePosition(tw.damageTime, tw.damageShake, 30, 1, false, true)
+                .SetLoops(2, LoopType.Yoyo).OnComplete(() => tw.damageTw = null);
+            body.DOColor(Color.red, tw.damageTime / 6f).SetLoops(6, LoopType.Yoyo);
         }
     }
 }
