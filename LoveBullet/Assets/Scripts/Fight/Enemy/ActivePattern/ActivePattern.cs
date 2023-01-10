@@ -13,6 +13,7 @@ namespace Enemy
         public int ATWeaken;
         public int DFWeaken;
         public int Turn;
+        public int Type;
         public int Fluctuation;
         public List<int> value=new List<int>();
     }
