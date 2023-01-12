@@ -417,6 +417,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FightManager
       objectReference: {fileID: 0}
+    - target: {fileID: 2699790138646095243, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
+      propertyPath: zPos
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4136505638310519120, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
       propertyPath: m_Name
       value: SystemManager
@@ -463,6 +467,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4136505638310519121, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4822576269960588504, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4822576269960588510, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
@@ -525,6 +533,10 @@ PrefabInstance:
       propertyPath: getCardList_debug.Array.data[13]
       value: 40
       objectReference: {fileID: 0}
+    - target: {fileID: 4850137871870446590, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7787435121010778820, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
       propertyPath: m_SizeDelta.x
       value: 400
@@ -545,6 +557,18 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8406525351778672332, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
+      propertyPath: m_Name
+      value: FightLay1UICanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 8784980375343721632, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8784980375567619356, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
+      propertyPath: zPos
+      value: -260
+      objectReference: {fileID: 0}
     - target: {fileID: 8784980375567619359, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
       propertyPath: m_SizeDelta.x
       value: 250
@@ -552,6 +576,14 @@ PrefabInstance:
     - target: {fileID: 8784980375567619359, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
       propertyPath: m_SizeDelta.y
       value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 8784980375567619359, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -258
+      objectReference: {fileID: 0}
+    - target: {fileID: 8784980375567619359, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -286.7
       objectReference: {fileID: 0}
     - target: {fileID: 8784980375572502177, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
       propertyPath: gameState.ATWeaken.value
