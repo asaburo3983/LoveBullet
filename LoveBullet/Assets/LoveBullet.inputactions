@@ -799,6 +799,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Player_Love",
+            "id": "ea24fd5b-cdfc-4aee-92c8-67fd49f5b7ba",
+            "actions": [
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "34c472a0-1b56-40c1-ba4d-8f26a9a850fc",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "033ea0c8-d65e-4506-bd78-60c3efd3b2a2",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [
