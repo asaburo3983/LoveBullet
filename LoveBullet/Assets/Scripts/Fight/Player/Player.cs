@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
+using UnityEngine.UI;
 using UniRx;
 
 [System.Serializable]
@@ -79,7 +81,14 @@ public class Player : SingletonMonoBehaviour<Player>
             state.hp.Value -= dmg;
         }
         state.DF.Value = Mathf.Clamp(state.DF.Value - _damage, 0, 9999);
-        
+    }
+
+    // 被ダメアニメーション
+    public void ReceiveAnim()
+    {
+        Sequence seq = DOTween.Sequence()
+            .Append(transform.DOLocalMoveX(transform.localPosition.x - 50, 0.1f).SetLoops(2, LoopType.Yoyo))
+            .Join(transform.GetChild(0).GetComponent<Image>().DOColor(new Color(1, 0, 0, 1), 0.1f).SetLoops(2, LoopType.Yoyo));
     }
 
     private void Start()
