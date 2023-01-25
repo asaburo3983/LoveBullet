@@ -15,6 +15,8 @@ namespace Love
 
         public Tween moveTW;
 
+        public ReactiveProperty<bool> isUISenpaiActive;
+        public ReactiveProperty<bool> isUIObjActive;
 
         private void Awake()
         {

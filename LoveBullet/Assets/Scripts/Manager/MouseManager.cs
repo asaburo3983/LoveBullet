@@ -38,8 +38,6 @@ public class MouseManager : SingletonMonoBehaviour<MouseManager>
             {
                 RightPushPos.Value = mouse.position.ReadValue();
             }
-
-
         }
     }
 }
