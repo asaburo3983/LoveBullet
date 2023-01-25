@@ -1,1 +1,0 @@
-Number,Name,EnumName,Explanationint,string,string,string0,なし,None,なし1,全体攻撃,All,敵全体に攻撃する2,ランダム,Random,ランダムな的に攻撃する3,N回攻撃,MultiAttack,指定回数攻撃する7,自傷,SelfHarm,自身のHPを削る8,リロード,Reload,リロードを行う9,コッキング,Cocking,コッキングを行う

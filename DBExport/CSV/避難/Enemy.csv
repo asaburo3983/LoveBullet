@@ -1,5 +1,1 @@
-Genre,Type,Strengeth,Name,Explanation,HP,HPFluctuationPlus,HPFluctuationMinus,ATFluctuationPlus,ATFluctuationMinus,Pattern1,Pattern2,Pattern3,Pattern4
-int,int,int,string,string,int,int,int,int,int,int,int,int,int
-0,2,1,ザコ1,テスト用のザコ1だ,5,2,1,5,5,1,0,1,0
-0,2,3,ザコ2,テスト用のザコ2だ,5,2,1,7,7,1,0,1,0
-0,2,5,ザコ3,テスト用のザコ3だ,5,2,1,10,10,1,0,1,0
+Number,Name,EnumName,Explanationint,string,string,string0,なし,None,なし1,全体攻撃,All,敵全体に攻撃する2,ランダム,Random,ランダムな的に攻撃する3,N回攻撃,MultiAttack,指定回数攻撃する7,自傷,SelfHarm,自身のHPを削る8,リロード,Reload,リロードを行う9,コッキング,Cocking,コッキングを行う
