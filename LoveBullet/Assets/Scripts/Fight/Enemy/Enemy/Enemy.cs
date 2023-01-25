@@ -103,7 +103,7 @@ namespace Enemy
                 .Where(x => x.Previous > 0)
                 .Where(x => x.Current <= 0)
                 .Subscribe(x => {
-                    Action();
+                    //Action();
                 }).AddTo(this);
 
             // 初期ターン数設定
@@ -150,16 +150,6 @@ namespace Enemy
            return CacheData.instance.enemyStates[_id];
         }
 
-        private void Update()
-        {
-            if (gameState.turn.Value <= 0) {
-                // 行動までのターン設定
-                var act = CacheData.instance.enemyActivePattern[state.pattern[gameState.currentIdx]];
-                gameState.turn.Value = act.Turn + Random.Range(0, act.Fluctuation);
-            }
-
-        }
-
         /// <summary>
         /// 敵が行動する
         /// </summary>
@@ -177,14 +167,17 @@ namespace Enemy
                 atk /= 100;
             }
             
-
             //TODO とりあえず攻撃と防御処理だけ作成
             Player.ReceiveDamage(atk);//攻撃
-            gameState.DFBuff.Value += actiovePattern.DF;//防御
+            gameState.DFBuff.Value = actiovePattern.DF;//防御
 
             // 行動順を一つずらす
             gameState.currentIdx++;
             gameState.currentIdx %= state.pattern.Count;
+
+            // 行動までのターン設定
+            var act = CacheData.instance.enemyActivePattern[state.pattern[gameState.currentIdx]];
+            gameState.turn.Value = act.Turn + Random.Range(0, act.Fluctuation);
         }
 
         public void ReceiveDamage(int _damage)
@@ -236,7 +229,7 @@ namespace Enemy
                 gameState.stan.Value--;
             }
             else {
-                gameState.turn.Value -= _progressTurn;
+                gameState.turn.Value = Mathf.Clamp(gameState.turn.Value - _progressTurn, 0, 9999);
             }
 
             gameState.ATWeaken.Value = Mathf.Clamp(gameState.ATWeaken.Value - 1, 0, 9999);
@@ -282,21 +275,19 @@ namespace Enemy
                 _delay = tw.damageDelay;
             }
 
-            DOVirtual.DelayedCall(_delay, () => {
-
-                actText.gameObject.SetActive(true);
-                actText.text = CacheData.instance.enemyActivePattern[state.pattern[(gameState.currentIdx + state.pattern.Count - 1) % state.pattern.Count]].name;
-
-                DOVirtual.DelayedCall(tw.atkTextTime, () => {
+            // TweenAnimationの作成
+            Sequence sequence = DOTween.Sequence()
+                .Append(DOVirtual.DelayedCall(_delay, () => {
+                    actText.text = CacheData.instance.enemyActivePattern[state.pattern[gameState.currentIdx]].name;
+                    actText.gameObject.SetActive(true);                   
+                }))
+                .Append(transform.DOLocalMoveX(transform.localPosition.x - tw.atkMove, tw.atkTime).SetDelay(tw.atkTextTime).SetLoops(2, LoopType.Yoyo))
+                .AppendCallback(() => { Player.instance.ReceiveAnim(); Action(); })
+                .OnComplete(() => {
                     actText.gameObject.SetActive(false);
-                    transform.DOLocalMoveX(transform.localPosition.x - tw.atkMove, tw.atkTime).SetLoops(2, LoopType.Yoyo).OnComplete(() => {
-                        Card.Fight.instance.actEnemy.Remove(this);
-                        countDown.Change();
-                        
-                    });
-
+                    Card.Fight.instance.actEnemy.Remove(this);
+                    countDown.Change();
                 });
-            });
         }
 
 
