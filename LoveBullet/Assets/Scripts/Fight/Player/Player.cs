@@ -11,6 +11,14 @@ public struct ReductionRate
     [Header("100% ~ 200%"), Range(100, 200)] public int DF;
 }
 
+public enum RecieveDamageReaction
+{
+    EnemyAttack,
+    Guard,
+    Poison,
+    Self,
+}
+
 public class Player : SingletonMonoBehaviour<Player>
 {
     [SerializeField] ReductionRate rate;
@@ -71,11 +79,19 @@ public class Player : SingletonMonoBehaviour<Player>
             state.hp.Value -= dmg;
         }
         state.DF.Value = Mathf.Clamp(state.DF.Value - _damage, 0, 9999);
-        if (state.hp.Value <= 0)
-        {
-            //€–Sˆ— TODO
-        }
+        
     }
+
+    private void Start()
+    {
+        instance.gameState.hp.Pairwise().Subscribe(x => {
+            // 0ˆÈã‚©‚ç0ˆÈ‰º‚É‚È‚Á‚½ê‡€–Sˆ—
+            if (x.Current <= 0 && x.Previous > 0) {
+                Debug.Log("€–Sˆ—@–¢ì¬");
+            }
+        }).AddTo(this);
+    }
+
 
     private void Awake()
     {
