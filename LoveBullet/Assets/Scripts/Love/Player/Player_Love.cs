@@ -34,8 +34,20 @@ namespace Love
         void Update()
         {
             //Move();
+            InputEvent();
         }
+        void InputEvent()
+        {
+            if (Love.Player_Love.instance.isUISenpaiActive.Value)
+            {
+                NovelManager.instance.NovelStart();
+            }
+            else if (Love.Player_Love.instance.isUIObjActive.Value)
+            {
 
+            }
+
+        }
 
     }
 }

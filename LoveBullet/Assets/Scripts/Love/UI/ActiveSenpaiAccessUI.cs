@@ -5,13 +5,11 @@ using UnityEngine.UI;
 using UniRx;
 public class ActiveSenpaiAccessUI : MonoBehaviour
 {
-    Image im;
-    Button bt;
+    SpriteRenderer sr;
     // Start is called before the first frame update
     void Start()
     {
-        im = GetComponent<Image>();
-        bt = GetComponent<Button>();
+        sr = GetComponent<SpriteRenderer>();
 
         Love.Player_Love.instance.isUISenpaiActive.Subscribe(x => { SetActive(x); }).AddTo(this);
     }
@@ -19,12 +17,9 @@ public class ActiveSenpaiAccessUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        im.enabled= Love.Player_Love.instance.isUISenpaiActive.Value;
-        bt.enabled = Love.Player_Love.instance.isUISenpaiActive.Value;
     }
     void SetActive(bool ac)
     {
-        im.enabled = ac;
-        bt.enabled = ac;
+        sr.enabled = ac;
     }
 }
