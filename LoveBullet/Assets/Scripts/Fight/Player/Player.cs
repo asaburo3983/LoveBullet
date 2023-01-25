@@ -87,7 +87,7 @@ public class Player : SingletonMonoBehaviour<Player>
     public void ReceiveAnim()
     {
         Sequence seq = DOTween.Sequence()
-            .Append(transform.DOLocalMoveX(transform.localPosition.x - 100, 0.1f).SetLoops(2, LoopType.Yoyo))
+            .Append(transform.DOLocalMoveX(transform.localPosition.x - 50, 0.1f).SetLoops(2, LoopType.Yoyo))
             .Join(transform.GetChild(0).GetComponent<Image>().DOColor(new Color(1, 0, 0, 1), 0.1f).SetLoops(2, LoopType.Yoyo));
     }
 
