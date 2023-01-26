@@ -1,1 +1,8 @@
-Number,Name,EnumName,Explanationint,string,string,string0,‚È‚µ,None,‚È‚µ1,UŒ‚—ÍUP(‰i‘±),Passive_Attack_Never,í“¬’†UŒ‚—Í‚ªã¸‚·‚é2,–hŒä—ÍUP(‰i‘±),Passive_Diffence_Never,í“¬’†–hŒä—Í‚ªã¸‚·‚é3,‰ñ•œ’Ç‰Á,Passive_Heal,í“¬I—¹HP‚ª‰ñ•œ‚·‚é4,HPUP,Passive_Hp,í“¬’†HP‚ÌãŒÀ’l‚ª‘‚¦‚é5,ƒRƒbƒLƒ“ƒOATUP,Passive_Attack_Cocking,ƒRƒbƒLƒ“ƒOŒã1ƒ^[ƒ“UŒ‚—Í‚ªã¸‚·‚é
+ï»¿Number,Name,EnumName,Explanation
+int,string,string,string
+0,ãªã—,None,ãªã—
+1,æ”»æ’ƒåŠ›UP(æ°¸ç¶š),Passive_Attack_Never,æˆ¦é—˜ä¸­æ”»æ’ƒåŠ›ãŒä¸Šæ˜‡ã™ã‚‹
+2,é˜²å¾¡åŠ›UP(æ°¸ç¶š),Passive_Diffence_Never,æˆ¦é—˜ä¸­é˜²å¾¡åŠ›ãŒä¸Šæ˜‡ã™ã‚‹
+3,å›å¾©è¿½åŠ ,Passive_Heal,æˆ¦é—˜çµ‚äº†æ™‚HPãŒå›å¾©ã™ã‚‹
+4,HPUP,Passive_Hp,æˆ¦é—˜ä¸­HPã®ä¸Šé™å€¤ãŒå¢—ãˆã‚‹
+5,ã‚³ãƒƒã‚­ãƒ³ã‚°æ™‚ATUP,Passive_Attack_Cocking,ã‚³ãƒƒã‚­ãƒ³ã‚°å¾Œ1ã‚¿ãƒ¼ãƒ³æ”»æ’ƒåŠ›ãŒä¸Šæ˜‡ã™ã‚‹
