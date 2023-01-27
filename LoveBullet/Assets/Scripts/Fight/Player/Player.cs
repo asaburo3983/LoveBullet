@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
+using UnityEngine.UI;
 using UniRx;
 
 [System.Serializable]
@@ -9,6 +11,14 @@ public struct ReductionRate
     [Header("0% ~ 100%"), Header("デバフ時の倍率")]
     [Range(0, 100)] public int AT;
     [Header("100% ~ 200%"), Range(100, 200)] public int DF;
+}
+
+public enum RecieveDamageReaction
+{
+    EnemyAttack,
+    Guard,
+    Poison,
+    Self,
 }
 
 public class Player : SingletonMonoBehaviour<Player>
@@ -71,11 +81,26 @@ public class Player : SingletonMonoBehaviour<Player>
             state.hp.Value -= dmg;
         }
         state.DF.Value = Mathf.Clamp(state.DF.Value - _damage, 0, 9999);
-        if (state.hp.Value <= 0)
-        {
-            //死亡処理 TODO
-        }
     }
+
+    // 被ダメアニメーション
+    public void ReceiveAnim()
+    {
+        Sequence seq = DOTween.Sequence()
+            .Append(transform.DOLocalMoveX(transform.localPosition.x - 50, 0.1f).SetLoops(2, LoopType.Yoyo))
+            .Join(transform.GetChild(0).GetComponent<Image>().DOColor(new Color(1, 0, 0, 1), 0.1f).SetLoops(2, LoopType.Yoyo));
+    }
+
+    private void Start()
+    {
+        instance.gameState.hp.Pairwise().Subscribe(x => {
+            // 0以上から0以下になった場合死亡処理
+            if (x.Current <= 0 && x.Previous > 0) {
+                Debug.Log("死亡処理　未作成");
+            }
+        }).AddTo(this);
+    }
+
 
     private void Awake()
     {
