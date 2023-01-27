@@ -294,7 +294,7 @@ TextMesh:
   m_Anchor: 3
   m_Alignment: 0
   m_TabSize: 4
-  m_FontSize: 450
+  m_FontSize: 400
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: 88fa8e0ee853cae4bb47f6a6f55ef91e, type: 3}
@@ -551,7 +551,7 @@ TextMesh:
   m_Anchor: 3
   m_Alignment: 0
   m_TabSize: 4
-  m_FontSize: 450
+  m_FontSize: 400
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 0}
@@ -717,7 +717,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 9.04, y: -0.48}
+  m_AnchoredPosition: {x: -0.39, y: -0.48}
   m_SizeDelta: {x: 271.86, y: 95.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!102 &943023224
@@ -732,10 +732,10 @@ TextMesh:
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
-  m_Anchor: 5
+  m_Anchor: 3
   m_Alignment: 0
   m_TabSize: 4
-  m_FontSize: 450
+  m_FontSize: 400
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 0}
@@ -850,6 +850,7 @@ MonoBehaviour:
   textStartPos: -2
   textEndPos: -0.5
   textMoveTime: 0.5
+  textSpeed: 15
 --- !u!1001 &1269503920
 PrefabInstance:
   m_ObjectHideFlags: 0

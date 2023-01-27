@@ -8,7 +8,7 @@ public class Scenario : MonoBehaviour
     public string position;
     public int page;
     public string text;
-    public int newLine;
+    public int   newLine;
     public int charaMove;
     public int charaAnime;
     public int EndEvent;

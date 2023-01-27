@@ -72,47 +72,66 @@ public class NovelManager : SingletonMonoBehaviour<NovelManager>
                 textR.color = new Color(textColor.r, textColor.g, textColor.b, textAlpha);
                 textC.color = new Color(textColor.r, textColor.g, textColor.b, textAlpha);
             }
-            //テキスト送り処理
-            canViewTextNum += (Time.deltaTime * textSpeed);
 
-            if (cacheTextL[0] != null)
-            {
-                //canViewTextNumは文字列の個数以下にしないといけない
-                var maxText = (int)canViewTextNum;
-                var text = cacheTextL[0].Substring(0, (int)canViewTextNum);
-                textL.text = text;
-                if (canViewTextNum > textLengthL[0] && cacheTextL[1] != null)
-                {
-                    int maxText2 = (int)canViewTextNum - textLengthL[0];
-                    
-                    if ((int)canViewTextNum> textLengthL[0]+ textLengthL[1])
-                    {
-                        maxText2 = textLengthL[0] + textLengthL[1];
-                    }
-                    textL.text = text+cacheTextL[1].Substring(0, maxText2);
-                }
-            }
+            CharacterFeed();
 
-
-            if (cacheTextR[0] != null)
-            {
-                textR.text = cacheTextR[0].Substring(0, (int)canViewTextNum);
-                if (canViewTextNum > textLengthR[1] && cacheTextR[1] != null)
-                {
-                    textL.text = cacheTextR[1].Substring(0, (int)canViewTextNum - textLengthR[0]);
-                }
-            }
-            if (cacheTextC[0] != null)
-            {
-                textC.text = cacheTextC[0].Substring(0, (int)canViewTextNum);
-                if (canViewTextNum > textLengthC[0]&&cacheTextC[1]!= null)
-                {
-                    textL.text = cacheTextC[1].Substring(0, (int)canViewTextNum - textLengthC[0]);
-                }
-            }
         }
     }
 
+    void CharacterFeed()
+    {
+        //テキスト送り処理
+        canViewTextNum += (Time.deltaTime * textSpeed);
+
+        if (cacheTextL[0] != null)
+        {
+            //canViewTextNumは文字列の個数以下にしないといけない
+            var maxText = (int)canViewTextNum;
+            if (maxText > textLengthL[0]) { maxText = textLengthL[0]; }
+
+            var text = cacheTextL[0].Substring(0, maxText);
+            textL.text = text;
+
+            if (canViewTextNum > textLengthL[0] && cacheTextL[1] != null)
+            {
+                int maxText2 = (int)canViewTextNum - textLengthL[0];
+                if (maxText2 > textLengthL[1]) { maxText2 = textLengthL[1]; }
+                textL.text = text + cacheTextL[1].Substring(0, maxText2);
+            }
+        }
+        if (cacheTextR[0] != null)
+        {
+            //canViewTextNumは文字列の個数以下にしないといけない
+            var maxText = (int)canViewTextNum;
+            if (maxText > textLengthR[0]) { maxText = textLengthR[0]; }
+
+            var text = cacheTextR[0].Substring(0, maxText);
+            textR.text = text;
+
+            if (canViewTextNum > textLengthR[0] && cacheTextR[1] != null)
+            {
+                int maxText2 = (int)canViewTextNum - textLengthR[0];
+                if (maxText2 > textLengthR[1]) { maxText2 = textLengthR[1]; }
+                textR.text = text + cacheTextR[1].Substring(0, maxText2);
+            }
+        }
+        if (cacheTextC[0] != null)
+        {
+            //canViewTextNumは文字列の個数以下にしないといけない
+            var maxText = (int)canViewTextNum;
+            if (maxText > textLengthC[0]) { maxText = textLengthC[0]; }
+
+            var text = cacheTextC[0].Substring(0, maxText);
+            textC.text = text;
+
+            if (canViewTextNum > textLengthC[0] && cacheTextC[1] != null)
+            {
+                int maxText2 = (int)canViewTextNum - textLengthC[0];
+                if (maxText2 > textLengthC[1]) { maxText2 = textLengthC[1]; }
+                textC.text = text + cacheTextC[1].Substring(0, maxText2);
+            }
+        }
+    }
     public void NovelStart()
     {
         cs = CacheScenario.instance;
@@ -152,8 +171,6 @@ public class NovelManager : SingletonMonoBehaviour<NovelManager>
         cacheTextL[1] = null;
         cacheTextR[1] = null;
         cacheTextC[1] = null;
-
-
 
         var nowPageData = cs.scenarios[_page];
         var nextPageData = cs.scenarios[_page+1];
