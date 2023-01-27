@@ -19,7 +19,7 @@ public class BGMData
 [CreateAssetMenu(fileName = "Assets/Resources/ScriptableObject/Audio/SO_Master", menuName = "ScriptableObjects/Audio/Master")]
 public class AudioListScriptableObject : ScriptableObject
 {
-     public List<Utility.EnumCreater.EnumState> actionName = new List<Utility.EnumCreater.EnumState>();
+     public List<Utility.EnumState> actionName = new List<Utility.EnumState>();
      public List<SEData> SE_List = new List<SEData>();
      public List<BGMData> BGM_List = new List<BGMData>();
      public int enumNumber = 0;

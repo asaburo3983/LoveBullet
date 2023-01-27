@@ -34,6 +34,9 @@ public class SoundSOEditWindow :EditorWindow
         var seMix = Resources.Load<AudioMixerGroup>("AudioMixer/AM_SE");
         var bgmMix = Resources.Load<AudioMixerGroup>("AudioMixer/AM_BGM");
 
+        List<Utility.EnumState> state = new List<Utility.EnumState>();
+        int id = 0;
+
         foreach (var _clip in data) {
             string _name = _clip.name;
             string _path = AssetDatabase.GetAssetPath(_clip);
@@ -53,8 +56,14 @@ public class SoundSOEditWindow :EditorWindow
                     _master.SE_List.Add(sd);
 
                     EditorUtility.SetDirty(obj);
-                    AssetDatabase.SaveAssets();
                 }
+
+                Utility.EnumState _state = new Utility.EnumState();
+                _state.num = id;
+                _state.name = _name;
+                state.Add(_state);
+
+                id++;
             }
             else {
                 if (!System.IO.File.Exists("Assets/Resources/ScriptableObject/Sound/BGM/" + _name + ".asset")) {
@@ -69,11 +78,15 @@ public class SoundSOEditWindow :EditorWindow
                     _master.BGM_List.Add(bd);
 
                     EditorUtility.SetDirty(obj);
-                    AssetDatabase.SaveAssets();
                 }
             }
 
         }
+
+        EditorUtility.SetDirty(_master);
+        AssetDatabase.SaveAssets();
+        Utility.EnumCreater.CreateEnumCs("SEList", "SE_List", state);
+
         Debug.Log("AudioScriptableObject Create");
     }
 
@@ -121,7 +134,7 @@ public class SoundSOEditWindow :EditorWindow
                 if (GUILayout.Button("’Ç‰Á")) {
                     if (add != "" && !_master.ContainsAction(add,_master.enumNumber)) {
 
-                        Utility.EnumCreater.EnumState _state = new Utility.EnumCreater.EnumState();
+                        Utility.EnumState _state = new Utility.EnumState();
 
                         _state.name = add;
                         _state.num = _master.enumNumber;

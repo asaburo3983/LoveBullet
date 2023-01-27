@@ -13,6 +13,72 @@ MonoBehaviour:
   m_Name: ListManager
   m_EditorClassIdentifier: 
   actionName: []
-  SE_List: []
-  BGM_List: []
+  SE_List:
+  - key: 
+    se: {fileID: 11400000, guid: b7779960ebe42be43b0e24e289ad29d8, type: 2}
+  - key: 
+    se: {fileID: 11400000, guid: 03ed325043302744ca9c90d568acd6f7, type: 2}
+  - key: 
+    se: {fileID: 11400000, guid: 04f68a411e8cc954c81632f9f5a4dd12, type: 2}
+  - key: 
+    se: {fileID: 11400000, guid: 096895552ae96d94e94c8a0a26070922, type: 2}
+  - key: 
+    se: {fileID: 11400000, guid: 77f0a57f379236749a52425de1788fa6, type: 2}
+  - key: 
+    se: {fileID: 11400000, guid: bb68a8d54cd4d7c48901b4b0c435f438, type: 2}
+  - key: 
+    se: {fileID: 11400000, guid: e5c2bfa249db21a42a68eb2983054977, type: 2}
+  - key: 
+    se: {fileID: 11400000, guid: 98f2f7a480e34c7458d74a5ab45b80d7, type: 2}
+  - key: 
+    se: {fileID: 11400000, guid: 62885e9f2a1df5d49b63055f29c0cbfc, type: 2}
+  - key: 
+    se: {fileID: 11400000, guid: f60b8c597ad43d9458be6233ef829ab4, type: 2}
+  - key: 
+    se: {fileID: 11400000, guid: 35aafc0aac8ef1b4f993c9d8228b73a4, type: 2}
+  - key: 
+    se: {fileID: 11400000, guid: dfbe782ce7279df4d95b64882f427649, type: 2}
+  - key: 
+    se: {fileID: 11400000, guid: ac2e36abee3732d469dc4d9f9f89cb69, type: 2}
+  - key: 
+    se: {fileID: 11400000, guid: bca798c37031ce448afb92e4d9298b90, type: 2}
+  - key: 
+    se: {fileID: 11400000, guid: f6c4d4ada263bb94a8a8fc648c2cc099, type: 2}
+  - key: 
+    se: {fileID: 11400000, guid: 85dc010464fd87a428a5b6e762295394, type: 2}
+  - key: 
+    se: {fileID: 11400000, guid: 64540cdf75d49a04bbace0fb2f04873c, type: 2}
+  - key: 
+    se: {fileID: 11400000, guid: b0c499c486b2c8b4b846f5b2db04e0f1, type: 2}
+  - key: 
+    se: {fileID: 11400000, guid: 16efa0715589b6142ad07e5ba2fac076, type: 2}
+  - key: 
+    se: {fileID: 11400000, guid: baeb61631f1ba1e48a3c551498e9273f, type: 2}
+  - key: 
+    se: {fileID: 11400000, guid: d3e3d04865b24894c913889d8070725c, type: 2}
+  - key: 
+    se: {fileID: 11400000, guid: 6f4cbe9e23e8206448479a8d648868d8, type: 2}
+  - key: 
+    se: {fileID: 11400000, guid: 2ee1f5e535122a54b8cb55babb484093, type: 2}
+  - key: 
+    se: {fileID: 11400000, guid: 7df8b6529fc72b440a18743758797d3c, type: 2}
+  - key: 
+    se: {fileID: 11400000, guid: ca31e1729a82cbd499841b4753649e1f, type: 2}
+  - key: 
+    se: {fileID: 11400000, guid: d5f2a811517d951469c8eb094a636fe9, type: 2}
+  - key: 
+    se: {fileID: 11400000, guid: be053d1158abc424f929cf725f8b698d, type: 2}
+  BGM_List:
+  - key: 
+    bgm: {fileID: 11400000, guid: c87ecddedfc933e4caf4d5937876ba87, type: 2}
+  - key: 
+    bgm: {fileID: 11400000, guid: e97adbaf3e6c68a4782db83b9e41f1df, type: 2}
+  - key: 
+    bgm: {fileID: 11400000, guid: 1877dbaa55fce494cbb4e07e99242ff0, type: 2}
+  - key: 
+    bgm: {fileID: 11400000, guid: f2a908734500b5e4cb4e7000f9dae87d, type: 2}
+  - key: 
+    bgm: {fileID: 11400000, guid: 84c421a14e89aac478cff2e92e0fe5b2, type: 2}
+  - key: 
+    bgm: {fileID: 11400000, guid: c727485b3383dbe48926e5127b6f643d, type: 2}
   enumNumber: 0
