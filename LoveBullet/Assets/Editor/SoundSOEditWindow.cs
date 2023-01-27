@@ -74,6 +74,17 @@ public class SoundSOEditWindow :EditorWindow
         Debug.Log("AudioScriptableObject Create");
     }
 
+    [MenuItem("Editor/Sound/EnemySEList")]
+    static void EnemySEList()
+    {
+
+    }
+    [MenuItem("Editor/Sound/CardSEList")]
+    static void CardSEList()
+    {
+
+    }
+
 
     void OnPlay(AudioClip clip)
     {
