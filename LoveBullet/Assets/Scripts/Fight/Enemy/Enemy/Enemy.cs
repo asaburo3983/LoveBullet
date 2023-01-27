@@ -27,7 +27,7 @@ namespace Enemy
         }
         [SerializeField]State state;
         public State enemyState => state;
-
+        
         [System.Serializable]
         public struct InGameState
         {
@@ -43,7 +43,7 @@ namespace Enemy
             public ReductionRate Rate;
         }
         public InGameState gameState;
-
+        
 
         [System.Serializable]
         class TwState
@@ -65,6 +65,8 @@ namespace Enemy
 
         private void Start()
         {
+            
+
             if (state == null)
             {
                 Debug.LogError("エネミーはイニシャライズされずに生成されました");
