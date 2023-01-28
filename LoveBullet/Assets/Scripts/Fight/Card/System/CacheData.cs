@@ -45,24 +45,9 @@ public class CacheData : SingletonMonoBehaviour<CacheData>
             state.explanation = (string)row["Explanation"];
 
             state.AP = (int)row["AP"];
-            state.AT = (int)row["AT"];
-            state.DF = (int)row["DF"];
+            state.AT = (int)row["Damage"];
             state.rank = (int)row["Rank"];
 
-            state.ATWeaken = (int)row["ATWeaken"];
-            state.DFWeaken = (int)row["DFWeaken"];
-            state.Stan = (int)row["Stan"];
-            state.Whole = (int)row["Whole"] == 1;
-            state.Cocking = (int)row["Cocking"];
-            state.Reload = (int)row["Reload"];
-            state.Scrap = (int)row["Scrap"];
-            state.SelfDamage = (int)row["SelfDamage"];
-
-            state.value.Add((int)row["Value0"]);
-            state.value.Add((int)row["Value1"]);
-            state.value.Add((int)row["Value2"]);
-            state.value.Add((int)row["Value3"]);
-            state.value.Add((int)row["Value4"]);
 
             cardStates.Add(state);
             idCount++;
@@ -89,7 +74,6 @@ public class CacheData : SingletonMonoBehaviour<CacheData>
             state.explanation = (string)row["Explanation"];
             state.hpMax = (int)row["HP"];
             state.hpFluctuationPlus = (int)row["HPFluctuationPlus"];
-            state.hpFluctuationMinus = (int)row["HPFluctuationMinus"];
 
             state.pattern.Add((int)row["Pattern1"]);
             state.pattern.Add((int)row["Pattern2"]);
