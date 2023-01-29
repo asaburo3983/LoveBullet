@@ -20,7 +20,6 @@ namespace Enemy
             public string explanation;
             public int hpMax;
             public int hpFluctuationPlus;
-            public int hpFluctuationMinus;
 
             public List<int> pattern = new List<int>();
             public List<int> value = new List<int>();

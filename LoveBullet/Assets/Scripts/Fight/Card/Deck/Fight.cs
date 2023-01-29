@@ -150,7 +150,7 @@ namespace Card
             if (cocking) return;
 
             var _card = gunInCards[0];
-            int _damage = _card.AT;
+            int _damage = _card.Damage;
 
             // 攻撃デバフが存在する場合、値の補正を行う
             if (plState.ATWeaken.Value > 0) {
@@ -179,7 +179,7 @@ namespace Card
 
             // プレイヤーステータス加減
             int _progress = _card.AP;
-            plState.DF.Value += _card.DF;
+            plState.Def.Value += _card.DF;
             plState.freeCocking += _card.Cocking;
             plState.ATWeaken.Value = Mathf.Clamp(plState.ATWeaken.Value - 1, 0, 9999);
             plState.DFWeaken.Value = Mathf.Clamp(plState.DFWeaken.Value - 1, 0, 9999);
@@ -241,11 +241,11 @@ namespace Card
             }
 
             // 防御バフがある場合、ダメージ減算
-            if (dmg <= plState.DF.Value) {
-                plState.DF.Value -= dmg;
+            if (dmg <= plState.Def.Value) {
+                plState.Def.Value -= dmg;
             }
             else {
-                plState.hp.Value -= dmg - plState.DF.Value;
+                plState.hp.Value -= dmg - plState.Def.Value;
             }
         }
 
@@ -383,8 +383,8 @@ namespace Card
         {
             if (enemyObjects.Count <= 0) { Debug.LogError("敵が存在しない状態でスキルを発動しています"); return; }
             //敵にダメージなり与える処理
-            enemyObjects[target].ReceiveDamage(gunInCards[0].AT);//敵へ攻撃処理
-            plState.DF.Value += gunInCards[0].DF;//プレイヤーへ防御追加
+            enemyObjects[target].ReceiveDamage(gunInCards[0].Damage);//敵へ攻撃処理
+            plState.Def.Value += gunInCards[0].DF;//プレイヤーへ防御追加
         }
         #endregion
 

@@ -45,10 +45,32 @@ public class CacheData : SingletonMonoBehaviour<CacheData>
             state.explanation = (string)row["Explanation"];
 
             state.AP = (int)row["AP"];
-            state.AT = (int)row["AT"];
-            state.DF = (int)row["DF"];
+            state.Damage = (int)row["Damage"];
             state.rank = (int)row["Rank"];
+            state.number = (int)row["Number"];
 
+            int buff = (int)row["Buff"];
+            int debuff = (int)row["Debuff"];
+            int special = (int)row["Special"];
+
+            // 4ƒrƒbƒg‚¸‚ÂŠi”[
+            state.AT = (buff >> 0) & 0x0f;      // 0 ~ 4 bit
+            state.DF = (buff >> 4) & 0x0f;      // 5 ~ 8 bit
+
+            // 4ƒrƒbƒg‚¸‚ÂŠi”[
+            state.ATWeaken = (debuff >> 0) & 0x0f;  // 0 ~ 4 bit
+            state.DFWeaken = (debuff >> 4) & 0x0f;  // 5 ~ 8 bit
+            state.Stan = (debuff >> 8) & 0x0f;      // 9 ~ 12 bit
+
+            // 4ƒrƒbƒg‚¸‚ÂŠi”[
+            // bool‚Í1ƒrƒbƒg‚¸‚ÂŠi”[
+            state.Cocking = (special >> 0) & 0x0f;          // 0 ~ 4 bit
+            state.Reload = (special >> 4) & 0x0f;           // 5 ~ 8 bit
+            state.SelfDamage= (special >> 8) & 0x0f;        // 9 ~ 12 bit
+            state.Scrap = ((special >> 12) & 0x01) == 1;    // 13 bit
+            state.Whole = ((special >> 13) & 0x01) == 1;    // 14 bit
+
+            /*
             state.ATWeaken = (int)row["ATWeaken"];
             state.DFWeaken = (int)row["DFWeaken"];
             state.Stan = (int)row["Stan"];
@@ -57,13 +79,7 @@ public class CacheData : SingletonMonoBehaviour<CacheData>
             state.Reload = (int)row["Reload"];
             state.Scrap = (int)row["Scrap"];
             state.SelfDamage = (int)row["SelfDamage"];
-
-            state.value.Add((int)row["Value0"]);
-            state.value.Add((int)row["Value1"]);
-            state.value.Add((int)row["Value2"]);
-            state.value.Add((int)row["Value3"]);
-            state.value.Add((int)row["Value4"]);
-
+            */
             cardStates.Add(state);
             idCount++;
         }
@@ -89,7 +105,6 @@ public class CacheData : SingletonMonoBehaviour<CacheData>
             state.explanation = (string)row["Explanation"];
             state.hpMax = (int)row["HP"];
             state.hpFluctuationPlus = (int)row["HPFluctuationPlus"];
-            state.hpFluctuationMinus = (int)row["HPFluctuationMinus"];
 
             state.pattern.Add((int)row["Pattern1"]);
             state.pattern.Add((int)row["Pattern2"]);
