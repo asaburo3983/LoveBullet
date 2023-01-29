@@ -14,7 +14,8 @@ namespace Database
         Card = 0,
         Enemy = 1,
         EnemyActionPattern = 2,
-        EnemyAddventPattern=3
+        EnemyAddventPattern=3,
+        Party = 4
     }
     public class Load : SingletonMonoBehaviour<Load>
     {

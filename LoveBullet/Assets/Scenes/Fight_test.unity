@@ -422,12 +422,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4136505637693180340, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
-      propertyPath: databaseName.Array.data[2]
-      value: ActivePattern.db
-      objectReference: {fileID: 0}
-    - target: {fileID: 4136505637693180340, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
-      propertyPath: databaseName.Array.data[3]
-      value: Addvent.db
+      propertyPath: databaseName.Array.size
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4136505638310519120, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
       propertyPath: m_Name
@@ -479,7 +475,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4822576269960588504, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4822576269960588510, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
       propertyPath: getCardList_debug.Array.size
@@ -572,6 +568,10 @@ PrefabInstance:
     - target: {fileID: 8784980375343721632, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8784980375343721635, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8784980375567619356, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
       propertyPath: zPos

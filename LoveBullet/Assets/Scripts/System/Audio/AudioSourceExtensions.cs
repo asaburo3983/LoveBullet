@@ -20,19 +20,53 @@ namespace AudioSystem
         {
             var list = AudioControl.Instance.audioList;
 
-            if (!AudioControl.Instance.audioList.ContainsAction(_audioPath)) {
-                Debug.LogError("存在しないアクション名です　; " + _audioPath);
+            var _se = list.GetSE(_audioPath);
+
+            if (_se == null) {
+                Debug.LogError("SE Play Error");
                 return;
             }
 
-            if (list.ContainsSE(_audioPath)) {
-                _audioSource.loop = _loop;
-                _audioSource.Play(list.GetSE(_audioPath));
-            }
-            else {
-                Debug.LogError("現在使用されていないアクション名です　; " + _audioPath);
-            }
+            _audioSource.loop = _loop;
+            _audioSource.Play(_se);
+
         }
+
+        public static void PlayCardSE(this AudioSource _audioSource, int cardSeID, bool _loop = false)
+        {
+            var list = AudioControl.Instance.audioList;
+
+            int number = (int)System.Enum.ToObject(typeof(Card_SE), cardSeID);
+
+
+            if (list.SE_List.Count < number) {
+                Debug.LogError("SE Play Error");
+                return;
+            }
+
+            _audioSource.loop = _loop;
+            _audioSource.Play(list.SE_List[number]);
+
+        }
+
+        public static void PlayEnemyAttackSE(this AudioSource _audioSource, int eaSeID, bool _loop = false)
+        {
+            var list = AudioControl.Instance.audioList;
+
+            int number = (int)System.Enum.ToObject(typeof(EnemyAttack_SE), eaSeID);
+
+
+            if (list.SE_List.Count < number) {
+                Debug.LogError("SE Play Error");
+                return;
+            }
+
+            _audioSource.loop = _loop;
+            _audioSource.Play(list.SE_List[number]);
+
+        }
+
+
 
         /// <summary>
         /// SEアセットを再生する

@@ -59,7 +59,7 @@ namespace Card
                 {
                     correct = false;
                 }
-                if (DF != -1 && card.DF != DF)
+                if (DF != -1 && card.buff.DF != DF)
                 {
                     correct = false;
                 }
