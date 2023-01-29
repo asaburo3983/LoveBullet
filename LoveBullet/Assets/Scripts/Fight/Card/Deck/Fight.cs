@@ -157,29 +157,36 @@ namespace Card
                 _damage *= player.Rate.AT;
                 _damage /= 100;
             }
-            
+
+            // SE再生
+            AudioSystem.AudioControl.Instance.SE.CardSePlayOneShot(gunInCards[0].SE);
+
+            Debug.LogError("ランダム攻撃処理　未作成");
+            Debug.LogError("複数回攻撃処理　　未作成");
+            Debug.LogError("一部バフ系統処理　未作成");
+
             // 攻撃処理
             if (gunInCards[0].Whole) {
 
                 // 全体攻撃
                 foreach(var _eObj in enemyObjects) {
                     _eObj.ReceiveDamage(_damage);
-                    _eObj.ReceiveStan(_card.Stan);
-                    _eObj.ReceiveATWeaken(_card.ATWeaken);
-                    _eObj.ReceiveDFWeaken(_card.DFWeaken);
+                    _eObj.ReceiveStan(_card.buff.Stan);
+                    _eObj.ReceiveATWeaken(_card.buff.AT_Weak);
+                    _eObj.ReceiveDFWeaken(_card.buff.DF_Weak);
                 }
             }
             else {
                 // 単体攻撃
                 _enemy.ReceiveDamage(_damage);
-                _enemy.ReceiveStan(_card.Stan);
-                _enemy.ReceiveATWeaken(_card.ATWeaken);
-                _enemy.ReceiveDFWeaken(_card.DFWeaken);
+                _enemy.ReceiveStan(_card.buff.Stan);
+                _enemy.ReceiveATWeaken(_card.buff.AT_Weak);
+                _enemy.ReceiveDFWeaken(_card.buff.DF_Weak);
             }
 
             // プレイヤーステータス加減
             int _progress = _card.AP;
-            plState.Def.Value += _card.DF;
+            plState.Def.Value = _card.buff.DF;
             plState.freeCocking += _card.Cocking;
             plState.ATWeaken.Value = Mathf.Clamp(plState.ATWeaken.Value - 1, 0, 9999);
             plState.DFWeaken.Value = Mathf.Clamp(plState.DFWeaken.Value - 1, 0, 9999);
@@ -384,7 +391,7 @@ namespace Card
             if (enemyObjects.Count <= 0) { Debug.LogError("敵が存在しない状態でスキルを発動しています"); return; }
             //敵にダメージなり与える処理
             enemyObjects[target].ReceiveDamage(gunInCards[0].Damage);//敵へ攻撃処理
-            plState.Def.Value += gunInCards[0].DF;//プレイヤーへ防御追加
+            plState.Def.Value += gunInCards[0].buff.DF;//プレイヤーへ防御追加
         }
         #endregion
 

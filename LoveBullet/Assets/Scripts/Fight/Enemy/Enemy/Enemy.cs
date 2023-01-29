@@ -34,7 +34,9 @@ namespace Enemy
             public IntReactiveProperty turn;
             public IntReactiveProperty hp;
             public IntReactiveProperty ATBuff;
+            public IntReactiveProperty ATBuff_Never;
             public IntReactiveProperty DFBuff;
+            public IntReactiveProperty DFBuff_Never;
             public IntReactiveProperty ATWeaken;
             public IntReactiveProperty DFWeaken;
             public IntReactiveProperty stan;
@@ -64,8 +66,6 @@ namespace Enemy
 
         private void Start()
         {
-            
-
             if (state == null)
             {
                 Debug.LogError("エネミーはイニシャライズされずに生成されました");
@@ -91,21 +91,12 @@ namespace Enemy
 
                 fight.enemyObjects.Remove(this);
                 
-
                 transform.Find("UI").gameObject.SetActive(false);
 
                 body.DOColor(new Color(1, 1, 1, 0), 1.0f).OnComplete(() => {
                     DOVirtual.DelayedCall(3.0f, () => Destroy(gameObject));
                 });
             }).AddTo(this);
-
-            // エネミー行動処理
-            gameState.turn.Pairwise()
-                .Where(x => x.Previous > 0)
-                .Where(x => x.Current <= 0)
-                .Subscribe(x => {
-                    //Action();
-                }).AddTo(this);
 
             // 初期ターン数設定
             gameState.turn.Value = CacheData.instance.enemyActivePattern[state.pattern[gameState.currentIdx]].Turn;
@@ -160,7 +151,7 @@ namespace Enemy
             var activeId = state.pattern[gameState.currentIdx];
             var actiovePattern = CacheData.instance.enemyActivePattern[activeId];
 
-            int atk = actiovePattern.AT;
+            int atk = actiovePattern.Damage + gameState.ATBuff.Value + gameState.ATBuff_Never.Value;
 
             // 攻撃デバフが存在する場合、値の補正を行う
             if (gameState.ATWeaken.Value > 0) {
@@ -170,7 +161,20 @@ namespace Enemy
             
             //TODO とりあえず攻撃と防御処理だけ作成
             Player.ReceiveDamage(atk);//攻撃
-            gameState.DFBuff.Value = actiovePattern.DF;//防御
+
+            // バフ系処理
+            gameState.ATBuff.Value = actiovePattern.buff.AT;
+            gameState.ATBuff_Never.Value += actiovePattern.buff.AT_Never;
+
+            gameState.DFBuff.Value = actiovePattern.buff.DF;
+            gameState.DFBuff_Never.Value += actiovePattern.buff.DF_Never;
+
+
+            // 回復処理
+            gameState.hp.Value += actiovePattern.buff.Heal;
+
+            // SE再生
+            AudioSystem.AudioControl.Instance.SE.EnemyAttackSePlayOneShot(actiovePattern.SE);
 
             // 行動順を一つずらす
             gameState.currentIdx++;
@@ -181,10 +185,10 @@ namespace Enemy
             gameState.turn.Value = act.Turn + Random.Range(0, act.Fluctuation);
         }
 
+
         public void ReceiveDamage(int _damage)
         {
             if (_damage <= 0) return;
-
 
             // 防御デバフ計算  割合増加
             int dmg = (_damage);
@@ -280,7 +284,7 @@ namespace Enemy
             Sequence sequence = DOTween.Sequence()
                 .Append(DOVirtual.DelayedCall(_delay, () => {
                     actText.text = CacheData.instance.enemyActivePattern[state.pattern[gameState.currentIdx]].name;
-                    actText.gameObject.SetActive(true);                   
+                    actText.gameObject.SetActive(true);
                 }))
                 .Append(transform.DOLocalMoveX(transform.localPosition.x - tw.atkMove, tw.atkTime).SetDelay(tw.atkTextTime).SetLoops(2, LoopType.Yoyo))
                 .AppendCallback(() => { Player.instance.ReceiveAnim(); Action(); })

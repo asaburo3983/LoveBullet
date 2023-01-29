@@ -300,7 +300,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unit: 1
-  buffer: 2
+  buffer: 3
   enemy: {fileID: 1952692010194144952}
   text: {fileID: 5462504582883525915}
 --- !u!1 &1572812128593586062
@@ -405,7 +405,6 @@ MonoBehaviour:
     explanation: 
     hpMax: 0
     hpFluctuationPlus: 0
-    hpFluctuationMinus: 0
     pattern: 
     value: 
   gameState:
@@ -696,7 +695,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unit: 1
-  buffer: 3
+  buffer: 4
   enemy: {fileID: 1952692010194144952}
   text: {fileID: 359754888411578521}
 --- !u!1 &3859969315637587046

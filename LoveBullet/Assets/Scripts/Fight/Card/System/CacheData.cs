@@ -49,26 +49,33 @@ public class CacheData : SingletonMonoBehaviour<CacheData>
             state.rank = (int)row["Rank"];
             state.number = (int)row["Number"];
 
+            state.SE = (int)row["SE"];
+            state.Effect = (int)row["Effect"];
+
             int buff = (int)row["Buff"];
             int debuff = (int)row["Debuff"];
             int special = (int)row["Special"];
 
             // 4ビットずつ格納
-            state.AT = (buff >> 0) & 0x0f;      // 0 ~ 4 bit
-            state.DF = (buff >> 4) & 0x0f;      // 5 ~ 8 bit
+            state.buff.AT = (buff >> 0) & 0x0f;          // 0 ~ 4   bit
+            state.buff.AT_Never = (buff >> 4) & 0x0f;    // 5 ~ 8   bit
+            state.buff.DF = (buff >> 8) & 0x0f;          // 9 ~ 12  bit
+            state.buff.DF_Never = (buff >> 12) & 0x0f;   // 13 ~ 16 bit
 
             // 4ビットずつ格納
-            state.ATWeaken = (debuff >> 0) & 0x0f;  // 0 ~ 4 bit
-            state.DFWeaken = (debuff >> 4) & 0x0f;  // 5 ~ 8 bit
-            state.Stan = (debuff >> 8) & 0x0f;      // 9 ~ 12 bit
+            state.buff.AT_Weak = (debuff >> 0) & 0x0f;  // 0 ~ 4 bit
+            state.buff.DF_Weak = (debuff >> 4) & 0x0f;  // 5 ~ 8 bit
+            state.buff.Stan = (debuff >> 8) & 0x0f;      // 9 ~ 12 bit
 
             // 4ビットずつ格納
             // boolは1ビットずつ格納
-            state.Cocking = (special >> 0) & 0x0f;          // 0 ~ 4 bit
-            state.Reload = (special >> 4) & 0x0f;           // 5 ~ 8 bit
-            state.SelfDamage= (special >> 8) & 0x0f;        // 9 ~ 12 bit
-            state.Scrap = ((special >> 12) & 0x01) == 1;    // 13 bit
-            state.Whole = ((special >> 13) & 0x01) == 1;    // 14 bit
+            state.Whole = ((special >> 0) & 0x01) == 1;     // 0 bit
+            state.Random = ((special >> 1) & 0x01) == 1;    // 1 bit
+            state.MultiAttack = (special >> 2) & 0x0f;      // 2 ~ 6 bit
+            state.SelfDamage= (special >> 6) & 0x0f;        // 7 ~ 10 bit
+            state.Reload = (special >> 10) & 0x0f;          // 11 ~ 14 bit
+            state.Cocking = (special >> 14) & 0x0f;         // 15 ~ 18 bit
+            state.Scrap = ((special >> 18) & 0x01) == 1;    // 19 bit
 
             cardStates.Add(state);
             idCount++;
@@ -114,7 +121,7 @@ public class CacheData : SingletonMonoBehaviour<CacheData>
     void CacheEnemyActivePattern()
     {
         var db = loadDB.GetDatabase(Database.Value.EnemyActionPattern);
-        var cmd = "SELECT * FROM EnemyActivePattern";
+        var cmd = "SELECT * FROM ActivePattern";
         var table = db.ExecuteQuery(cmd);
 
         foreach (var row in table.Rows)
@@ -123,18 +130,31 @@ public class CacheData : SingletonMonoBehaviour<CacheData>
 
             state.name = (string)row["Name"];
             state.explanation = (string)row["Explanation"];
-            state.AT = (int)row["AT"];
-            state.DF = (int)row["DF"];
-            state.ATWeaken = (int)row["ATWeaken"];
-            state.DFWeaken = (int)row["DFWeaken"];
+
+            state.Damage = (int)row["AT"];
+
+            int buff = (int)row["Buff"];
+            int buff2 = (int)row["Buff2"];
+
+            // buff1
+            state.buff.AT = (buff >> 0) & 0x0f;         // 0 ~ 4   bit
+            state.buff.AT_Never = (buff >> 4) & 0x0f;   // 5 ~ 8   bit
+            state.buff.DF = (buff >> 8) & 0x0f;         // 9 ~ 12  bit
+            state.buff.DF_Never = (buff >> 12) & 0x0f;  // 13 ~ 16 bit
+
+            state.buff.AT_Weak = (buff >> 16) & 0x0f;   // 17 ~ 20 bit
+            state.buff.DF_Weak = (buff >> 20) & 0x0f;   // 21 ~ 24 bit
+
+            // buff2
+            state.buff.Stan = (buff2 >> 0) & 0x0f;  // 0 ~ 4   bit
+            state.buff.Heal = (buff2 >> 4) & 0x0f;  // 5 ~ 8   bit
+
             state.Turn = (int)row["Turn"];
             state.Type = (int)row["Type"];
             state.Fluctuation = (int)row["FluctuationPlus"];
 
-            state.value.Add((int)row["Value1"]);
-            state.value.Add((int)row["Value2"]);
-            state.value.Add((int)row["Value3"]);
-            state.value.Add((int)row["Value4"]);
+            state.SE = (int)row["SE"];
+            state.Effect = (int)row["Effect"];
 
             enemyActivePattern.Add(state);
         }
@@ -144,8 +164,8 @@ public class CacheData : SingletonMonoBehaviour<CacheData>
     /// </summary>
     void CacheEnemyAddventPattern()
     {
-        var db = loadDB.GetDatabase(Database.Value.EnemyAddventPattern);
-        var cmd = "SELECT * FROM EnemyAddventPattern";
+        var db = loadDB.GetDatabase(Database.Value.Party);
+        var cmd = "SELECT * FROM Party";
         var table = db.ExecuteQuery(cmd);
 
         foreach (var row in table.Rows)
@@ -154,7 +174,7 @@ public class CacheData : SingletonMonoBehaviour<CacheData>
 
             for(int i=0;i< (table.Columns.Count - 2); i++)
             {
-                string enemyTag = "Enemy" + (i+1).ToString();
+                string enemyTag = "Enemy" + (i + 1).ToString();
                 state.enemysId.Add((int)row[enemyTag]);
             }
             enemyAddventPattern.Add(state);

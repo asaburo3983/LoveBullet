@@ -32,7 +32,7 @@ namespace FightEnemy
             switch (_type) {
                 case 0:
                     damageText.enabled = true;
-                    int damage = (pattrn.AT + enemy.gameState.ATBuff.Value);
+                    int damage = (pattrn.Damage + enemy.gameState.ATBuff.Value);
 
                     // UŒ‚ƒfƒoƒtŒvŽZ
                     if (enemy.gameState.ATWeaken.Value > 0) {
@@ -48,7 +48,7 @@ namespace FightEnemy
                     break;
                 case 1:
                     damageText.enabled = true;
-                    damageText.text = pattrn.DF.ToString();
+                    damageText.text = pattrn.buff.DF.ToString();
                     break;
                 case 2:
                     damageText.enabled = false;
