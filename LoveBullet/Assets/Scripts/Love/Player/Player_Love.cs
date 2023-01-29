@@ -15,6 +15,8 @@ namespace Love
 
         public Tween moveTW;
 
+        public ReactiveProperty<bool> isUISenpaiActive;
+        public ReactiveProperty<bool> isUIObjActive;
 
         private void Awake()
         {
@@ -32,8 +34,20 @@ namespace Love
         void Update()
         {
             //Move();
+            InputEvent();
         }
+        void InputEvent()
+        {
+            if (Love.Player_Love.instance.isUISenpaiActive.Value)
+            {
+                NovelManager.instance.NovelStart();
+            }
+            else if (Love.Player_Love.instance.isUIObjActive.Value)
+            {
 
+            }
+
+        }
 
     }
 }

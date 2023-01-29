@@ -15,10 +15,10 @@ namespace FightPlayer
         void Start()
         {
             player = Player.instance;
-            player.gameState.hp.Subscribe(x =>
-            {
-                hpText.text = x.ToString() + "/" + player.gameState.maxHP.Value.ToString();
-            }).AddTo(this);
+            //player.gameState.hp.Subscribe(x =>
+            //{
+            //    hpText.text = x.ToString() + "/" + player.gameState.maxHP.Value.ToString();
+            //}).AddTo(this);
         }
 
         // Update is called once per frame
