@@ -27,7 +27,7 @@ public class CacheData : SingletonMonoBehaviour<CacheData>
         }
     }
     /// <summary>
-    /// ƒJ[ƒh‚ÌƒLƒƒƒbƒVƒ…‰»
+    /// ã‚«ãƒ¼ãƒ‰ã®ã‚­ãƒ£ãƒƒã‚·ãƒ¥åŒ–
     /// </summary>
     void CacheCard()
     {
@@ -45,16 +45,37 @@ public class CacheData : SingletonMonoBehaviour<CacheData>
             state.explanation = (string)row["Explanation"];
 
             state.AP = (int)row["AP"];
-            state.AT = (int)row["Damage"];
+            state.Damage = (int)row["Damage"];
             state.rank = (int)row["Rank"];
+            state.number = (int)row["Number"];
 
+            int buff = (int)row["Buff"];
+            int debuff = (int)row["Debuff"];
+            int special = (int)row["Special"];
+
+            // 4ãƒ“ãƒƒãƒˆãšã¤æ ¼ç´
+            state.AT = (buff >> 0) & 0x0f;      // 0 ~ 4 bit
+            state.DF = (buff >> 4) & 0x0f;      // 5 ~ 8 bit
+
+            // 4ãƒ“ãƒƒãƒˆãšã¤æ ¼ç´
+            state.ATWeaken = (debuff >> 0) & 0x0f;  // 0 ~ 4 bit
+            state.DFWeaken = (debuff >> 4) & 0x0f;  // 5 ~ 8 bit
+            state.Stan = (debuff >> 8) & 0x0f;      // 9 ~ 12 bit
+
+            // 4ãƒ“ãƒƒãƒˆãšã¤æ ¼ç´
+            // boolã¯1ãƒ“ãƒƒãƒˆãšã¤æ ¼ç´
+            state.Cocking = (special >> 0) & 0x0f;          // 0 ~ 4 bit
+            state.Reload = (special >> 4) & 0x0f;           // 5 ~ 8 bit
+            state.SelfDamage= (special >> 8) & 0x0f;        // 9 ~ 12 bit
+            state.Scrap = ((special >> 12) & 0x01) == 1;    // 13 bit
+            state.Whole = ((special >> 13) & 0x01) == 1;    // 14 bit
 
             cardStates.Add(state);
             idCount++;
         }
     }
     /// <summary>
-    /// “¹’†“Gƒf[ƒ^‚ÌƒLƒƒƒbƒVƒ…
+    /// é“ä¸­æ•µãƒ‡ãƒ¼ã‚¿ã®ã‚­ãƒ£ãƒƒã‚·ãƒ¥
     /// </summary>
     void CacheEnemy()
     {
@@ -88,7 +109,7 @@ public class CacheData : SingletonMonoBehaviour<CacheData>
         }
     }
     /// <summary>
-    /// “Gs“®ƒpƒ^[ƒ“‚ÌƒLƒƒƒbƒVƒ…
+    /// æ•µè¡Œå‹•ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ã‚­ãƒ£ãƒƒã‚·ãƒ¥
     /// </summary>   
     void CacheEnemyActivePattern()
     {
@@ -119,7 +140,7 @@ public class CacheData : SingletonMonoBehaviour<CacheData>
         }
     }
     /// <summary>
-    /// “G‚ÌoŒ»ƒpƒ^[ƒ“
+    /// æ•µã®å‡ºç¾ãƒ‘ã‚¿ãƒ¼ãƒ³
     /// </summary>
     void CacheEnemyAddventPattern()
     {

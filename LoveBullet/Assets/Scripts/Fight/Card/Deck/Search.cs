@@ -55,7 +55,7 @@ namespace Card
                 {
                     correct = false;
                 }
-                if (AT != -1 && card.AT != AT)
+                if (AT != -1 && card.Damage != AT)
                 {
                     correct = false;
                 }

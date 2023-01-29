@@ -34,17 +34,22 @@ namespace Card
             public string name;
             public int rank;
             public string explanation;
+
             public int AP;
+            public int Damage;
             public int AT;
             public int DF;
             public int Stan;
             public int ATWeaken;
             public int DFWeaken;
-            public bool Whole;      // 全体攻撃
+
             public int Cocking;     // コッキング回数
             public int Reload;      // 強制リロード回数
-            public int Scrap;       // 廃棄
             public int SelfDamage;  // 自傷
+            public bool Scrap;      // 廃棄
+            public bool Whole;      // 全体攻撃
+
+            public int number;
             public List<int> value = new List<int>();
         }
         protected State state;
@@ -77,7 +82,7 @@ namespace Card
             Rough.SetText(ui.name, state.name);
             Rough.SetText(ui.explanation,state.explanation);
             Rough.SetText(ui.AP, state.AP);
-            Rough.SetText(ui.AT, state.AT);
+            Rough.SetText(ui.AT, state.Damage);
             Rough.SetText(ui.DF, state.DF);
             
             //Rough.SetText(ui.ATWeaken, state.ATWeaken);
