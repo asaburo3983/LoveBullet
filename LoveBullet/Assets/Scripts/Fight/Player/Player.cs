@@ -32,7 +32,9 @@ public class Player : SingletonMonoBehaviour<Player>
         public IntReactiveProperty maxHP;
         public IntReactiveProperty hp;
         public IntReactiveProperty Atk;
+        public IntReactiveProperty Atk_Never;
         public IntReactiveProperty Def;
+        public IntReactiveProperty Def_Never;
         public IntReactiveProperty ATWeaken;
         public IntReactiveProperty DFWeaken;
 

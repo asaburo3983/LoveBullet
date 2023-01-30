@@ -52,30 +52,10 @@ public class CacheData : SingletonMonoBehaviour<CacheData>
             state.SE = (int)row["SE"];
             state.Effect = (int)row["Effect"];
 
-            int buff = (int)row["Buff"];
-            int debuff = (int)row["Debuff"];
-            int special = (int)row["Special"];
-
-            // 4ビットずつ格納
-            state.buff.AT = (buff >> 0) & 0x0f;          // 0 ~ 4   bit
-            state.buff.AT_Never = (buff >> 4) & 0x0f;    // 5 ~ 8   bit
-            state.buff.DF = (buff >> 8) & 0x0f;          // 9 ~ 12  bit
-            state.buff.DF_Never = (buff >> 12) & 0x0f;   // 13 ~ 16 bit
-
-            // 4ビットずつ格納
-            state.buff.AT_Weak = (debuff >> 0) & 0x0f;  // 0 ~ 4 bit
-            state.buff.DF_Weak = (debuff >> 4) & 0x0f;  // 5 ~ 8 bit
-            state.buff.Stan = (debuff >> 8) & 0x0f;      // 9 ~ 12 bit
-
-            // 4ビットずつ格納
-            // boolは1ビットずつ格納
-            state.Whole = ((special >> 0) & 0x01) == 1;     // 0 bit
-            state.Random = ((special >> 1) & 0x01) == 1;    // 1 bit
-            state.MultiAttack = (special >> 2) & 0x0f;      // 2 ~ 6 bit
-            state.SelfDamage= (special >> 6) & 0x0f;        // 7 ~ 10 bit
-            state.Reload = (special >> 10) & 0x0f;          // 11 ~ 14 bit
-            state.Cocking = (special >> 14) & 0x0f;         // 15 ~ 18 bit
-            state.Scrap = ((special >> 18) & 0x01) == 1;    // 19 bit
+            foreach (var value in System.Enum.GetValues(typeof(BuffEnum))) {
+                string _key = System.Enum.GetName(typeof(BuffEnum), value);
+                if (row.ContainsKey(_key)) state.buff[(int)value] = (int)row[_key];
+            }
 
             cardStates.Add(state);
             idCount++;
@@ -131,23 +111,12 @@ public class CacheData : SingletonMonoBehaviour<CacheData>
             state.name = (string)row["Name"];
             state.explanation = (string)row["Explanation"];
 
-            state.Damage = (int)row["AT"];
+            state.Damage = (int)row["Damage"];
 
-            int buff = (int)row["Buff"];
-            int buff2 = (int)row["Buff2"];
-
-            // buff1
-            state.buff.AT = (buff >> 0) & 0x0f;         // 0 ~ 4   bit
-            state.buff.AT_Never = (buff >> 4) & 0x0f;   // 5 ~ 8   bit
-            state.buff.DF = (buff >> 8) & 0x0f;         // 9 ~ 12  bit
-            state.buff.DF_Never = (buff >> 12) & 0x0f;  // 13 ~ 16 bit
-
-            state.buff.AT_Weak = (buff >> 16) & 0x0f;   // 17 ~ 20 bit
-            state.buff.DF_Weak = (buff >> 20) & 0x0f;   // 21 ~ 24 bit
-
-            // buff2
-            state.buff.Stan = (buff2 >> 0) & 0x0f;  // 0 ~ 4   bit
-            state.buff.Heal = (buff2 >> 4) & 0x0f;  // 5 ~ 8   bit
+            foreach (var value in System.Enum.GetValues(typeof(BuffEnum))) {
+                string _key = System.Enum.GetName(typeof(BuffEnum), value);
+                if (row.ContainsKey(_key)) state.buff[(int)value] = (int)row[_key];
+            }
 
             state.Turn = (int)row["Turn"];
             state.Type = (int)row["Type"];

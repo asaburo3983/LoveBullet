@@ -48,7 +48,7 @@ namespace FightEnemy
                     break;
                 case 1:
                     damageText.enabled = true;
-                    damageText.text = pattrn.buff.DF.ToString();
+                    damageText.text = pattrn.buff[(int)BuffEnum.Bf_Diffence].ToString();
                     break;
                 case 2:
                     damageText.enabled = false;
