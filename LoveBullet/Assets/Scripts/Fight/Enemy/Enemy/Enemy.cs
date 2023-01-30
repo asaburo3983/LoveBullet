@@ -163,15 +163,16 @@ namespace Enemy
             Player.ReceiveDamage(atk);//UŒ‚
 
             // ƒoƒtŒnˆ—
-            gameState.ATBuff.Value = actiovePattern.buff.AT;
-            gameState.ATBuff_Never.Value += actiovePattern.buff.AT_Never;
+            gameState.ATBuff.Value = actiovePattern.buff[(int)BuffEnum.Bf_Attack];
+            gameState.ATBuff_Never.Value += actiovePattern.buff[(int)BuffEnum.Bf_Attack_Never];
 
-            gameState.DFBuff.Value = actiovePattern.buff.DF;
-            gameState.DFBuff_Never.Value += actiovePattern.buff.DF_Never;
+            gameState.DFBuff.Value = Mathf.Clamp(actiovePattern.buff[(int)BuffEnum.Bf_Diffence] > 0 ?
+                actiovePattern.buff[(int)BuffEnum.Bf_Diffence] + gameState.DFBuff_Never.Value : 0, 0, 999);
+            gameState.DFBuff_Never.Value += actiovePattern.buff[(int)BuffEnum.Bf_Diffence_Never];
 
 
             // ‰ñ•œˆ—
-            gameState.hp.Value += actiovePattern.buff.Heal;
+            gameState.hp.Value += actiovePattern.buff[(int)BuffEnum.Bf_Heal];
 
             // SEÄ¶
             AudioSystem.AudioControl.Instance.SE.EnemyAttackSePlayOneShot(actiovePattern.SE);
@@ -186,9 +187,9 @@ namespace Enemy
         }
 
 
-        public void ReceiveDamage(int _damage)
+        public int ReceiveDamage(int _damage)
         {
-            if (_damage <= 0) return;
+            if (_damage <= 0) return 0;
 
             // –hŒäƒfƒoƒtŒvZ  Š„‡‘‰Á
             int dmg = (_damage);
@@ -200,7 +201,7 @@ namespace Enemy
             // –hŒäƒoƒtŒvZ
             if (dmg < gameState.DFBuff.Value) {
                 gameState.DFBuff.Value -= dmg;
-                return;
+                return 0;
             }
             else {
                 dmg -= gameState.DFBuff.Value;
@@ -211,6 +212,8 @@ namespace Enemy
             gameState.hp.Value -= dmg;
 
             DamageAnimation();
+
+            return dmg;
         }
 
         public void ReceiveStan(int _stan)

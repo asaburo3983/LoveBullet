@@ -38,7 +38,7 @@ namespace Card
             public int AP;
             public int Damage;
 
-            public Buff buff = new Buff();
+            public int[] buff = new int[(int)BuffEnum.Max];
 
             public int Cocking;     // コッキング回数
             public int Reload;      // 強制リロード回数
@@ -84,7 +84,7 @@ namespace Card
             Rough.SetText(ui.explanation,state.explanation);
             Rough.SetText(ui.AP, state.AP);
             Rough.SetText(ui.AT, state.Damage);
-            Rough.SetText(ui.DF, state.buff.DF);
+            Rough.SetText(ui.DF, state.buff[(int)BuffEnum.Bf_Diffence]);
             
             //Rough.SetText(ui.ATWeaken, state.ATWeaken);
             //Rough.SetText(ui.DFWeaken, state.DFWeaken);

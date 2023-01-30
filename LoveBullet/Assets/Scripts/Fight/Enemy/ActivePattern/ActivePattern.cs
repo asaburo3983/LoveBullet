@@ -11,8 +11,8 @@ namespace Enemy
         public string explanation;
 
         public int Damage;
-        public Buff buff = new Buff();
-        
+        public int[] buff = new int[(int)BuffEnum.Max];
+
         public int Turn;
         public int Type;
         public int Fluctuation;
