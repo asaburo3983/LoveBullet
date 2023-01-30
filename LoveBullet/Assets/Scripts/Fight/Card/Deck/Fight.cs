@@ -89,6 +89,7 @@ namespace Card
             actEnemy.ObserveRemove().Subscribe(x => {
                 if (actEnemy.Count == 0) {
                     playerTurn = true;
+                    plState.Def.Value = 0;
                     return;
                 }
                 //“G‚Ìs“®ˆ—
