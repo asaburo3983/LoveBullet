@@ -55,11 +55,11 @@ namespace Card
                 {
                     correct = false;
                 }
-                if (AT != -1 && card.AT != AT)
+                if (AT != -1 && card.Damage != AT)
                 {
                     correct = false;
                 }
-                if (DF != -1 && card.DF != DF)
+                if (DF != -1 && card.buff[(int)BuffEnum.Bf_Diffence] != DF)
                 {
                     correct = false;
                 }

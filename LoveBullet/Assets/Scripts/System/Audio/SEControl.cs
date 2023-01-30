@@ -55,7 +55,7 @@ namespace AudioSystem
         /// SEを再生する
         /// </summary>
         /// <param name="_act"></param>
-        public AudioSource PlaySeOneShot(SE_List _act)
+        public AudioSource PlaySeOneShot(SEList _act)
         {
             //再生処理
             var audioSource = audioSourceList[listIdx];
@@ -66,6 +66,40 @@ namespace AudioSystem
 
             return audioSource;
         }
+
+        /// <summary>
+        /// SEを再生する
+        /// </summary>
+        /// <param name="_act"></param>
+        public AudioSource CardSePlayOneShot(int id)
+        {
+            //再生処理
+            var audioSource = audioSourceList[listIdx];
+            audioSource.PlayCardSE(id);
+
+            //インデックスを更新
+            UpdateIdx();
+
+            return audioSource;
+        }
+
+        /// <summary>
+        /// SEを再生する
+        /// </summary>
+        /// <param name="_act"></param>
+        public AudioSource EnemyAttackSePlayOneShot(int id)
+        {
+            //再生処理
+            var audioSource = audioSourceList[listIdx];
+            audioSource.PlayEnemyAttackSE(id);
+
+            //インデックスを更新
+            UpdateIdx();
+
+            return audioSource;
+        }
+
+
 
         /// <summary>
         /// インデックスを更新する

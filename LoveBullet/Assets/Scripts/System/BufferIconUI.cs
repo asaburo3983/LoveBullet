@@ -16,6 +16,7 @@ enum BufferType
 {
     Atk_Weak,
     Def_Weak,
+    Atk_Buff,
     Armor,
     Stan,
 }
@@ -43,7 +44,36 @@ public class BufferIconUI : MonoBehaviour
 
     void PlayerIconInit()
     {
+        Player player = Player.instance;
 
+        switch (buffer) {
+            case BufferType.Atk_Weak:
+                player.gameState.ATWeaken.Subscribe(x => {
+                    transform.GetChild(0).gameObject.SetActive(x > 0);
+                    text.text = x.ToString();
+                }).AddTo(this);
+                break;
+            case BufferType.Def_Weak:
+                player.gameState.DFWeaken.Subscribe(x => {
+                    transform.GetChild(0).gameObject.SetActive(x > 0);
+                    text.text = x.ToString();
+                }).AddTo(this);
+                break;
+            case BufferType.Atk_Buff:
+                player.gameState.Atk.Subscribe(x => {
+                    transform.GetChild(0).gameObject.SetActive(x > 0);
+                    text.text = x.ToString();
+                }).AddTo(this);
+                break;
+            case BufferType.Armor:
+                player.gameState.Def.Subscribe(x => {
+                    transform.GetChild(0).gameObject.SetActive(x > 0);
+                    text.text = x.ToString();
+                }).AddTo(this);
+                break;
+            default:
+                break;
+        }
     }
 
     void EnemyIconInit()

@@ -31,7 +31,10 @@ public class Player : SingletonMonoBehaviour<Player>
     {
         public IntReactiveProperty maxHP;
         public IntReactiveProperty hp;
-        public IntReactiveProperty DF;
+        public IntReactiveProperty Atk;
+        public IntReactiveProperty Atk_Never;
+        public IntReactiveProperty Def;
+        public IntReactiveProperty Def_Never;
         public IntReactiveProperty ATWeaken;
         public IntReactiveProperty DFWeaken;
 
@@ -59,15 +62,15 @@ public class Player : SingletonMonoBehaviour<Player>
     /// </summary>
     public static void ResetDF()
     {
-        instance.gameState.DF.Value = 0;
+        instance.gameState.Def.Value = 0;
     }
     public static void PlusDF(int _value)
     {
-        instance.gameState.DF.Value += _value;
+        instance.gameState.Def.Value += _value;
     }
     public static void MinusDF(int _value)
     {
-        instance.gameState.DF.Value -= _value;
+        instance.gameState.Def.Value -= _value;
     }
     /// <summary>
     /// プレイヤーにダメージを与える処理
@@ -76,11 +79,11 @@ public class Player : SingletonMonoBehaviour<Player>
     public static void ReceiveDamage(int _damage)
     {
         var state = instance.gameState;
-        var dmg = _damage - state.DF.Value;
+        var dmg = _damage - state.Def.Value;
         if (dmg > 0) {
             state.hp.Value -= dmg;
         }
-        state.DF.Value = Mathf.Clamp(state.DF.Value - _damage, 0, 9999);
+        state.Def.Value = Mathf.Clamp(state.Def.Value - _damage, 0, 9999);
     }
 
     // 被ダメアニメーション

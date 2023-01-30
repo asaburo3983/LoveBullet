@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8e7785e9939a784aa8caba799428688, type: 3}
-  m_Name: Cannon
+  m_Name: CannonShot
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: f59ef0260435107478db352ef8c04217, type: 3}
-  outputGroup: {fileID: 4799263259807566236, guid: a3c40694c255e57449e8f174bdc3570c, type: 2}
+  clip: {fileID: 0}
+  outputGroup: {fileID: 0}

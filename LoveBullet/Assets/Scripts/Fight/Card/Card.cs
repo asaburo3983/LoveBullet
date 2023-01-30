@@ -34,17 +34,23 @@ namespace Card
             public string name;
             public int rank;
             public string explanation;
+
             public int AP;
-            public int AT;
-            public int DF;
-            public int Stan;
-            public int ATWeaken;
-            public int DFWeaken;
-            public bool Whole;      // ‘S‘ÌUŒ‚
+            public int Damage;
+
+            public int[] buff = new int[(int)BuffEnum.Max];
+
             public int Cocking;     // ƒRƒbƒLƒ“ƒO‰ñ”
             public int Reload;      // ‹­§ƒŠƒ[ƒh‰ñ”
-            public int Scrap;       // ”pŠü
             public int SelfDamage;  // ©
+            public int MultiAttack; // UŒ‚‰ñ”
+            public bool Scrap;      // ”pŠü
+            public bool Whole;      // ‘S‘ÌUŒ‚
+            public bool Random;     // ƒ‰ƒ“ƒ_ƒ€UŒ‚
+
+            public int number;
+            public int SE;
+            public int Effect;
             public List<int> value = new List<int>();
         }
         protected State state;
@@ -77,8 +83,8 @@ namespace Card
             Rough.SetText(ui.name, state.name);
             Rough.SetText(ui.explanation,state.explanation);
             Rough.SetText(ui.AP, state.AP);
-            Rough.SetText(ui.AT, state.AT);
-            Rough.SetText(ui.DF, state.DF);
+            Rough.SetText(ui.AT, state.Damage);
+            Rough.SetText(ui.DF, state.buff[(int)BuffEnum.Bf_Diffence]);
             
             //Rough.SetText(ui.ATWeaken, state.ATWeaken);
             //Rough.SetText(ui.DFWeaken, state.DFWeaken);

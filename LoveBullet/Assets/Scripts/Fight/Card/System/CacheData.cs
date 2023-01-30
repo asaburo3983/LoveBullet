@@ -27,7 +27,7 @@ public class CacheData : SingletonMonoBehaviour<CacheData>
         }
     }
     /// <summary>
-    /// ƒJ[ƒh‚ÌƒLƒƒƒbƒVƒ…‰»
+    /// ã‚«ãƒ¼ãƒ‰ã®ã‚­ãƒ£ãƒƒã‚·ãƒ¥åŒ–
     /// </summary>
     void CacheCard()
     {
@@ -45,31 +45,24 @@ public class CacheData : SingletonMonoBehaviour<CacheData>
             state.explanation = (string)row["Explanation"];
 
             state.AP = (int)row["AP"];
-            state.AT = (int)row["AT"];
-            state.DF = (int)row["DF"];
+            state.Damage = (int)row["Damage"];
             state.rank = (int)row["Rank"];
+            state.number = (int)row["Number"];
 
-            state.ATWeaken = (int)row["ATWeaken"];
-            state.DFWeaken = (int)row["DFWeaken"];
-            state.Stan = (int)row["Stan"];
-            state.Whole = (int)row["Whole"] == 1;
-            state.Cocking = (int)row["Cocking"];
-            state.Reload = (int)row["Reload"];
-            state.Scrap = (int)row["Scrap"];
-            state.SelfDamage = (int)row["SelfDamage"];
+            state.SE = (int)row["SE"];
+            state.Effect = (int)row["Effect"];
 
-            state.value.Add((int)row["Value0"]);
-            state.value.Add((int)row["Value1"]);
-            state.value.Add((int)row["Value2"]);
-            state.value.Add((int)row["Value3"]);
-            state.value.Add((int)row["Value4"]);
+            foreach (var value in System.Enum.GetValues(typeof(BuffEnum))) {
+                string _key = System.Enum.GetName(typeof(BuffEnum), value);
+                if (row.ContainsKey(_key)) state.buff[(int)value] = (int)row[_key];
+            }
 
             cardStates.Add(state);
             idCount++;
         }
     }
     /// <summary>
-    /// “¹’†“Gƒf[ƒ^‚ÌƒLƒƒƒbƒVƒ…
+    /// é“ä¸­æ•µãƒ‡ãƒ¼ã‚¿ã®ã‚­ãƒ£ãƒƒã‚·ãƒ¥
     /// </summary>
     void CacheEnemy()
     {
@@ -89,7 +82,6 @@ public class CacheData : SingletonMonoBehaviour<CacheData>
             state.explanation = (string)row["Explanation"];
             state.hpMax = (int)row["HP"];
             state.hpFluctuationPlus = (int)row["HPFluctuationPlus"];
-            state.hpFluctuationMinus = (int)row["HPFluctuationMinus"];
 
             state.pattern.Add((int)row["Pattern1"]);
             state.pattern.Add((int)row["Pattern2"]);
@@ -104,12 +96,12 @@ public class CacheData : SingletonMonoBehaviour<CacheData>
         }
     }
     /// <summary>
-    /// “Gs“®ƒpƒ^[ƒ“‚ÌƒLƒƒƒbƒVƒ…
+    /// æ•µè¡Œå‹•ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ã‚­ãƒ£ãƒƒã‚·ãƒ¥
     /// </summary>   
     void CacheEnemyActivePattern()
     {
         var db = loadDB.GetDatabase(Database.Value.EnemyActionPattern);
-        var cmd = "SELECT * FROM EnemyActivePattern";
+        var cmd = "SELECT * FROM ActivePattern";
         var table = db.ExecuteQuery(cmd);
 
         foreach (var row in table.Rows)
@@ -118,29 +110,31 @@ public class CacheData : SingletonMonoBehaviour<CacheData>
 
             state.name = (string)row["Name"];
             state.explanation = (string)row["Explanation"];
-            state.AT = (int)row["AT"];
-            state.DF = (int)row["DF"];
-            state.ATWeaken = (int)row["ATWeaken"];
-            state.DFWeaken = (int)row["DFWeaken"];
+
+            state.Damage = (int)row["Damage"];
+
+            foreach (var value in System.Enum.GetValues(typeof(BuffEnum))) {
+                string _key = System.Enum.GetName(typeof(BuffEnum), value);
+                if (row.ContainsKey(_key)) state.buff[(int)value] = (int)row[_key];
+            }
+
             state.Turn = (int)row["Turn"];
             state.Type = (int)row["Type"];
             state.Fluctuation = (int)row["FluctuationPlus"];
 
-            state.value.Add((int)row["Value1"]);
-            state.value.Add((int)row["Value2"]);
-            state.value.Add((int)row["Value3"]);
-            state.value.Add((int)row["Value4"]);
+            state.SE = (int)row["SE"];
+            state.Effect = (int)row["Effect"];
 
             enemyActivePattern.Add(state);
         }
     }
     /// <summary>
-    /// “G‚ÌoŒ»ƒpƒ^[ƒ“
+    /// æ•µã®å‡ºç¾ãƒ‘ã‚¿ãƒ¼ãƒ³
     /// </summary>
     void CacheEnemyAddventPattern()
     {
-        var db = loadDB.GetDatabase(Database.Value.EnemyAddventPattern);
-        var cmd = "SELECT * FROM EnemyAddventPattern";
+        var db = loadDB.GetDatabase(Database.Value.Party);
+        var cmd = "SELECT * FROM Party";
         var table = db.ExecuteQuery(cmd);
 
         foreach (var row in table.Rows)
@@ -149,7 +143,7 @@ public class CacheData : SingletonMonoBehaviour<CacheData>
 
             for(int i=0;i< (table.Columns.Count - 2); i++)
             {
-                string enemyTag = "Enemy" + (i+1).ToString();
+                string enemyTag = "Enemy" + (i + 1).ToString();
                 state.enemysId.Add((int)row[enemyTag]);
             }
             enemyAddventPattern.Add(state);

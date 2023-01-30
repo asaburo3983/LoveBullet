@@ -89,6 +89,7 @@ namespace Card
             actEnemy.ObserveRemove().Subscribe(x => {
                 if (actEnemy.Count == 0) {
                     playerTurn = true;
+                    plState.Def.Value = 0;
                     return;
                 }
                 //敵の行動処理
@@ -150,39 +151,57 @@ namespace Card
             if (cocking) return;
 
             var _card = gunInCards[0];
-            int _damage = _card.AT;
+            int _damage = _card.Damage + plState.Atk.Value + plState.Atk_Never.Value;
 
             // 攻撃デバフが存在する場合、値の補正を行う
             if (plState.ATWeaken.Value > 0) {
                 _damage *= player.Rate.AT;
                 _damage /= 100;
             }
-            
-            // 攻撃処理
-            if (gunInCards[0].Whole) {
 
-                // 全体攻撃
-                foreach(var _eObj in enemyObjects) {
-                    _eObj.ReceiveDamage(_damage);
-                    _eObj.ReceiveStan(_card.Stan);
-                    _eObj.ReceiveATWeaken(_card.ATWeaken);
-                    _eObj.ReceiveDFWeaken(_card.DFWeaken);
+            // SE再生
+            AudioSystem.AudioControl.Instance.SE.CardSePlayOneShot(gunInCards[0].SE);
+
+            Debug.LogError("ランダム攻撃処理　未作成");
+            Debug.LogError("与ダメージ吸収処理　　未作成");
+
+            // 攻撃処理
+
+            // 攻撃回数分ループする
+            for (int i = 0; i < gunInCards[0].MultiAttack; i++) {
+                if (gunInCards[0].Whole) {
+
+                    // 全体攻撃
+                    foreach (var _eObj in enemyObjects) {
+                        _eObj.ReceiveDamage(_damage);
+                        _eObj.ReceiveStan(_card.buff[(int)BuffEnum.Bf_Stan]);
+                        _eObj.ReceiveATWeaken(_card.buff[(int)BuffEnum.Bf_Weaken_Attack]);
+                        _eObj.ReceiveDFWeaken(_card.buff[(int)BuffEnum.Bf_Weaken_Diffence]);
+                    }
                 }
-            }
-            else {
-                // 単体攻撃
-                _enemy.ReceiveDamage(_damage);
-                _enemy.ReceiveStan(_card.Stan);
-                _enemy.ReceiveATWeaken(_card.ATWeaken);
-                _enemy.ReceiveDFWeaken(_card.DFWeaken);
+                else {
+                    // 単体攻撃
+                    _enemy.ReceiveDamage(_damage);
+                    _enemy.ReceiveStan(_card.buff[(int)BuffEnum.Bf_Stan]);
+                    _enemy.ReceiveATWeaken(_card.buff[(int)BuffEnum.Bf_Weaken_Attack]);
+                    _enemy.ReceiveDFWeaken(_card.buff[(int)BuffEnum.Bf_Weaken_Diffence]);
+                }
             }
 
             // プレイヤーステータス加減
             int _progress = _card.AP;
-            plState.DF.Value += _card.DF;
-            plState.freeCocking += _card.Cocking;
+            plState.Def.Value = Mathf.Clamp(_card.buff[(int)BuffEnum.Bf_Diffence] > 0 ? _card.buff[(int)BuffEnum.Bf_Diffence] + plState.Def_Never.Value : 0, 0, 999);
+            plState.Atk.Value = _card.buff[(int)BuffEnum.Bf_Attack];
+            plState.Atk_Never.Value += _card.buff[(int)BuffEnum.Bf_Attack_Never];
+            plState.Def_Never.Value += _card.buff[(int)BuffEnum.Bf_Diffence_Never];
+
+
+            plState.hp.Value += _card.buff[(int)BuffEnum.Bf_Heal];
+
             plState.ATWeaken.Value = Mathf.Clamp(plState.ATWeaken.Value - 1, 0, 9999);
             plState.DFWeaken.Value = Mathf.Clamp(plState.DFWeaken.Value - 1, 0, 9999);
+
+
 
 
             // 強制リロードするか
@@ -241,11 +260,11 @@ namespace Card
             }
 
             // 防御バフがある場合、ダメージ減算
-            if (dmg <= plState.DF.Value) {
-                plState.DF.Value -= dmg;
+            if (dmg <= plState.Def.Value) {
+                plState.Def.Value -= dmg;
             }
             else {
-                plState.hp.Value -= dmg - plState.DF.Value;
+                plState.hp.Value -= dmg - plState.Def.Value;
             }
         }
 
@@ -326,6 +345,9 @@ namespace Card
             }
             gunInCards.Clear();
 
+            // とりあえず音
+            AudioSystem.AudioControl.Instance.SE.PlaySeOneShot(SEList.Reload);
+
 
             //デッキ内カードが込める弾の個数より少ない時
             if (deckInCards.Count < bulletNum)
@@ -353,6 +375,8 @@ namespace Card
 
             // コッキング中は再度処理しない
             if (cocking) return;
+
+            AudioSystem.AudioControl.Instance.SE.PlaySeOneShot(SEList.Cocking);
 
             gunInCards.Move(0, 5);
             ProgressTurn(cockingCost);
@@ -383,8 +407,8 @@ namespace Card
         {
             if (enemyObjects.Count <= 0) { Debug.LogError("敵が存在しない状態でスキルを発動しています"); return; }
             //敵にダメージなり与える処理
-            enemyObjects[target].ReceiveDamage(gunInCards[0].AT);//敵へ攻撃処理
-            plState.DF.Value += gunInCards[0].DF;//プレイヤーへ防御追加
+            enemyObjects[target].ReceiveDamage(gunInCards[0].Damage);//敵へ攻撃処理
+            plState.Def.Value += gunInCards[0].buff[(int)BuffEnum.Bf_Diffence];//プレイヤーへ防御追加
         }
         #endregion
 
