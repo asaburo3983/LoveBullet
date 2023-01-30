@@ -1,1 +1,9 @@
-Number,Name,EnumName,Explanationint,string,string,string0,‚È‚µ,None,‚È‚µ1,‘S‘ÌUŒ‚,All,“G‘S‘Ì‚ÉUŒ‚‚·‚é2,ƒ‰ƒ“ƒ_ƒ€,Random,ƒ‰ƒ“ƒ_ƒ€‚È“I‚ÉUŒ‚‚·‚é3,N‰ñUŒ‚,MultiAttack,w’è‰ñ”UŒ‚‚·‚é7,©,SelfHarm,©g‚ÌHP‚ğí‚é8,ƒŠƒ[ƒh,Reload,ƒŠƒ[ƒh‚ğs‚¤9,ƒRƒbƒLƒ“ƒO,Cocking,ƒRƒbƒLƒ“ƒO‚ğs‚¤
+ï»¿Number,Name,EnumName,Explanation
+int,string,string,string
+0,ãªã—,None,ãªã—
+1,å…¨ä½“æ”»æ’ƒ,Sp_All,æ•µå…¨ä½“ã«æ”»æ’ƒã™ã‚‹
+2,ãƒ©ãƒ³ãƒ€ãƒ ,Sp_Random,ãƒ©ãƒ³ãƒ€ãƒ ãªçš„ã«æ”»æ’ƒã™ã‚‹
+3,Nå›æ”»æ’ƒ,Sp_MultiAttack,æŒ‡å®šå›æ•°æ”»æ’ƒã™ã‚‹
+7,è‡ªå‚·,Sp_SelfHarm,è‡ªèº«ã®HPã‚’å‰Šã‚‹
+8,ãƒªãƒ­ãƒ¼ãƒ‰,Sp_Reload,ãƒªãƒ­ãƒ¼ãƒ‰ã‚’è¡Œã†
+9,ã‚³ãƒƒã‚­ãƒ³ã‚°,Sp_Cocking,ã‚³ãƒƒã‚­ãƒ³ã‚°ã‚’è¡Œã†
