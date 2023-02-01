@@ -417,6 +417,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: FightManager
       objectReference: {fileID: 0}
+    - target: {fileID: 800379716734763279, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 465a691a460e3294db388bafc132f0ab, type: 3}
+    - target: {fileID: 2530004093206349139, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: e2597b1312551f7469a4a2bcbace7b41, type: 3}
     - target: {fileID: 2699790138646095243, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
       propertyPath: zPos
       value: 0
@@ -561,10 +569,18 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8254742697519951473, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 76d3dc57565663f439ba8e3f13c11fed, type: 3}
     - target: {fileID: 8406525351778672332, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
       propertyPath: m_Name
       value: FightLay1UICanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 8784980375022112334, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: fe19993f254a42c4c8aa2a046b952bf7, type: 3}
     - target: {fileID: 8784980375343721632, guid: edc94356d8f74414eac5a57462e1935e, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
