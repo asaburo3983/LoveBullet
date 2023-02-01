@@ -416,7 +416,11 @@ MonoBehaviour:
       value: 0
     ATBuff:
       value: 0
+    ATBuff_Never:
+      value: 0
     DFBuff:
+      value: 0
+    DFBuff_Never:
       value: 0
     ATWeaken:
       value: 0
@@ -1281,7 +1285,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ba4687e3cc14cf94db92694a44f15ba4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 76d3dc57565663f439ba8e3f13c11fed, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
