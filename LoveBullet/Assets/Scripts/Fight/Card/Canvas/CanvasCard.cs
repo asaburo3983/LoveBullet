@@ -8,23 +8,17 @@ namespace Card
     public class CanvasCard : Card
     {
 
-        Vector2 originSize;
+        [SerializeField]Vector2 originSize = Vector2.one;
         [SerializeField]Vector2 bigSize;
         [SerializeField] float duration;
         Tween tw;
 
-        // Start is called before the first frame update
-        void Start()
+        public void SetSize(Vector2 _origin,Vector2 _big)
         {
-            originSize = Vector2.one;
-
+            originSize = _origin;
+            bigSize = _big;
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
         public void PointEnter()
         {
             if (tw != null)
