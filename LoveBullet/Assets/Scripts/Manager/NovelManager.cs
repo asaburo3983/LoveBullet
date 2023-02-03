@@ -44,6 +44,7 @@ public class NovelManager : SingletonMonoBehaviour<NovelManager>
     public float textSpeed = 5.0f;
     float canViewTextNum = 0;
 
+
     private void Awake()
     {
         SingletonCheck(this);
@@ -172,14 +173,14 @@ public class NovelManager : SingletonMonoBehaviour<NovelManager>
         cacheTextR[1] = null;
         cacheTextC[1] = null;
 
-        var nowPageData = cs.scenarios[_page];
-        var nextPageData = cs.scenarios[_page+1];
+        var nowPageData = cs.chapter1[_page];
+        var nextPageData = cs.chapter1[_page+1];
         string posString = nowPageData.position;
         //前のポジションを参照する
         var minusCount = 1;
         while (posString == "")
         {
-            posString = cs.scenarios[_page - minusCount].position;
+            posString = cs.chapter1[_page - minusCount].position;
             minusCount++;
         }
         //一行目を代入する処理

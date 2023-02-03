@@ -419,7 +419,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 405b63a696130fb40bf6432376dbe4db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scenarios: []
 --- !u!1001 &822275666
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -429,15 +428,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8434137615799588664, guid: 390d906bd2ab47844bc013fc7b766933, type: 3}
       propertyPath: databaseName.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8434137615799588664, guid: 390d906bd2ab47844bc013fc7b766933, type: 3}
       propertyPath: databaseName.Array.data[0]
-      value: Chapter1.db
+      value: Tatie.db
       objectReference: {fileID: 0}
     - target: {fileID: 8434137615799588664, guid: 390d906bd2ab47844bc013fc7b766933, type: 3}
       propertyPath: databaseName.Array.data[1]
-      value: EnemyAddventPattern.db
+      value: Chapter1.db
       objectReference: {fileID: 0}
     - target: {fileID: 8434137615799588664, guid: 390d906bd2ab47844bc013fc7b766933, type: 3}
       propertyPath: databaseName.Array.data[2]
