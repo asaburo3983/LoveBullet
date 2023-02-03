@@ -4,20 +4,10 @@ using UnityEngine;
 
 public class BandManager : MonoBehaviour
 {
-    [SerializeField] GameObject deckList;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] DeckListManager deckList;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void InstantateDeckList()
     {
-        Instantiate(deckList);
+        deckList.OnActive();
     }
 }

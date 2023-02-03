@@ -38,6 +38,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2101354558445024957}
     m_Modifications:
+    - target: {fileID: 2225471545685144384, guid: cd0740e2fb37c154a93aa695ad9d0d13, type: 3}
+      propertyPath: originSize.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2225471545685144384, guid: cd0740e2fb37c154a93aa695ad9d0d13, type: 3}
+      propertyPath: originSize.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6348224142813131794, guid: cd0740e2fb37c154a93aa695ad9d0d13, type: 3}
       propertyPath: m_Name
       value: Canvas Card
