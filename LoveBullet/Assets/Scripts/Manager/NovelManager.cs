@@ -44,7 +44,12 @@ public class NovelManager : SingletonMonoBehaviour<NovelManager>
     public float textSpeed = 5.0f;
     float canViewTextNum = 0;
 
-
+    //—§‚¿ŠG
+    Sprite tatieL;
+    Sprite tatieR;
+    [SerializeField]SpriteRenderer tatieLObj;
+    [SerializeField]SpriteRenderer tatieRObj;
+    
     private void Awake()
     {
         SingletonCheck(this);
@@ -224,11 +229,52 @@ public class NovelManager : SingletonMonoBehaviour<NovelManager>
 
         
     }
+
+    void InsertImage(int _page)
+    {
+        var headStr = "Texture/Love/Tatie/";
+
+        var textureNumL = cs.chapter1[_page].charaImageL;
+        var textureNumR = cs.chapter1[_page].charaImageR;
+        if (textureNumL != 0)
+        {
+                foreach(var taties in cs.tatie)
+            {
+                if (taties.number == textureNumL)
+                {
+                    string[] words = taties.textureName.Split('.');
+                    tatieL = Resources.Load<Sprite>(headStr + words[0]);
+                }
+            }
+        }
+        else
+        {
+            tatieL = null;
+        }
+        if (textureNumR != 0)
+        {
+            foreach (var taties in cs.tatie)
+            {
+                if (taties.number == textureNumR)
+                {
+                    string[] words = taties.textureName.Split('.');
+                    tatieR = Resources.Load<Sprite>(headStr + words[0]);
+                }
+            }
+        }
+
+        tatieLObj.sprite = tatieL;
+        tatieRObj.sprite = tatieR;
+
+
+
+    }
     void NextPage()
     {
         if (isNovel.Value && InputSystem.instance.WasPressThisFlame("Player", "Fire"))
         {
             InsertText(page);
+            InsertImage(page);
         }
     }
     void InputEvent()

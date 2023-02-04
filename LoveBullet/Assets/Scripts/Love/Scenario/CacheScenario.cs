@@ -6,8 +6,8 @@ public class CacheScenario : SingletonMonoBehaviour<CacheScenario>
 {
     Database.Load loadDB;
 
-    public List<Scenario> chapter1;
-    public List<Tatie> tatie;
+    public List<Scenario> chapter1 = new List<Scenario>();
+    public List<Tatie> tatie=new List<Tatie>();
     // Start is called before the first frame update
     void Start()
     {
@@ -20,8 +20,8 @@ public class CacheScenario : SingletonMonoBehaviour<CacheScenario>
     }
     void CacheTatie()
     {
-        var db = loadDB.GetDatabase(Database.Value.Card);
-        var cmd = "SELECT * FROM Chapter1";
+        var db = loadDB.GetDatabase((Database.Value)0);
+        var cmd = "SELECT * FROM Tatie";
         var table = db.ExecuteQuery(cmd);
 
         foreach (var row in table.Rows)
@@ -35,7 +35,7 @@ public class CacheScenario : SingletonMonoBehaviour<CacheScenario>
     }
     void CacheScenario1()
     {
-        var db = loadDB.GetDatabase(Database.Value.Card);
+        var db = loadDB.GetDatabase((Database.Value)1);
         var cmd = "SELECT * FROM Chapter1";
         var table = db.ExecuteQuery(cmd);
 
