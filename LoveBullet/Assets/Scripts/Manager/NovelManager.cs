@@ -82,6 +82,24 @@ public class NovelManager : SingletonMonoBehaviour<NovelManager>
             CharacterFeed();
 
         }
+
+        //// エフェクトデバッグ用
+        //if(Input.GetKeyDown(KeyCode.Alpha1)) // 左画像の揺れ
+        //{
+        //    CinematicsManager.Instance.PlayCinematicEffect(1, tatieLObj, -1, tatieRObj);
+        //}
+        //if(Input.GetKeyDown(KeyCode.Alpha2)) // 点滅
+        //{
+        //    CinematicsManager.Instance.PlayCinematicEffect(2, tatieLObj, -1, tatieRObj);
+        //}
+        //if(Input.GetKeyDown(KeyCode.Alpha3)) // 右画像の揺れ
+        //{
+        //    CinematicsManager.Instance.PlayCinematicEffect(-1, tatieLObj, 1, tatieRObj);
+        //}
+        //if (Input.GetKeyDown(KeyCode.Alpha4)) // 点滅（右を使って変更があるかどうか確認)
+        //{
+        //    CinematicsManager.Instance.PlayCinematicEffect(-1, tatieLObj, 2, tatieRObj);
+        //}
     }
 
     void CharacterFeed()
@@ -273,6 +291,8 @@ public class NovelManager : SingletonMonoBehaviour<NovelManager>
     {
         if (isNovel.Value && InputSystem.instance.WasPressThisFlame("Player", "Fire"))
         {
+            // エフェクト発生
+            // CinematicsManager.Instance.PlayCinematicEffect(1, tatieLObj, -1, tatieRObj);
             InsertText(page);
             InsertImage(page);
         }
