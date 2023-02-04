@@ -28,10 +28,10 @@ namespace Card
         [System.Serializable]
         public class State
         {
+            public string name;
             public int id;
             public GENRE genre;
             public TYPE type;
-            public string name;
             public int rank;
             public string explanation;
 
@@ -54,6 +54,7 @@ namespace Card
             public List<int> value = new List<int>();
         }
         protected State state;
+        public State STATE => state;
 
         [System.Serializable]
         public struct UI
