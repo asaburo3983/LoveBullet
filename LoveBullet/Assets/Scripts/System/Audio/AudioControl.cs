@@ -4,6 +4,12 @@ using UnityEngine;
 
 namespace AudioSystem
 {
+    public enum AudioType
+    {
+        Master,
+        BGM,
+        SE
+    }
 
     public sealed class AudioControl : MonoBehaviour
     {
