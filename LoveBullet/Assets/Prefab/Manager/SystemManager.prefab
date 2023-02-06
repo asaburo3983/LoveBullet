@@ -108,6 +108,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   masterAM: {fileID: 24100000, guid: 447b53404951faf4bbba7f3815f6ef4b, type: 2}
+  masterVolume:
+    value: 1
   bgmVolume:
     value: 1
   seVolume:

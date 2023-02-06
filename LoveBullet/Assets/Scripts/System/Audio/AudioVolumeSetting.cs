@@ -11,6 +11,9 @@ public sealed class AudioVolumeSetting : MonoBehaviour
     private AudioMixer masterAM;
 
     [SerializeField]
+    private FloatReactiveProperty masterVolume = new FloatReactiveProperty(1.0f);   //マスターボリューム値
+
+    [SerializeField]
     private FloatReactiveProperty bgmVolume = new FloatReactiveProperty(1.0f);      //BGMのボリューム値
     
     [SerializeField]
@@ -18,14 +21,29 @@ public sealed class AudioVolumeSetting : MonoBehaviour
 
     private void Start()
     {
+        masterVolume
+            .Subscribe(_value => {
+                masterAM.SetFloat("BGM_Volume", ConvertVolumeToDb(_value * masterVolume.Value));
+                masterAM.SetFloat("SE_Volume", ConvertVolumeToDb(_value * masterVolume.Value));
+            }).AddTo(this);
+
         bgmVolume
-            .Subscribe(_value => masterAM.SetFloat("BGM_Volume", ConvertVolumeToDb(_value)))
+            .Subscribe(_value => masterAM.SetFloat("BGM_Volume", ConvertVolumeToDb(_value * masterVolume.Value)))
             .AddTo(this);
 
         seVolume
-            .Subscribe(_value => masterAM.SetFloat("SE_Volume", ConvertVolumeToDb(_value)))
+            .Subscribe(_value => masterAM.SetFloat("SE_Volume", ConvertVolumeToDb(_value * masterVolume.Value)))
             .AddTo(this);
     }
+
+    /// <summary>
+    /// マスターボリューム値
+    /// </summary>
+    public float MasterVolume {
+        get { return masterVolume.Value; }
+        set { masterVolume.Value = Mathf.Clamp01(value); }
+    }
+    public FloatReactiveProperty MasterVolumeReactive => masterVolume;
 
     /// <summary>
     /// BGMのボリューム値
@@ -33,8 +51,10 @@ public sealed class AudioVolumeSetting : MonoBehaviour
     public float BGMVolume
     {
         get { return bgmVolume.Value; }
-        set { bgmVolume.Value = Mathf.Clamp(value, 0f, 1f); }
+        set { bgmVolume.Value = Mathf.Clamp01(value); }
     }
+    public FloatReactiveProperty BGMVolumeReactive => bgmVolume;
+    
 
     /// <summary>
     /// SEのボリューム値
@@ -42,8 +62,9 @@ public sealed class AudioVolumeSetting : MonoBehaviour
     public float SEVolume
     {
         get { return seVolume.Value; }
-        set { seVolume.Value = Mathf.Clamp(value, 0f, 1f); }
+        set { seVolume.Value = Mathf.Clamp01(value); }
     }
+    public FloatReactiveProperty SEVolumeReactive => seVolume;
 
     /// <summary>
     /// ボリューム値をデシベル値に変換する
