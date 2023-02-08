@@ -287,14 +287,27 @@ public class NovelManager : SingletonMonoBehaviour<NovelManager>
 
 
     }
+
+    void InsertEffect(int _page)
+    {
+        // エフェクト発生
+        var effectNumL = cs.chapter1[_page].effectL;
+        var effectNumR = cs.chapter1[_page].effectR;
+
+        if (effectNumL <= 0) { effectNumL = -1; }
+        if (effectNumR <= 0) { effectNumR = -1; }
+
+        CinematicsManager.Instance.PlayCinematicEffect(effectNumL, tatieLObj, effectNumR, tatieRObj);
+    }
     void NextPage()
     {
         if (isNovel.Value && InputSystem.instance.WasPressThisFlame("Player", "Fire"))
         {
-            // エフェクト発生
-            // CinematicsManager.Instance.PlayCinematicEffect(1, tatieLObj, -1, tatieRObj);
-            InsertText(page);
+
             InsertImage(page);
+            InsertEffect(page);
+            InsertText(page);
+            
         }
     }
     void InputEvent()

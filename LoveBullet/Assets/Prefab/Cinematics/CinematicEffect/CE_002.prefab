@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectDuration: 0.6
   blackPanel: {fileID: 925411030893498167}
-  blackenSpeed: 0.1
+  blackenSpeed: 0.3
 --- !u!1 &925411030720844424
 GameObject:
   m_ObjectHideFlags: 0
