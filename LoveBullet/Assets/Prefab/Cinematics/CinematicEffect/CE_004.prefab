@@ -49,6 +49,8 @@ MonoBehaviour:
   effectLPos: {x: -750, y: 0}
   effectRPos: {x: 750, y: 0}
   stillImage: {fileID: 1337700661425112103}
+  spriteL: {fileID: 21300000, guid: 804c6a432711d804fb212a4cb3a24c1a, type: 3}
+  spriteR: {fileID: 21300000, guid: 7346e0ab626f0a24688d3a2c50c72ae4, type: 3}
 --- !u!1 &1337700661425112097
 GameObject:
   m_ObjectHideFlags: 0

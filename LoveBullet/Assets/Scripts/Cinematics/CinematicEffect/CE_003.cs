@@ -14,6 +14,11 @@ public class CE_003 : CE_Base
     [SerializeField, Header("スチル画像オブジェクト")]
     private Image stillImage;
 
+    [SerializeField, Header("左で使う画像アセット")]
+    private Sprite spriteL;
+    [SerializeField, Header("右で使う画像アセット")]
+    private Sprite spriteR;
+
     private void OnEnable()
     {
         if (CinematicsManager.Instance != null)
@@ -21,10 +26,12 @@ public class CE_003 : CE_Base
             if(CinematicsManager.Instance.GetEffectSide() == CinematicsManager.EffectSide.effL)
             {
                 tween = stillImage.transform.DOLocalMove(effectLPos, 0f);
+                stillImage.sprite = spriteL;
             }
             else
             {
                 tween = stillImage.transform.DOLocalMove(effectRPos, 0f);
+                stillImage.sprite = spriteR;
             }
 
             // 演出はここ。今後変更かも
