@@ -8,16 +8,20 @@ public class CacheScenario : SingletonMonoBehaviour<CacheScenario>
 
     public List<Scenario> chapter1 = new List<Scenario>();
     public List<Tatie> tatie=new List<Tatie>();
-    // Start is called before the first frame update
-    void Start()
+    public List<DropObject> dropObject = new List<DropObject>();
+
+    private void Awake()
     {
         if (SingletonCheck(this))
         {
             loadDB = Database.Load.instance;
             CacheTatie();
             CacheScenario1();
+            CacheDropObject();
         }
     }
+
+
     void CacheTatie()
     {
         var db = loadDB.GetDatabase((Database.Value)0);
@@ -57,7 +61,23 @@ public class CacheScenario : SingletonMonoBehaviour<CacheScenario>
             chapter1.Add(sc);
         }
     }
+    void CacheDropObject()
+    {
+        var db = loadDB.GetDatabase((Database.Value)2);
+        var cmd = "SELECT * FROM DropObject";
+        var table = db.ExecuteQuery(cmd);
 
+        foreach (var row in table.Rows)
+        {
+            var tmp = new DropObject();
+            tmp.number = (int)row["Number"];
+            tmp.name   = (string)row["Name"];
+            tmp.value = (int)row["Value"];
+            tmp.percent = (int)row["Percent"];
+
+            dropObject.Add(tmp);
+        }
+    }
     // Update is called once per frame
     void Update()
     {

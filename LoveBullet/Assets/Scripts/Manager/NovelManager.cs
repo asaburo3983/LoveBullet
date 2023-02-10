@@ -10,12 +10,43 @@ public class NovelManager : SingletonMonoBehaviour<NovelManager>
 
     CacheScenario cs;
     public ReactiveProperty<bool> isNovel = new ReactiveProperty<bool>();
-    int page=0;
-    float textTime;
 
-    string leftText;
-    string rightText;
+    public enum NovelMode
+    {
+        Novel,
+        Rest,
+        Shop,
+        MAX,
+    }
+    [SerializeField] public NovelMode novelMode;
+    [SerializeField]private int chapterNum;
+    public void SetNovelMode(NovelMode nm, int chapter = -1)
+    {
+        novelMode = nm;
+        chapterNum = chapter;
+    }
 
+    [System.Serializable]
+    public struct ModeState
+    {
+        public float playerStartPos;
+
+        [Header("休憩時に使用する値")]
+        public float restHealPer;
+        public float restMindHealPer;
+        public int instanceDropObjectMin;
+        public int instanceDropObjectMax;
+        public List<GameObject> dropObject;
+        public List<Transform> dropObjectPos;
+
+        [Header("ショップ時に使用する値")]
+        public List<GameObject> shopObject;
+        public List<Transform> shopObjectPos;
+    }
+    [SerializeField] ModeState modeState;
+
+    //テキスト系
+    int page =0;
     [SerializeField] TextMesh textL;
     [SerializeField] TextMesh textR;
     [SerializeField] TextMesh textC;
@@ -63,8 +94,87 @@ public class NovelManager : SingletonMonoBehaviour<NovelManager>
         textRectL = textL.gameObject.GetComponent<RectTransform>();
         textRectR = textR.gameObject.GetComponent<RectTransform>();
         textRectC = textC.gameObject.GetComponent<RectTransform>();
-    }
+        switch (novelMode)
+        {
+            case NovelMode.Novel:
+                //プレイヤーの位置を設定してノベルを開始する
+                NovelStart();
+                break;
+            case NovelMode.Rest:
+                Rest();
+                break;
+            case NovelMode.Shop:
+                Shop();
+                break;
 
+
+        }
+    }
+    /// <summary>
+    /// プレイヤーの位置を設定位置にする
+    /// </summary>
+    void SetPlayerStartPos()
+    {
+        var pos = Love.PlayerLove.instance.transform.position;
+        pos.x = modeState.playerStartPos;
+        Love.PlayerLove.instance.transform.position = pos;
+    }
+    void Rest()
+    {
+        //HPをN%回復させる
+        //var pGameState = Player.instance.gameState;
+        //var heal = pGameState.maxHP.Value * modeState.restHealPer / 100.0f;
+        //Player.instance.gameState.hp.Value += (int)heal;
+        //ドロップオブジェクトを配置する
+
+        //不安程度をN％回復させる
+
+        var objectNum= Random.Range(modeState.instanceDropObjectMin, modeState.instanceDropObjectMax+1);
+
+        List<int> posNums = new List<int>();
+        for(int i = 0; i<objectNum; i++)
+        {
+            //確率計算して生成する
+            var per = Random.Range(1, 101);
+            var perPlus = 0;
+            foreach(var dropObj in cs.dropObject)
+            {
+
+                perPlus += dropObj.percent;
+                if (per < perPlus)
+                {
+                    //設定されているオブジェクトと位置に設定する 
+                    //同じ場所に生成されないようにする
+                    var posNum = Random.Range(0, cs.dropObject.Count);
+                    int loopBreak = 0;
+                    if (posNums.Count > 0)
+                    {
+                        while (posNums.IndexOf(posNum) != -1)
+                        {
+                            posNum = Random.Range(0, cs.dropObject.Count);
+                            loopBreak++;
+                        }
+                    }
+                    posNums.Add(posNum);
+
+                    Instantiate(modeState.dropObject[dropObj.number], modeState.dropObjectPos[posNum].position,Quaternion.identity);
+                    break;
+                }
+            }
+        }
+        //初期位置に設定
+        SetPlayerStartPos();
+    }
+    void Shop()
+    {
+        //ショップ用オブジェクトを生成
+        for (int i = 0; i < modeState.shopObject.Count; i++)
+        {
+            Instantiate(modeState.shopObject[i], modeState.shopObjectPos[i].position, Quaternion.identity);
+        }
+        //初期位置に設定
+        SetPlayerStartPos();
+    }
     // Update is called once per frame
     void Update()
     {
@@ -160,12 +270,12 @@ public class NovelManager : SingletonMonoBehaviour<NovelManager>
     {
         cs = CacheScenario.instance;
         isNovel.Value = true;
-        //page = 0;
-        textTime = 0;
-
+        
         Love.PlayerLove.instance.move = false;
-        //InsertText(page);
-        //黒帯を出現させる
+
+        //TODO　DBからプレイヤーとキャラの位置を設定する
+        //
+        //
     }
     void NovelEnd()
     {
