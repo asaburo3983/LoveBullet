@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
-public class HealObject : Object
+public class HealObject : BaseDropObject
 {
     [SerializeField]float healPer;
     // Start is called before the first frame update

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
-public class GetCardObject : Object
+public class GetCardObject : BaseDropObject
 {
     [SerializeField]int rank;
     // Start is called before the first frame update
