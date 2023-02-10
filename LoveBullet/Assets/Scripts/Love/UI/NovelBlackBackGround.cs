@@ -22,17 +22,19 @@ public class NovelBlackBackGround : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     void FadeImage(bool enable)
     {
         if (enable)
         {
-            sr.DOFade(fadeAlpha,fadeSpeed);
+            DOTween.ToAlpha(() => sr.color, a => sr.color = a, fadeAlpha, fadeSpeed);
+
         }
         else
         {
-            sr.DOFade(0,fadeSpeed);
+            DOTween.ToAlpha(() => sr.color, a => sr.color = a, 0, fadeSpeed);
+
         }
 
     }
