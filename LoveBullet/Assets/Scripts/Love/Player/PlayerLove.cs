@@ -15,10 +15,14 @@ namespace Love
 
         public Tween moveTW;
 
-        public ReactiveProperty<bool> isUISenpaiActive;
-        public ReactiveProperty<bool> isUIObjActive;
-
         public bool move = true;
+
+        public GameObject fightAccessUI;
+
+        public GameObject shopAccessUI;
+
+        public GameObject objectAccessUI;
+
         private void Awake()
         {
             SingletonCheck(this);
@@ -40,14 +44,6 @@ namespace Love
         void InputEvent()
         {
             
-            if (Love.PlayerLove.instance.isUISenpaiActive.Value)
-            {
-                NovelManager.instance.NovelStart();
-            }
-            else if (Love.PlayerLove.instance.isUIObjActive.Value)
-            {
-
-            }
 
         }
 
