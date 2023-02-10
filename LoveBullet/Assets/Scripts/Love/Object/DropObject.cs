@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 
-public class Object : MonoBehaviour
+public class BaseDropObject : MonoBehaviour
 {
     protected ReactiveProperty<bool> touch = new ReactiveProperty<bool>();
     virtual protected void Start()
