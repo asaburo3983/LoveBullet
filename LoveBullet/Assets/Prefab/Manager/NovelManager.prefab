@@ -45,6 +45,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isNovel:
     value: 0
+  novelMode: 2
+  chapterNum: 0
+  modeState:
+    playerStartPos: 0
+    restHealPer: 10
+    restMindHealPer: 0
+    instanceDropObjectMin: 1
+    instanceDropObjectMax: 3
+    dropObject:
+    - {fileID: 3999915570695052583, guid: 8b72eaf722db9ca4bba82fd1ee900d6a, type: 3}
+    - {fileID: 2772215222192430939, guid: 0433cd7cec138fa4388703955dfcc474, type: 3}
+    - {fileID: 7243026502383981813, guid: 6943a1d29cf2ee043b8828ed4e970e7b, type: 3}
+    - {fileID: 1255163187474592417, guid: 42617731aca422d43a7ee40f043b1d1a, type: 3}
+    - {fileID: 4559850538490272112, guid: 09365225f83ee7745b7a44029fadabee, type: 3}
+    dropObjectPos:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    shopObject:
+    - {fileID: 4955894658577192858, guid: f8008afaabd9e6d4285c429776d5329f, type: 3}
+    - {fileID: 4622049407970853300, guid: fef01481aa2fd324fbd03a8a0d504e19, type: 3}
+    - {fileID: 8188318975870001766, guid: 591389104e2b59f499302d115e2f600b, type: 3}
+    shopObjectPos:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
   textL: {fileID: 0}
   textR: {fileID: 0}
   textC: {fileID: 0}
