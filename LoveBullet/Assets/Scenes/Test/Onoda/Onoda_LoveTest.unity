@@ -615,7 +615,7 @@ PrefabInstance:
       objectReference: {fileID: 1238046555}
     - target: {fileID: 6862055833000488389, guid: 812af7274ec85ca4ca90b1f727092af3, type: 3}
       propertyPath: novelMode
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6862055833000488389, guid: 812af7274ec85ca4ca90b1f727092af3, type: 3}
       propertyPath: tatieLObj

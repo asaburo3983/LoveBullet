@@ -46,17 +46,6 @@ public class Player : SingletonMonoBehaviour<Player>
     public InGameState gameState = new InGameState();
 
 
-    [System.Serializable]
-    public struct UI
-    {
-        public GameObject hp;
-        public GameObject AP;
-        public GameObject DF;
-        public GameObject ATWeaken;
-        public GameObject DFWeaken;
-    }
-    [SerializeField] UI ui;
-
     /// <summary>
     /// DFä«óù
     /// </summary>
