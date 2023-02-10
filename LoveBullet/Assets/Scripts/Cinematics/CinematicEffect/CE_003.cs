@@ -34,7 +34,7 @@ public class CE_003 : CE_Base
                 stillImage.sprite = spriteR;
             }
 
-            // 演出はここ。今後変更かも
+            // billy memo: 演出はここ。今後変更かも
             tween = stillImage.DOFade(1f, 0.5f);
         }
     }

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7859063238792448946
+--- !u!1 &1747483633760986983
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6024843202506587245}
-  - component: {fileID: 2676253183086934682}
+  - component: {fileID: 1747483633760986981}
+  - component: {fileID: 1747483633760986980}
   m_Layer: 0
-  m_Name: CinematicsManager
+  m_Name: CE_005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6024843202506587245
+--- !u!4 &1747483633760986981
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7859063238792448946}
+  m_GameObject: {fileID: 1747483633760986983}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -31,21 +31,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2676253183086934682
+--- !u!114 &1747483633760986980
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7859063238792448946}
+  m_GameObject: {fileID: 1747483633760986983}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae188baf443f93f4498f439d4ddd74ba, type: 3}
+  m_Script: {fileID: 11500000, guid: 003b837e1a3d3b74d83aa1ae1196c286, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cinematicEffectObjects:
-  - {fileID: 752788971713254907, guid: afdbc9998dc48cc47bc15c10093b10de, type: 3}
-  - {fileID: 925411030549066354, guid: 01fed06ec3e2a3044bf05e0216dd4bd0, type: 3}
-  - {fileID: 1337700661410800198, guid: cce4734488a520546845a3d2b1ddf741, type: 3}
-  - {fileID: 1337700661410800198, guid: b78cae5507f0ec64b84d95b43ab43b60, type: 3}
-  - {fileID: 1747483633760986983, guid: e04a04224489699489b7b5b19c318667, type: 3}
+  effectType: 0
+  effectDuration: 0
+  sceneToLoad:
+    m_SceneName: Fight
