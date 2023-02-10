@@ -28,10 +28,13 @@ namespace Love
         /// </summary>
         private void Move()
         {
+            if (!PlayerLove.instance.move) { return; }
+
             //ˆÚ“®ˆ—
             if (input.WasPressed("Player", "Move"))
             {
                 var vec = input.GetValue("Player", "Move");
+                vec.y = 0;
 
                 rb.AddForce(vec * moveSpeed*Time.deltaTime);
             }
