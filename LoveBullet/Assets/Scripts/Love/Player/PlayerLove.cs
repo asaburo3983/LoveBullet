@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace Love
 {
-    public class Player_Love : SingletonMonoBehaviour<Player_Love>
+    public class PlayerLove : SingletonMonoBehaviour<PlayerLove>
     {
 
         MouseManager mouse;
@@ -18,6 +18,7 @@ namespace Love
         public ReactiveProperty<bool> isUISenpaiActive;
         public ReactiveProperty<bool> isUIObjActive;
 
+        public bool move = true;
         private void Awake()
         {
             SingletonCheck(this);
@@ -38,11 +39,12 @@ namespace Love
         }
         void InputEvent()
         {
-            if (Love.Player_Love.instance.isUISenpaiActive.Value)
+            
+            if (Love.PlayerLove.instance.isUISenpaiActive.Value)
             {
                 NovelManager.instance.NovelStart();
             }
-            else if (Love.Player_Love.instance.isUIObjActive.Value)
+            else if (Love.PlayerLove.instance.isUIObjActive.Value)
             {
 
             }

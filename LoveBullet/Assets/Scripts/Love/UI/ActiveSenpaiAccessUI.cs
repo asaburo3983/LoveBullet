@@ -11,7 +11,7 @@ public class ActiveSenpaiAccessUI : MonoBehaviour
     {
         sr = GetComponent<SpriteRenderer>();
 
-        Love.Player_Love.instance.isUISenpaiActive.Subscribe(x => { SetActive(x); }).AddTo(this);
+        Love.PlayerLove.instance.isUISenpaiActive.Subscribe(x => { SetActive(x); }).AddTo(this);
     }
 
     // Update is called once per frame
