@@ -162,12 +162,14 @@ public class NovelManager : SingletonMonoBehaviour<NovelManager>
         isNovel.Value = true;
         //page = 0;
         textTime = 0;
+
+        Love.PlayerLove.instance.move = false;
         //InsertText(page);
         //çïë—ÇèoåªÇ≥ÇπÇÈ
     }
     void NovelEnd()
     {
-
+        Love.PlayerLove.instance.move = true;
     }
     void InsertText(int _page)
     {
