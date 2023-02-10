@@ -46,3 +46,5 @@ MonoBehaviour:
   cinematicEffectObjects:
   - {fileID: 752788971713254907, guid: afdbc9998dc48cc47bc15c10093b10de, type: 3}
   - {fileID: 925411030549066354, guid: 01fed06ec3e2a3044bf05e0216dd4bd0, type: 3}
+  - {fileID: 1337700661410800198, guid: cce4734488a520546845a3d2b1ddf741, type: 3}
+  - {fileID: 1337700661410800198, guid: b78cae5507f0ec64b84d95b43ab43b60, type: 3}

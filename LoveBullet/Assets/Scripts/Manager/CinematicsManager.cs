@@ -2,6 +2,7 @@ using DG.Tweening.Core.Easing;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 /// <summary>
 /// 演出エフェクトマネージャー
@@ -30,7 +31,17 @@ public class CinematicsManager : MonoBehaviour
     // 変数定義
     #region variables
 
+    // 生成後のエフェクトオブジェクトのリスト
+    private GameObject effect;
+    private List<GameObject> effectList = new List<GameObject>();
+
+    public enum EffectSide
+    {
+        effL,
+        effR
+    }
     private GameObject targetObject;
+    private EffectSide effectSide;
 
     #endregion
 
@@ -69,6 +80,7 @@ public class CinematicsManager : MonoBehaviour
         {
             // 対象オブジェクト指定
             targetObject = _tatieL.gameObject;
+            effectSide = EffectSide.effL;
 
             // 演出エフェクトを再生
             PlayEffect(_effectL);
@@ -78,15 +90,44 @@ public class CinematicsManager : MonoBehaviour
         {
             // 対象オブジェクト指定
             targetObject = _tatieR.gameObject;
+            effectSide = EffectSide.effR;
 
             // 演出エフェクトを再生
             PlayEffect(_effectR);
         }
     }
 
+    // エフェクトオブジェクトを取得
+    public GameObject GetEffectObj()
+    {
+        if (effect != null) return effect;
+        else return null;
+    }
+    // ターゲットされるオブジェクト取得
     public GameObject GetEffectTargetObj()
     {
         return targetObject;
+    }
+    // ターゲットされる側を取得
+    public EffectSide GetEffectSide()
+    {
+        return effectSide;
+    }
+    // 存在してるエフェクトがあれば
+    public void RemoveEffect()
+    {
+        if (effectList.Count != 0)
+        {
+            foreach (var eff in effectList)
+            {
+                // 画面上に残るタイプのエフェクトの場合のみ実行する処理
+                if (eff.GetComponent<CE_Base>().GetEffectType() == CE_Base.Type.Stay)
+                {
+                    eff.GetComponent<CE_Base>().FadeOut();
+                }
+            }
+            effectList.Clear();
+        }
     }
 
     #endregion
@@ -96,7 +137,12 @@ public class CinematicsManager : MonoBehaviour
 
     private void PlayEffect(int _num)
     {
-        Instantiate(cinematicEffectObjects[_num - 1], Vector3.zero, Quaternion.identity);
+        effect = Instantiate(cinematicEffectObjects[_num - 1], Vector3.zero, Quaternion.identity);
+        // 残るタイプであればリストに追加
+        if (effect.GetComponent<CE_Base>().GetEffectType() == CE_Base.Type.Stay)
+        {
+            effectList.Add(effect);
+        }
     }
 
     #endregion
