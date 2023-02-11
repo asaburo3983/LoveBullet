@@ -1,0 +1,7 @@
+﻿Error,Position,Text,NewLine,SE,CharaImageR,EffectR,CharaImageL,EffectL
+int,string,string,int,int,int,int,int,int
+11,L,酒にあうツマミはないか,1,0,0,0,1,0
+14,R,ではこちらなどいかがでしょう,1,0,107,0,3,0
+10,C,クールナッツを食べた,1,0,0,0,0,0
+14,L,ワインが飲みたくなるなこれ！,1,0,102,0,2,0
+15,C,カード「アイスバレット」を獲得,1,0,0,0,0,0
