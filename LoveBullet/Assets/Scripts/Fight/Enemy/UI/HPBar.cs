@@ -8,24 +8,18 @@ namespace FightEnemy
 {
     public class HPBar : MonoBehaviour
     {
-        [SerializeField] Transform greenBar;
-        float origineSizeX;
-        float sizeX;
+
         [SerializeField] Enemy.Enemy enemy;
+        [SerializeField] SpriteRendererFillAmount srfa;
 
         // Start is called before the first frame update
         void Start()
         {
-            origineSizeX = greenBar.localScale.x;
-
-            sizeX = origineSizeX * ((float)enemy.gameState.hp.Value / (float)enemy.gameState.maxHP.Value);
-            greenBar.localScale = new Vector3(sizeX, greenBar.localScale.y);
-
+            srfa.FillAmount = (float)enemy.gameState.hp.Value / (float)enemy.gameState.maxHP.Value;
             //HP変更時にバーのサイズを変える
             enemy.gameState.hp.Subscribe(x =>
             {
-                sizeX = origineSizeX * ((float)x / (float)enemy.gameState.maxHP.Value);
-                greenBar.localScale = new Vector3(sizeX, greenBar.localScale.y);
+                srfa.FillAmount = (float)enemy.gameState.hp.Value / (float)enemy.gameState.maxHP.Value;
             }).AddTo(this);
         }
 
