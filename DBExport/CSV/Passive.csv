@@ -1,0 +1,8 @@
+﻿Number,Name,EnumName,Explanation,Value,Turn
+int,string,string,string,int,int
+0,なし,None,なし,0,-1
+1,攻撃力UP(永続),Passive_Attack_Never,戦闘中攻撃力が上昇する,1,-1
+2,防御力UP(永続),Passive_Diffence_Never,戦闘中防御力が上昇する,1,-1
+3,回復追加,Passive_Heal,戦闘終了時HPが回復する,5,-1
+4,HPUP,Passive_Hp,戦闘中HPの上限値が増える,5,-1
+5,コッキング時ATUP,Passive_Attack_Cocking,コッキング後1ターン攻撃力が上昇する,2,-1
