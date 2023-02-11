@@ -162,7 +162,12 @@ namespace Card
             // UŒ‚ˆ—
 
             // UŒ‚‰ñ”•ªƒ‹[ƒv‚·‚é
-            for (int i = 0; i < gunInCards[0].MultiAttack; i++) {
+            var attackNum = gunInCards[0].MultiAttack;
+            if(gunInCards[0].Damage>0&& attackNum == 0)
+            {
+                attackNum++;
+            }
+            for (int i = 0; i < attackNum; i++) {
                 if (gunInCards[0].Whole) {
 
                     // ‘S‘ÌUŒ‚

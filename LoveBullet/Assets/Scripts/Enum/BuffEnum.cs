@@ -8,5 +8,6 @@ public enum BuffEnum{
     Bf_Weaken_Diffence = 6,
     Bf_Stan = 7,
     Bf_Heal = 8,
+
     Max 
 }

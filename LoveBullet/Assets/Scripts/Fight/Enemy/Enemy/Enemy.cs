@@ -99,9 +99,6 @@ namespace Enemy
                     DOVirtual.DelayedCall(3.0f, () => Destroy(gameObject));
                 });
 
-                //body.DOColor(new Color(1, 1, 1, 0), 1.0f).OnComplete(() => {
-                //    DOVirtual.DelayedCall(3.0f, () => Destroy(gameObject));
-                //});
 
             }).AddTo(this);
 
@@ -316,8 +313,10 @@ namespace Enemy
             tw.damageTw = transform.DOShakePosition(tw.damageTime, tw.damageShake, 30, 1, false, true)
                 .SetLoops(2, LoopType.Yoyo).OnComplete(() => tw.damageTw = null);
 
-            sBody.DOColor(Color.red, tw.damageTime / 6f).SetLoops(6, LoopType.Yoyo);
-            //body.DOColor(Color.red, tw.damageTime / 6f).SetLoops(6, LoopType.Yoyo);
+
+            transform.GetChild(0).GetComponent<SpriteRenderer>().DOColor(new Color(1, 0, 0, 1), tw.damageTime).SetLoops(2, LoopType.Yoyo);
+
+            //sBody.DOColor(Color.red, tw.damageTime / 6f).SetLoops(2, LoopType.Yoyo);
         }
     }
 }
