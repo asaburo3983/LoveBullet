@@ -1,0 +1,10 @@
+﻿Number,Name,EnumName,Explanation
+int,string,string,string
+0,なし,None,なし
+1,全体攻撃,Sp_All,敵全体に攻撃する
+2,ランダム,Sp_Random,ランダムな的に攻撃する
+3,N回攻撃,Sp_MultiAttack,指定回数攻撃する
+7,自傷,Sp_SelfHarm,自身のHPを削る
+8,リロード,Sp_Reload,リロードを行う
+9,コッキング,Sp_Cocking,コッキングを行う
+10,破棄,SP_Scrap,使用後、捨て札にいかない
