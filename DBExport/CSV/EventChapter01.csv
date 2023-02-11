@@ -1,0 +1,8 @@
+﻿Error,Position,Text,NewLine,SE,CharaImageR,EffectR,CharaImageL,EffectL
+int,string,string,int,int,int,int,int,int
+9,L,良い酒が飲みたいな,1,0,0,0,1,0
+17,R,ではこちらのお酒などいかがでしょう,1,0,107,0,3,0
+9,C,良薬の万酒を飲んだ,1,0,0,0,0,0
+11,L,苦ぇ酒だな！悪くない！,1,0,102,0,2,0
+13,C,パッシブ「回復追加」を取得,1,0,0,0,0,0
+21,C,パッシブ効果：戦闘終了時にHPが回復する。,1,0,0,0,0,0

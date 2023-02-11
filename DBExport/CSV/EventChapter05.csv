@@ -1,0 +1,7 @@
+﻿Error,Position,Text,NewLine,SE,CharaImageR,EffectR,CharaImageL,EffectL
+int,string,string,int,int,int,int,int,int
+11,L,酒にあうツマミはないか,1,0,0,0,1,0
+14,R,ではこちらなどいかがでしょう,1,0,107,0,3,0
+14,C,ながーいチェイングミを食べた,1,0,0,0,0,0
+27,L,グミと酒って合うんだな！酒の味が一風変わって楽しめる！,1,0,102,0,2,0
+16,C,カード「チェインバレット」を獲得,1,0,0,0,0,0

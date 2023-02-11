@@ -1,0 +1,8 @@
+﻿Error,Position,Text,NewLine,SE,CharaImageR,EffectR,CharaImageL,EffectL
+int,string,string,int,int,int,int,int,int
+9,L,良い酒が飲みたいな,1,0,0,0,1,0
+17,R,ではこちらのお酒などいかがでしょう,1,0,107,0,3,0
+14,C,ガーディアンテキーラを飲んだ,1,0,0,0,0,0
+10,L,効くなぁ！もう一杯！,1,0,102,0,2,0
+14,C,パッシブ「防御力UP」を取得,1,0,0,0,0,0
+23,C,パッシブ効果：戦闘中得られる防御に1プラスする,1,0,0,0,0,0
