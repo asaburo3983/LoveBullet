@@ -405,7 +405,6 @@ GameObject:
   - component: {fileID: 4392869467653949977}
   - component: {fileID: 4092526596960794407}
   - component: {fileID: 846650256990901607}
-  - component: {fileID: 1326495685852577358}
   - component: {fileID: 3227105445441613728}
   m_Layer: 0
   m_Name: AtkBuff
@@ -506,20 +505,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   followUI: {fileID: 3197866766574912639}
   adjustPos: {x: 0, y: 0, z: 0}
---- !u!114 &1326495685852577358
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1376822757359518467}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59fbaff5c416e974fab8b1be3a5315af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  buffType: 2
-  enemy: {fileID: 5275671047277976357}
 --- !u!114 &3227105445441613728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -532,7 +517,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a9111e3bbae9e542b9a52e193eeffa2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buffType: 0
+  buffType: 2
   enemy: {fileID: 5275671047277976357}
 --- !u!1 &1687025550292627584
 GameObject:
@@ -1312,7 +1297,6 @@ GameObject:
   - component: {fileID: 2239147701605722217}
   - component: {fileID: 1167275147255351505}
   - component: {fileID: 7101426609165529247}
-  - component: {fileID: 8980958586234064610}
   - component: {fileID: 2487176185259593136}
   m_Layer: 0
   m_Name: DFWeek
@@ -1413,20 +1397,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   followUI: {fileID: 8728823730415426208}
   adjustPos: {x: 0, y: 0, z: 0}
---- !u!114 &8980958586234064610
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3260182927306950440}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59fbaff5c416e974fab8b1be3a5315af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  buffType: 1
-  enemy: {fileID: 5275671047277976357}
 --- !u!114 &2487176185259593136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1439,7 +1409,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a9111e3bbae9e542b9a52e193eeffa2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buffType: 0
+  buffType: 1
   enemy: {fileID: 5275671047277976357}
 --- !u!1 &3582274467302931158
 GameObject:
@@ -1454,7 +1424,6 @@ GameObject:
   - component: {fileID: 4618177195148472434}
   - component: {fileID: 3851694890174299318}
   - component: {fileID: 3938021727252308932}
-  - component: {fileID: 7966755438945629904}
   - component: {fileID: 8750843148602533865}
   m_Layer: 0
   m_Name: Stan
@@ -1555,20 +1524,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   followUI: {fileID: 6130868818918056184}
   adjustPos: {x: 0, y: 0, z: 0}
---- !u!114 &7966755438945629904
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3582274467302931158}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59fbaff5c416e974fab8b1be3a5315af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  buffType: 4
-  enemy: {fileID: 5275671047277976357}
 --- !u!114 &8750843148602533865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1581,7 +1536,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a9111e3bbae9e542b9a52e193eeffa2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buffType: 0
+  buffType: 4
   enemy: {fileID: 5275671047277976357}
 --- !u!1 &3748480134777044276
 GameObject:
@@ -2042,7 +1997,6 @@ GameObject:
   - component: {fileID: 251064638907011301}
   - component: {fileID: 8233636257158730636}
   - component: {fileID: 4576624789318741109}
-  - component: {fileID: 2850272302234664167}
   - component: {fileID: 7010563644078355285}
   m_Layer: 0
   m_Name: ATWeek
@@ -2143,20 +2097,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   followUI: {fileID: 8401677055209349305}
   adjustPos: {x: 0, y: 0, z: 0}
---- !u!114 &2850272302234664167
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5017720995143693531}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59fbaff5c416e974fab8b1be3a5315af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  buffType: 0
-  enemy: {fileID: 5275671047277976357}
 --- !u!114 &7010563644078355285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2506,7 +2446,6 @@ GameObject:
   - component: {fileID: 621428735300691230}
   - component: {fileID: 5178256767315295682}
   - component: {fileID: 7736527865359456157}
-  - component: {fileID: 1625396773801904792}
   - component: {fileID: 3312847936907035412}
   m_Layer: 0
   m_Name: Armor
@@ -2607,20 +2546,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   followUI: {fileID: 629746635466357243}
   adjustPos: {x: 0, y: 0, z: 0}
---- !u!114 &1625396773801904792
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8386071273113915800}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59fbaff5c416e974fab8b1be3a5315af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  buffType: 3
-  enemy: {fileID: 5275671047277976357}
 --- !u!114 &3312847936907035412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2633,5 +2558,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a9111e3bbae9e542b9a52e193eeffa2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buffType: 0
+  buffType: 3
   enemy: {fileID: 5275671047277976357}

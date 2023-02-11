@@ -63,7 +63,7 @@ namespace Enemy
         // Update is called once per frame
         void Update()
         {
-
+           // SetText(enemy.gameState.ATWeaken.Value.ToString());
         }
     }
 }
