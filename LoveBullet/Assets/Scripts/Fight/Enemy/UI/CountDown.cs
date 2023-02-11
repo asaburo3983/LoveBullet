@@ -9,9 +9,10 @@ namespace FightEnemy
     {
         [SerializeField] Enemy.Enemy enemy;
         [SerializeField] Text countDownText;
-        [SerializeField] Image actIcon;
+        [SerializeField] SpriteRenderer actIcon;
         [SerializeField] Text damageText;
         [SerializeField] List<Sprite> type;
+
         // Start is called before the first frame update
         void Start()
         {

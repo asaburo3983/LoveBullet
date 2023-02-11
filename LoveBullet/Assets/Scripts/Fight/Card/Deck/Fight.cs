@@ -11,7 +11,7 @@ namespace Card
 
     public class Fight : SingletonMonoBehaviour<Fight>
     {
-        [SerializeField] Transform fightCanvas;
+        [SerializeField] List<Transform> enemyAddventPos;
 
         [Header("カード管理系")]
         [SerializeField] Card.GENRE startDeckGenre;
@@ -51,20 +51,12 @@ namespace Card
 
         [Header("敵処理系")]
         public GameObject enemyBase;
-        public List<Vector3> enemyPos;
         List<Enemy.Enemy.State> enemysState = new List<Enemy.Enemy.State>();
         public List<Enemy.Enemy> enemyObjects = new List<Enemy.Enemy>();
         [SerializeField,ReadOnly]int targetId = 0;
         public int TargetId => targetId;
 
         public ReactiveCollection<Enemy.Enemy> actEnemy = new ReactiveCollection<Enemy.Enemy>();
-
-        // TweenAnimation
-        Tween fireTw = null;
-
-        [Header("アニメーション")]
-        [SerializeField] float fireMoveDist = 1.0f;
-        [SerializeField] float fireMoveTime = 0.1f;
 
         #region InitFunction
 
@@ -99,6 +91,8 @@ namespace Card
         }
         private void Update()
         {
+
+
             if (enemyObjects.Count == 0 && ResultManager.instance.isResult == false)
             {
                 //TODO仮置き
@@ -168,7 +162,12 @@ namespace Card
             // 攻撃処理
 
             // 攻撃回数分ループする
-            for (int i = 0; i < gunInCards[0].MultiAttack; i++) {
+            var attackNum = gunInCards[0].MultiAttack;
+            if(gunInCards[0].Damage>0&& attackNum == 0)
+            {
+                attackNum++;
+            }
+            for (int i = 0; i < attackNum; i++) {
                 if (gunInCards[0].Whole) {
 
                     // 全体攻撃
@@ -201,9 +200,6 @@ namespace Card
             plState.ATWeaken.Value = Mathf.Clamp(plState.ATWeaken.Value - 1, 0, 9999);
             plState.DFWeaken.Value = Mathf.Clamp(plState.DFWeaken.Value - 1, 0, 9999);
 
-
-
-
             // 強制リロードするか
             if (_card.Reload > 0) {
                 for(int i= _card.Reload; i > 0; i--) {
@@ -222,10 +218,8 @@ namespace Card
             // エネミーのターン経過処理
             ProgressTurn(_progress);
 
-            // プレイヤーアニメーション
-            if (fireTw != null) fireTw.Kill(true);
-            fireTw = player.transform.DOLocalMoveX(player.transform.localPosition.x + fireMoveDist, fireMoveTime)
-                .SetLoops(2, LoopType.Yoyo).OnComplete(() => fireTw = null);
+            //プレイヤーの攻撃アニメーション
+            Player.instance.AttackAnim();
         }
         
         /// <summary>
@@ -433,7 +427,7 @@ namespace Card
                 if (enemyId == -1) continue;
                 enemysState.Add(Enemy.Enemy.GetEnemyState(enemyId));
                 //敵生成
-                var enemy = Instantiate(enemyBase, enemyPos[enemyCount], Quaternion.identity, fightCanvas);
+                var enemy = Instantiate(enemyBase, enemyAddventPos[enemyCount].position, Quaternion.identity);
                 var script = enemy.GetComponent<Enemy.Enemy>();
                 script.Initialize(enemysState[enemyCount]);
 

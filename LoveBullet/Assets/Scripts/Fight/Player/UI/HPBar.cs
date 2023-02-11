@@ -8,7 +8,7 @@ namespace FightPlayer
 {
     public class HPBar : MonoBehaviour
     {
-        [SerializeField] RectTransform greenBar;
+        [SerializeField] Transform greenBar;
 
         float origineSizeX;
         float sizeX;
@@ -18,13 +18,13 @@ namespace FightPlayer
         void Start()
         {
             player = Player.instance;
-            origineSizeX = greenBar.sizeDelta.x;
+            origineSizeX = greenBar.localScale.x;
             sizeX = origineSizeX * ((float)player.gameState.hp.Value / (float)player.gameState.maxHP.Value);
-            greenBar.sizeDelta = new Vector2(sizeX, greenBar.sizeDelta.y);
+            greenBar.localScale = new Vector3(sizeX, greenBar.localScale.y);
             player.gameState.hp.Subscribe(x =>
             {
                 sizeX = origineSizeX * ((float)x / (float)player.gameState.maxHP.Value);
-                greenBar.sizeDelta = new Vector2(sizeX, greenBar.sizeDelta.y);
+                greenBar.localScale = new Vector2(sizeX, greenBar.localScale.y);
             }).AddTo(this);
         }
 
