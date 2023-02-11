@@ -46,6 +46,13 @@ public class Player : SingletonMonoBehaviour<Player>
     public InGameState gameState = new InGameState();
 
 
+    // TweenAnimation
+    Tween fireTw = null;
+    [SerializeField] float attackMovePosX;
+    [SerializeField] float attackMoveSpeed;
+    [SerializeField] float receiveMovePosX;
+    [SerializeField] float receiveMoveSpeed;
+
     /// <summary>
     /// DF管理
     /// </summary>
@@ -75,12 +82,22 @@ public class Player : SingletonMonoBehaviour<Player>
         state.Def.Value = Mathf.Clamp(state.Def.Value - _damage, 0, 9999);
     }
 
+    public void AttackAnim()
+    {
+        // プレイヤーアニメーション
+        if (fireTw != null) fireTw.Kill(true);
+        var pi = Player.instance;
+        fireTw = Player.instance.transform.DOMoveX(attackMovePosX, attackMoveSpeed).SetLoops(2, LoopType.Yoyo).OnComplete(() => fireTw = null);
+    }
     // 被ダメアニメーション
+    Sequence seq;
     public void ReceiveAnim()
     {
-        Sequence seq = DOTween.Sequence()
-            .Append(transform.DOLocalMoveX(transform.localPosition.x - 50, 0.1f).SetLoops(2, LoopType.Yoyo))
-            .Join(transform.GetChild(0).GetComponent<Image>().DOColor(new Color(1, 0, 0, 1), 0.1f).SetLoops(2, LoopType.Yoyo));
+        if (seq != null) { seq.Kill(true); }
+        seq = DOTween.Sequence()
+            .Append(transform.DOMoveX(receiveMovePosX, receiveMoveSpeed).SetLoops(2, LoopType.Yoyo))
+            .Join(transform.GetChild(0).GetComponent<SpriteRenderer>().DOColor(new Color(1, 0, 0, 1), 0.1f).SetLoops(2, LoopType.Yoyo))
+            .OnComplete(() => seq = null);
     }
 
     private void Start()

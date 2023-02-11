@@ -36,6 +36,5 @@ public class NovelBlackBackGround : MonoBehaviour
             DOTween.ToAlpha(() => sr.color, a => sr.color = a, 0, fadeSpeed);
 
         }
-
     }
 }

@@ -60,7 +60,9 @@ namespace Enemy
         }
         [SerializeField] TwState tw;
 
-        [SerializeField] Image body;
+        //[SerializeField] Image body;
+        [SerializeField] SpriteRenderer sBody;
+
         [SerializeField] Text actText;
         [SerializeField] FightEnemy.CountDown countDown;
 
@@ -93,9 +95,14 @@ namespace Enemy
                 
                 transform.Find("UI").gameObject.SetActive(false);
 
-                body.DOColor(new Color(1, 1, 1, 0), 1.0f).OnComplete(() => {
+                sBody.DOColor(new Color(1, 1, 1, 0), 1.0f).OnComplete(() => {
                     DOVirtual.DelayedCall(3.0f, () => Destroy(gameObject));
                 });
+
+                //body.DOColor(new Color(1, 1, 1, 0), 1.0f).OnComplete(() => {
+                //    DOVirtual.DelayedCall(3.0f, () => Destroy(gameObject));
+                //});
+
             }).AddTo(this);
 
             // 初期ターン数設定
@@ -109,7 +116,8 @@ namespace Enemy
         {
             //リソースのから仮テクスチャを読み込んで入れる
             var path= "Texture/Fight/Enemy/Enemy"+ state.number.ToString();
-            body.sprite = Resources.Load<Sprite>(path);
+            //body.sprite = Resources.Load<Sprite>(path);
+            sBody.sprite = Resources.Load<Sprite>(path);
 
             //GetComponent<BoxCollider2D>().size = image.bounds.size;
 
@@ -307,7 +315,9 @@ namespace Enemy
 
             tw.damageTw = transform.DOShakePosition(tw.damageTime, tw.damageShake, 30, 1, false, true)
                 .SetLoops(2, LoopType.Yoyo).OnComplete(() => tw.damageTw = null);
-            body.DOColor(Color.red, tw.damageTime / 6f).SetLoops(6, LoopType.Yoyo);
+
+            sBody.DOColor(Color.red, tw.damageTime / 6f).SetLoops(6, LoopType.Yoyo);
+            //body.DOColor(Color.red, tw.damageTime / 6f).SetLoops(6, LoopType.Yoyo);
         }
     }
 }

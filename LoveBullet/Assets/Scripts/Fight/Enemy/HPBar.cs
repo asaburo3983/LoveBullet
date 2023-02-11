@@ -8,8 +8,7 @@ namespace FightEnemy
 {
     public class HPBar : MonoBehaviour
     {
-        [SerializeField] RectTransform greenBar;
-        [SerializeField] Text hpText;
+        [SerializeField] Transform greenBar;
         float origineSizeX;
         float sizeX;
         [SerializeField] Enemy.Enemy enemy;
@@ -17,14 +16,16 @@ namespace FightEnemy
         // Start is called before the first frame update
         void Start()
         {
-            origineSizeX = greenBar.sizeDelta.x;
+            origineSizeX = greenBar.localScale.x;
+
             sizeX = origineSizeX * ((float)enemy.gameState.hp.Value / (float)enemy.gameState.maxHP.Value);
-            greenBar.sizeDelta = new Vector2(sizeX, greenBar.sizeDelta.y);
+            greenBar.localScale = new Vector3(sizeX, greenBar.localScale.y);
+
+            //HP変更時にバーのサイズを変える
             enemy.gameState.hp.Subscribe(x =>
             {
-                hpText.text = x.ToString() + "/" + enemy.gameState.maxHP.Value.ToString();
                 sizeX = origineSizeX * ((float)x / (float)enemy.gameState.maxHP.Value);
-                greenBar.sizeDelta = new Vector2(sizeX, greenBar.sizeDelta.y);
+                greenBar.localScale = new Vector3(sizeX, greenBar.localScale.y);
             }).AddTo(this);
         }
 

@@ -64,8 +64,6 @@ namespace Card
             public GameObject AP;
             public GameObject AT;
             public GameObject DF;
-            public GameObject ATWeaken;
-            public GameObject DFWeaken;
         }
         public UI ui;
 
