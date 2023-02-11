@@ -721,6 +721,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4599845706031816117}
   - component: {fileID: 5927489432968418599}
+  - component: {fileID: 1424426630725378370}
   m_Layer: 0
   m_Name: Green
   m_TagString: Untagged
@@ -761,7 +762,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -793,6 +794,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1424426630725378370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1828625942016541241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0545a1710c031ad4b90654c99502fcb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spriteRenderer: {fileID: 5927489432968418599}
+  _fillAmount: 1
+  reverce: 0
+  type: 1
 --- !u!1 &2330208923154365971
 GameObject:
   m_ObjectHideFlags: 0
@@ -938,8 +955,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b97e0be3603bed419fb871da02488d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  greenBar: {fileID: 4599845706031816117}
   enemy: {fileID: 5275671047277976357}
+  srfa: {fileID: 1424426630725378370}
 --- !u!1 &2953162101288004165
 GameObject:
   m_ObjectHideFlags: 0
@@ -1550,6 +1567,7 @@ GameObject:
   - component: {fileID: 1625490061942371270}
   - component: {fileID: 4956091624638426413}
   - component: {fileID: 2861431651884620857}
+  - component: {fileID: 5154821166496439431}
   m_Layer: 0
   m_Name: HPText
   m_TagString: Untagged
@@ -1632,6 +1650,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   followUI: {fileID: 5387586360411956969}
   adjustPos: {x: 0, y: 0, z: 0}
+--- !u!114 &5154821166496439431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3748480134777044276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f285859ddd503ab429e2bd5babe94ac9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 5275671047277976357}
+  hpText: {fileID: 4956091624638426413}
 --- !u!1 &4204776075446149769
 GameObject:
   m_ObjectHideFlags: 0

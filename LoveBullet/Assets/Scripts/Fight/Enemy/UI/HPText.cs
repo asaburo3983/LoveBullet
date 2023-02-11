@@ -1,22 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UniRx;
+using UnityEngine.UI;
 
-namespace FightPlayer
+namespace Enemy
 {
-    public class HPBar : MonoBehaviour
+    public class HPText : MonoBehaviour
     {
-        Player player;
-        [SerializeField] SpriteRendererFillAmount srfa;
+        [SerializeField] Enemy enemy;
+        [SerializeField] Text hpText;
+
         // Start is called before the first frame update
         void Start()
         {
-            player = Player.instance;
-            player.gameState.hp.Subscribe(x =>
+            enemy.gameState.hp.Subscribe(x =>
             {
-                srfa.FillAmount = ((float)x / (float)player.gameState.maxHP.Value);
+                hpText.text = x.ToString() + "/" + enemy.gameState.maxHP.Value.ToString();
             }).AddTo(this);
         }
 
