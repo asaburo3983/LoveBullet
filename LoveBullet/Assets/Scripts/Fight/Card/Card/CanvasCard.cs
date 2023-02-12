@@ -13,6 +13,7 @@ namespace Card
         [SerializeField] float duration;
         Tween tw;
 
+
         public void SetSize(Vector2 _origin,Vector2 _big)
         {
             originSize = _origin;
