@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Card
 {
@@ -67,7 +68,8 @@ namespace Card
         }
         public UI ui;
 
-
+        [SerializeField] Image frame;
+        [SerializeField] Image illust;
 
         /// <summary>
         /// ステータス値を代入して
@@ -84,11 +86,39 @@ namespace Card
             Rough.SetText(ui.AP, state.AP);
             Rough.SetText(ui.AT, state.Damage);
             Rough.SetText(ui.DF, state.buff[(int)BuffEnum.Bf_Diffence]);
-            
+
             //Rough.SetText(ui.ATWeaken, state.ATWeaken);
             //Rough.SetText(ui.DFWeaken, state.DFWeaken);
 
-        }
 
+            SetTexture();
+        }
+        void SetTexture()
+        {
+            string framePath = "none";
+            if (state.Damage > 0)
+            {
+                framePath = "Texture/Fight/UI/Card/Frame/" + "CardFrame_Attack";
+
+            }
+            else if (state.buff[(int)BuffEnum.Bf_Diffence] > 0)
+            {
+                framePath = "Texture/Fight/UI/Card/Frame/" + "CardFrame_Diffence";
+            }
+            else
+            {
+                framePath = "Texture/Fight/UI/Card/Frame/" + "CardFrame_Special";
+            }
+            frame.sprite = Resources.Load<Sprite>(framePath);
+
+            //リソースのから仮テクスチャを読み込んで入れる
+            var path = "Texture/Fight/UI/Card/Illust/" + state.id.ToString();
+            var tex = Resources.Load<Sprite>(path);
+            if (tex != null)
+            {
+                illust.sprite = Resources.Load<Sprite>(path);
+            }
+
+        }
     }
 }
