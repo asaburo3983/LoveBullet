@@ -38,11 +38,10 @@ namespace Card
         public void Push()
         {
             var result = ResultManager.instance;
-            if (result.Mode == true) {
+            if (result.IsResult) {
                 return;
             }
-            Fight.instance.deckList.Add(state);
-            ResultManager.instance.ChangeMode();
+            result.GetCard(state,this.gameObject);
         }
     }
 }
