@@ -206,9 +206,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c570cb9cf6c9c6479f6c0fdb18e0211, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  red: {fileID: 9107213742375854231}
-  green: {fileID: 1495658291954797909}
-  blue: {fileID: 140541816782661947}
+  value:
+  - {fileID: 9107213742375854231}
+  - {fileID: 1495658291954797909}
+  - {fileID: 140541816782661947}
   scaleSize: 1.2
   scaleTime: 0.1
 --- !u!1 &2604261408441427473
