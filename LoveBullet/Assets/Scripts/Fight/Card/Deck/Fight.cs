@@ -11,7 +11,7 @@ namespace Card
 
     public class Fight : SingletonMonoBehaviour<Fight>
     {
-        [SerializeField] Transform fightCanvas;
+        [SerializeField] List<Transform> enemyAddventPos;
 
         [Header("カード管理系")]
         [SerializeField] Card.GENRE startDeckGenre;
@@ -25,7 +25,7 @@ namespace Card
 
         // デバッグ用の銃内のカード表示処理
 #if UNITY_EDITOR
-        [SerializeField]List<Card.State> GunInCard;
+        [SerializeField] List<Card.State> GunInCard;
         private void FixedUpdate()
         {
             GunInCard = gunInCards.ToList();
@@ -41,7 +41,7 @@ namespace Card
         [SerializeField] int explanationCardNum = 0;
 
         [Header("その他ルール系")]
-        [SerializeField,ReadOnly] int floor;
+        [SerializeField, ReadOnly] int floor;
         [SerializeField] int reloadCost = 1;
         [SerializeField] int cockingCost = 1;
         [SerializeField, ReadOnly] bool playerTurn = true;
@@ -51,27 +51,18 @@ namespace Card
 
         [Header("敵処理系")]
         public GameObject enemyBase;
-        public List<Vector3> enemyPos;
         List<Enemy.Enemy.State> enemysState = new List<Enemy.Enemy.State>();
         public List<Enemy.Enemy> enemyObjects = new List<Enemy.Enemy>();
-        [SerializeField,ReadOnly]int targetId = 0;
+        [SerializeField, ReadOnly] int targetId = 0;
         public int TargetId => targetId;
 
         public ReactiveCollection<Enemy.Enemy> actEnemy = new ReactiveCollection<Enemy.Enemy>();
-
-        // TweenAnimation
-        Tween fireTw = null;
-
-        [Header("アニメーション")]
-        [SerializeField] float fireMoveDist = 1.0f;
-        [SerializeField] float fireMoveTime = 0.1f;
 
         #region InitFunction
 
         private void Awake()
         {
-            if (SingletonCheck(this,true))
-            {
+            if (SingletonCheck(this, true)) {
             }
         }
         void Start()
@@ -99,10 +90,11 @@ namespace Card
         }
         private void Update()
         {
-            if (enemyObjects.Count == 0 && ResultManager.instance.IsResult == false)
-            {
+
+
+            if (enemyObjects.Count == 0 && ResultManager.instance.isResult == false) {
                 //TODO仮置き
-                ResultManager.instance.StartResult();
+                ResultManager.instance.StartResult(15, true);
             }
         }
         //戦闘を開始する
@@ -120,15 +112,12 @@ namespace Card
         void StartTurn_Enemy()
         {
             //エネミー側で削除されていた場合リストから削除しておく
-            for(int i=0;i< enemyObjects.Count; i++)
-            {
-                if (enemyObjects[i] == null)
-                {
+            for (int i = 0; i < enemyObjects.Count; i++) {
+                if (enemyObjects[i] == null) {
                     enemyObjects.RemoveAt(i);
                 }
             }
-            foreach (var enemy in enemyObjects)
-            {
+            foreach (var enemy in enemyObjects) {
                 enemy.Action();//敵に順番に行動させる
                 enemy.ResetDF();//DFをリセットする
             }
@@ -168,7 +157,11 @@ namespace Card
             // 攻撃処理
 
             // 攻撃回数分ループする
-            for (int i = 0; i < gunInCards[0].MultiAttack; i++) {
+            var attackNum = gunInCards[0].MultiAttack;
+            if (gunInCards[0].Damage > 0 && attackNum == 0) {
+                attackNum++;
+            }
+            for (int i = 0; i < attackNum; i++) {
                 if (gunInCards[0].Whole) {
 
                     // 全体攻撃
@@ -201,12 +194,9 @@ namespace Card
             plState.ATWeaken.Value = Mathf.Clamp(plState.ATWeaken.Value - 1, 0, 9999);
             plState.DFWeaken.Value = Mathf.Clamp(plState.DFWeaken.Value - 1, 0, 9999);
 
-
-
-
             // 強制リロードするか
             if (_card.Reload > 0) {
-                for(int i= _card.Reload; i > 0; i--) {
+                for (int i = _card.Reload; i > 0; i--) {
                     Reload();
                 }
             }
@@ -222,12 +212,10 @@ namespace Card
             // エネミーのターン経過処理
             ProgressTurn(_progress);
 
-            // プレイヤーアニメーション
-            if (fireTw != null) fireTw.Kill(true);
-            fireTw = player.transform.DOLocalMoveX(player.transform.localPosition.x + fireMoveDist, fireMoveTime)
-                .SetLoops(2, LoopType.Yoyo).OnComplete(() => fireTw = null);
+            //プレイヤーの攻撃アニメーション
+            Player.instance.AttackAnim();
         }
-        
+
         /// <summary>
         /// ターンを進行する
         /// </summary>
@@ -235,7 +223,7 @@ namespace Card
         public void ProgressTurn(int _progressTurn)
         {
             bool _flg = true;
-            foreach(var _enemy in enemyObjects) {
+            foreach (var _enemy in enemyObjects) {
                 if (_enemy.ProgressTurn(_progressTurn)) {
                     _flg = playerTurn = false;
                     actEnemy.Add(_enemy);
@@ -273,7 +261,7 @@ namespace Card
         /// </summary>
         /// <param name="_atk"></param>
         /// <param name="_def"></param>
-        public void ReceiveWeaken(int _atk,int _def)
+        public void ReceiveWeaken(int _atk, int _def)
         {
             plState.ATWeaken.Value += _atk;
             plState.DFWeaken.Value += _def;
@@ -310,8 +298,7 @@ namespace Card
         void InitializeStartDeck()
         {
 
-            foreach (var cardId in startDecksId)
-            {
+            foreach (var cardId in startDecksId) {
                 deckList.Add(Search.GetCard(cardId));
             }
         }
@@ -339,8 +326,7 @@ namespace Card
         public void Reload(int bulletNum = 6)
         {
             //リボルバー内を空に 中身があるならTrushに移動させる
-            foreach(var card in gunInCards)
-            {
+            foreach (var card in gunInCards) {
                 if (card.id != 0) trashInCards.Add(card);
             }
             gunInCards.Clear();
@@ -350,14 +336,12 @@ namespace Card
 
 
             //デッキ内カードが込める弾の個数より少ない時
-            if (deckInCards.Count < bulletNum)
-            {
+            if (deckInCards.Count < bulletNum) {
                 //山札がないので捨て札をシャッフルして山札に加える
                 ResetTrush();
             }
             //デッキからカード追加
-            for (int i = 0; i < bulletNum; i++)
-            {
+            for (int i = 0; i < bulletNum; i++) {
                 gunInCards.Add(deckInCards[0]);
                 deckInCards.RemoveAt(0);
             }
@@ -389,8 +373,8 @@ namespace Card
         {
             // トラッシュリストをシャッフルしてデッキに入れる
             trashInCards = trashInCards.OrderBy(a => Guid.NewGuid()).ToList();
-            
-            foreach(var _cards in trashInCards) {
+
+            foreach (var _cards in trashInCards) {
                 deckInCards.Add(_cards);
             }
 
@@ -427,13 +411,12 @@ namespace Card
             var enemyGroup = Enemy.AddventPattern.GetGroup(floor, rand);
 
             int enemyCount = 0;
-            foreach (var enemyId in enemyGroup)
-            {
-               
+            foreach (var enemyId in enemyGroup) {
+
                 if (enemyId == -1) continue;
                 enemysState.Add(Enemy.Enemy.GetEnemyState(enemyId));
                 //敵生成
-                var enemy = Instantiate(enemyBase, enemyPos[enemyCount], Quaternion.identity, fightCanvas);
+                var enemy = Instantiate(enemyBase, enemyAddventPos[enemyCount].position, Quaternion.identity);
                 var script = enemy.GetComponent<Enemy.Enemy>();
                 script.Initialize(enemysState[enemyCount]);
 
