@@ -93,10 +93,10 @@ namespace Card
         {
 
 
-            if (enemyObjects.Count == 0 && ResultManager.instance.isResult == false)
+            if (enemyObjects.Count == 0 && ResultManager.instance.IsResult == false)
             {
                 //TODO‰¼’u‚«
-                ResultManager.instance.StartResult(15, true);
+                ResultManager.instance.StartResult();
             }
         }
         //í“¬‚ğŠJn‚·‚é
