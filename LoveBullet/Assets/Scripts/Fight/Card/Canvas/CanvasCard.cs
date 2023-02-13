@@ -13,6 +13,7 @@ namespace Card
         [SerializeField] float duration;
         Tween tw;
 
+
         public void SetSize(Vector2 _origin,Vector2 _big)
         {
             originSize = _origin;
@@ -38,10 +39,11 @@ namespace Card
         public void Push()
         {
             var result = ResultManager.instance;
-            if (result.IsResult) {
+            if (result.Mode == true) {
                 return;
             }
-            result.GetCard(state,this.gameObject);
+            Fight.instance.deckList.Add(state);
+            ResultManager.instance.ChangeMode();
         }
     }
 }
