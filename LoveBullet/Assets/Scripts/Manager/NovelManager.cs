@@ -19,7 +19,7 @@ public class NovelManager : SingletonMonoBehaviour<NovelManager>
         MAX,
     }
     [SerializeField] public NovelMode novelMode;
-    [SerializeField]private int chapterNum;
+    [SerializeField] public int chapterNum;
     public void SetNovelMode(NovelMode nm, int chapter = -1)
     {
         novelMode = nm;

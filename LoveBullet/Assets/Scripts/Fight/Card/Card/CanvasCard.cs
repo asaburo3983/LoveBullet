@@ -13,7 +13,7 @@ namespace Card
         [SerializeField] float duration;
         Tween tw;
 
-
+        DeckListManager dlMana;
         public void SetSize(Vector2 _origin,Vector2 _big)
         {
             originSize = _origin;
@@ -35,6 +35,11 @@ namespace Card
                 tw.Kill();
             }
             tw = transform.DOScale(originSize, duration).OnComplete( () => tw = null);
+        }
+        public void PointClick()
+        {
+            dlMana = DeckListManager.instance;
+            dlMana.PickUpCard(true, state,powerUp);
         }
         public void Push()
         {
