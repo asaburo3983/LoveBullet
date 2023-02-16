@@ -51,6 +51,7 @@ public class DeckListManager : SingletonMonoBehaviour<DeckListManager>
 
         DisableCanvas();
     }
+    List<GameObject> cardsOBJ=new List<GameObject>();
     void Start()
     {
         //カードを生成する
@@ -61,6 +62,8 @@ public class DeckListManager : SingletonMonoBehaviour<DeckListManager>
         {
             var pos = new Vector3(cardOriginPos.x + ((i % 6) * cardDistX), cardOriginPos.y - i / 6 * cardDistY, 0);
             var obj=Instantiate(cardPrefab, pos, Quaternion.identity, cardsParent);
+           
+            cardsOBJ.Add(obj);
             viewCard.Add(obj.GetComponent<Card.CanvasCard>());
             viewCard[i].powerUp.deckListID = i;
             viewCard[i].Initialize(deckList[i].state);
@@ -73,6 +76,8 @@ public class DeckListManager : SingletonMonoBehaviour<DeckListManager>
     private void Update()
     {
         MoveSlider();
+
+
     }
     void MoveSlider()
     {
@@ -138,6 +143,14 @@ public class DeckListManager : SingletonMonoBehaviour<DeckListManager>
         deckListCanvas.SetActive(true);
 
         DOTween.To(() => canvasGroup.alpha, (x) => canvasGroup.alpha = x, 1.0f, canvasFadeSpeed);
+
+        //カードのポジションをセット
+        for (int i = 0; i < cardNum; i++)
+        {
+            var pos = new Vector3(cardOriginPos.x + ((i % 6) * cardDistX), cardOriginPos.y - i / 6 * cardDistY, 0);
+            cardsOBJ[i].transform.position = pos;
+            // obj.transform.position = pos;
+        }
     }
     public void DisableCanvas()
     {

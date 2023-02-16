@@ -9,7 +9,6 @@ public class ResultManager : SingletonMonoBehaviour<ResultManager>
 {
     [SerializeField] Canvas canvas;
     [SerializeField] GameObject cards;
-    [SerializeField] ResultEvent ev;
     bool isResult;
     public bool IsResult =>isResult;
 

@@ -614,6 +614,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 334f142233e119b4e90cae157b161f5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mode: 0
 --- !u!1 &1718718825603268813
 GameObject:
   m_ObjectHideFlags: 0
@@ -1981,6 +1982,7 @@ MonoBehaviour:
     hpFluctuationPlus: 0
     pattern: 
     value: 
+  fieldID: 0
   gameState:
     maxHP:
       value: 0
@@ -2238,6 +2240,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 334f142233e119b4e90cae157b161f5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mode: 0
 --- !u!1 &5784146377079544271
 GameObject:
   m_ObjectHideFlags: 0
@@ -2465,6 +2468,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 334f142233e119b4e90cae157b161f5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mode: 0
 --- !u!1 &8386071273113915800
 GameObject:
   m_ObjectHideFlags: 0

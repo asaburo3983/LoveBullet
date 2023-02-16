@@ -90,7 +90,7 @@ namespace Card
         public void Initialize(State _state)
         {
             SetState(_state);
-            SetTexture();
+            SetTexture_Image();
         }
         public void SetState(State _state)
         {
@@ -110,7 +110,7 @@ namespace Card
             Rough.SetText(ui.AT, state.Damage + powerUp.AT);
             Rough.SetText(ui.DF, state.buff[(int)BuffEnum.Bf_Diffence] + powerUp.DF);
         }
-        void SetTexture()
+        void SetTexture_Image()
         {
             string framePath = "none";
             if (state.Damage > 0)

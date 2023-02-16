@@ -8,6 +8,8 @@ public class BandManager : SingletonMonoBehaviour<BandManager>
     [SerializeField] Canvas deckListCanvas;
 
     public ReactiveProperty<int> playerHP = new ReactiveProperty<int>();
+    public ReactiveProperty<int> playerMaxHP = new ReactiveProperty<int>();
+
     public ReactiveProperty<int> unstable = new ReactiveProperty<int>();
     public ReactiveProperty<int> feelRed = new ReactiveProperty<int>();
     public ReactiveProperty<int> feelBlue = new ReactiveProperty<int>();

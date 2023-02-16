@@ -1,14 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class StartFight : MonoBehaviour
+using UnityEngine.UI;
+public class SetCanvasMainCamera : MonoBehaviour
 {
-    [SerializeField] GameObject resultCanvas;
     // Start is called before the first frame update
     void Start()
     {
-        Card.Fight.instance.StartFight();
+        GetComponent<Canvas>().worldCamera = Camera.main;
     }
 
     // Update is called once per frame

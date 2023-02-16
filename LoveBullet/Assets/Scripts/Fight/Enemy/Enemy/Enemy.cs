@@ -26,7 +26,8 @@ namespace Enemy
         }
         [SerializeField]State state;
         public State enemyState => state;
-        
+
+        public int fieldID;
         [System.Serializable]
         public struct InGameState
         {
@@ -77,18 +78,18 @@ namespace Enemy
             //Ž€–Sˆ—
             gameState.hp.Where(x => x <= 0).Subscribe(x => {
 
-                var fight = Card.Fight.instance;
+                var fight = FightManager.instance;
                 int _id = fight.enemyObjects.IndexOf(this);
                 
                 // íœ‚É”º‚¢ƒ^[ƒQƒbƒg‚ÌID‚ð•ÏX‚·‚é
-                if(fight.TargetId == _id) {
+                if(fight.targetId == _id) {
 
                     if(fight.enemyObjects.Count - 1 == _id) {
                         fight.SetTarget(0);
                     }
                 }
-                else if(fight.TargetId > _id) {
-                    fight.SetTarget(fight.TargetId - 1);
+                else if(fight.targetId > _id) {
+                    fight.SetTarget(fight.targetId - 1);
                 }
 
                 fight.enemyObjects.Remove(this);
@@ -165,7 +166,7 @@ namespace Enemy
             }
             
             //TODO ‚Æ‚è‚ ‚¦‚¸UŒ‚‚Æ–hŒäˆ—‚¾‚¯ì¬
-            Player.ReceiveDamage(atk);//UŒ‚
+            Player.instance.ReceiveDamage(atk);//UŒ‚
 
             // ƒoƒtŒnˆ—
             gameState.ATBuff.Value = actiovePattern.buff[(int)BuffEnum.Bf_Attack];
@@ -259,7 +260,7 @@ namespace Enemy
 
         public void SetTarget()
         {
-            Card.Fight.instance.SetTarget(this);
+            FightManager.instance.SetTarget(fieldID);
         }
 
         private void OnDestroy()
@@ -298,7 +299,7 @@ namespace Enemy
                 .AppendCallback(() => { Player.instance.ReceiveAnim(); Action(); })
                 .OnComplete(() => {
                     actText.gameObject.SetActive(false);
-                    Card.Fight.instance.actEnemy.Remove(this);
+                    FightManager.instance.actEnemy.Remove(this);
                     countDown.Change();
                 });
         }

@@ -8,15 +8,15 @@ namespace FightPlayer
 {
     public class HPBar : MonoBehaviour
     {
-        Player player;
+        BandManager bandMana;
         [SerializeField] SpriteRendererFillAmount srfa;
         // Start is called before the first frame update
         void Start()
         {
-            player = Player.instance;
-            player.gameState.hp.Subscribe(x =>
+            bandMana = BandManager.instance;
+            bandMana.playerHP.Subscribe(x =>
             {
-                srfa.FillAmount = ((float)x / (float)player.gameState.maxHP.Value);
+                srfa.FillAmount = ((float)x / (float)bandMana.playerMaxHP.Value);
             }).AddTo(this);
         }
 

@@ -8,16 +8,16 @@ namespace FightPlayer
 {
     public class HPText : MonoBehaviour
     {
-        Player player;
+        BandManager bandMana;
         [SerializeField] Text hpText;
 
         // Start is called before the first frame update
         void Start()
         {
-            player = Player.instance;
-            player.gameState.hp.Subscribe(x =>
+            bandMana = BandManager.instance;
+            bandMana.playerHP.Subscribe(x =>
             {
-                hpText.text = x.ToString() + "/" + player.gameState.maxHP.Value.ToString();
+                hpText.text = x.ToString() + "/" + bandMana.playerMaxHP.Value.ToString();
             }).AddTo(this);
         }
 

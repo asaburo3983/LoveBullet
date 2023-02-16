@@ -6,7 +6,7 @@ using DG.Tweening;
 
 public class TargetIcon : MonoBehaviour
 {
-    Card.Fight fight;
+    FightManager fight;
     ReactiveProperty<Vector3> pos = new ReactiveProperty<Vector3>();
     [SerializeField] float moveSpeed;
     Tween tw;
@@ -14,16 +14,16 @@ public class TargetIcon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        fight = Card.Fight.instance;
+        fight = FightManager.instance;
         pos.Subscribe(x => Move(x)).AddTo(this);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (fight.TargetId >= 0 && fight.enemyObjects.Count > 0)
+        if (fight.targetId >= 0 && fight.enemyObjects.Count > 0)
         {
-            pos.Value = fight.enemyObjects[fight.TargetId].transform.position;
+            pos.Value = fight.enemyObjects[fight.targetId].transform.position;
             //transform.position = pos;
         }
     }
