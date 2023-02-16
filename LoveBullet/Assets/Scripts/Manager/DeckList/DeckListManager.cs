@@ -67,7 +67,6 @@ public class DeckListManager : SingletonMonoBehaviour<DeckListManager>
             viewCard.Add(obj.GetComponent<Card.CanvasCard>());
             viewCard[i].powerUp.deckListID = i;
             viewCard[i].Initialize(deckList[i].state);
-        //
         }
 
         cardsPos.Subscribe(x => MoveCards()).AddTo(this);

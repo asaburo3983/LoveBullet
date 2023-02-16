@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 using System.Linq;
 using UniRx;
@@ -55,6 +56,11 @@ public class FightManager : SingletonMonoBehaviour<FightManager>
     [SerializeField] float cockingMaxTime;
     bool IsCardMoveNow;
 
+    [Header("スクリーン描画系")]
+    ReactiveProperty<bool> isEndFight = new ReactiveProperty<bool>();
+    [SerializeField] GameObject endFight;
+    [SerializeField] float screenFadeTime;
+
     #region InitFunction
 
     private void Awake()
@@ -91,20 +97,35 @@ public class FightManager : SingletonMonoBehaviour<FightManager>
 
         //デッキをシャッフルする
         ShuffleDeck();
-
+        //カードの初期生成
         InstantiateGunInCards();
+
+        //戦闘終了処理
+        //isEndFight.Where(x => x == true).Subsucribe(x => { FloorClear(); }).AddTo(this);
     }
     private void Update()
     {
         if (enemyObjects.Count <= 0)
         {
             //エネミーがすべていなくなった際に階層クリアを行う
+            //isEndFight.value = true;
         }
     }
+    void FloorStart()
+    {
 
+    }
     void FloorClear()
     {
         //クリア演出を行う
+        endFight.SetActive(true);
+        var canvasGroup = endFight.GetComponent<CanvasGroup>();
+        DOTween.To(() => canvasGroup.alpha, (x) => canvasGroup.alpha = x, 1.0f, screenFadeTime).OnComplete(() => { 
+            //数秒後リザルトを表示する
+
+        });
+
+        floor++;//階層を上げる
 
         //クリア演出後リザルトを表示する
     }

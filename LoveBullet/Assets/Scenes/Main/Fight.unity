@@ -128,67 +128,11 @@ Camera:
   m_CorrespondingSourceObject: {fileID: 6351509615239713049, guid: 653e30fab97d3ae4885cc1bef343f8a7, type: 3}
   m_PrefabInstance: {fileID: 734342615}
   m_PrefabAsset: {fileID: 0}
---- !u!21 &254029254
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Hidden/SpriteRendererFillAmountHorizontal
-  m_Shader: {fileID: 4800000, guid: 3aec375957887314c920cadf2ffcd41c, type: 3}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _FillAmount: 1
-    - _Reverse: 0
-    m_Colors: []
-  m_BuildTextureStacks: []
 --- !u!224 &571118904 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 571118904, guid: 1266813eda3b2df4681f182f8a544691, type: 3}
   m_PrefabInstance: {fileID: 1074222964}
   m_PrefabAsset: {fileID: 0}
---- !u!21 &729202529
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Hidden/SpriteRendererFillAmountHorizontal
-  m_Shader: {fileID: 4800000, guid: 3aec375957887314c920cadf2ffcd41c, type: 3}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _FillAmount: 1
-    - _Reverse: 0
-    m_Colors: []
-  m_BuildTextureStacks: []
 --- !u!1001 &734342615
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -572,6 +516,34 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1330742790, guid: 1266813eda3b2df4681f182f8a544691, type: 3}
   m_PrefabInstance: {fileID: 1074222964}
   m_PrefabAsset: {fileID: 0}
+--- !u!21 &1568381769
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Hidden/SpriteRendererFillAmountHorizontal
+  m_Shader: {fileID: 4800000, guid: 3aec375957887314c920cadf2ffcd41c, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _FillAmount: 1
+    - _Reverse: 0
+    m_Colors: []
+  m_BuildTextureStacks: []
 --- !u!224 &1780050228 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1780050228, guid: 1266813eda3b2df4681f182f8a544691, type: 3}
@@ -625,7 +597,7 @@ PrefabInstance:
     - target: {fileID: 7427685733685329648, guid: dcfc09452f8c179409330eeff6a3f8db, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 254029254}
+      objectReference: {fileID: 1568381769}
     - target: {fileID: 7427685734008007248, guid: dcfc09452f8c179409330eeff6a3f8db, type: 3}
       propertyPath: m_Name
       value: Stage
