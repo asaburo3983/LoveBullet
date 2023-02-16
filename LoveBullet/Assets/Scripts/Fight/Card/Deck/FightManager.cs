@@ -12,13 +12,12 @@ public class FightManager : SingletonMonoBehaviour<FightManager>
     //マネージャー系
     BandManager bandMana;
 
-
     [Header("カード管理系")]
     [SerializeField] List<Card.Card> deckInCards = new List<Card.Card>();
     public List<Card.Card> gunInCards = new List<Card.Card>();
     [SerializeField] List<Card.Card> trashInCards = new List<Card.Card>();
   
-
+    //プレイヤー系
     Player player;
     Player.InGameState plState;
 
@@ -28,14 +27,11 @@ public class FightManager : SingletonMonoBehaviour<FightManager>
     [SerializeField] int cockingCost = 1;
     [SerializeField, ReadOnly] bool playerTurn = true;
     public bool PlayerTurn => playerTurn;
-    bool cocking = false;
-    public bool CockingFlg { get { return cocking; } set { cocking = value; } }
 
     [Header("敵処理系")]
     public GameObject enemyPrefab;
     [SerializeField] List<Transform> enemyStartPos;//エネミー初期位置
     [SerializeField] List<Transform> enemyAddventPos;//エネミー定位置
-
     List<Enemy.Enemy.State> enemysState = new List<Enemy.Enemy.State>();
     public List<Enemy.Enemy> enemyObjects = new List<Enemy.Enemy>();
     public int targetId = 0;
@@ -72,20 +68,20 @@ public class FightManager : SingletonMonoBehaviour<FightManager>
         bandMana = BandManager.instance;
         player = Player.instance;
         plState = player.gameState;
-        //playerTurn = true;
+        playerTurn = true;
 
         //// 行動する敵を順番にアニメーションし、全てが終わると行動できるようにする
-        //actEnemy.ObserveRemove().Subscribe(x =>
-        //{
-        //    if (actEnemy.Count == 0)
-        //    {
-        //        playerTurn = true;
-        //        plState.Def.Value = 0;
-        //        return;
-        //    }
-        //    //敵の行動処理
-        //    actEnemy[0].AttackAnimation();
-        //}).AddTo(this);
+        actEnemy.ObserveRemove().Subscribe(x =>
+        {
+            if (actEnemy.Count == 0)
+            {
+                playerTurn = true;
+                plState.Def.Value = 0;
+                return;
+            }
+            //敵の行動処理
+            actEnemy[0].AttackAnimation();
+        }).AddTo(this);
 
         //戦闘開始演出
 
@@ -100,8 +96,18 @@ public class FightManager : SingletonMonoBehaviour<FightManager>
     }
     private void Update()
     {
+        if (enemyObjects.Count <= 0)
+        {
+            //エネミーがすべていなくなった際に階層クリアを行う
+        }
     }
 
+    void FloorClear()
+    {
+        //クリア演出を行う
+
+        //クリア演出後リザルトを表示する
+    }
     /// <summary>
     /// カード初期生成
     /// </summary>
@@ -160,27 +166,6 @@ public class FightManager : SingletonMonoBehaviour<FightManager>
          obj.transform.DOMoveY(cardBasePos[num].position.y, reloadMoveSpeed).OnComplete(() => { obj.transform.DOMoveX(cardBasePos[num].position.x, reloadMoveSpeed); });
         //定位置まで移動させる
         cards.Add(obj);
-    }
-    void StartTurn_Player()
-    {
-        Player.instance.ResetDF();
-    }
-
-    void StartTurn_Enemy()
-    {
-        //エネミー側で削除されていた場合リストから削除しておく
-        for (int i = 0; i < enemyObjects.Count; i++)
-        {
-            if (enemyObjects[i] == null)
-            {
-                enemyObjects.RemoveAt(i);
-            }
-        }
-        foreach (var enemy in enemyObjects)
-        {
-            enemy.Action();//敵に順番に行動させる
-            enemy.ResetDF();//DFをリセットする
-        }
     }
 
     #endregion
@@ -279,23 +264,25 @@ public class FightManager : SingletonMonoBehaviour<FightManager>
     /// <param name="_enemy"></param>
     void Fire(Enemy.Enemy _enemy)
     {
+        //カードの移動中は処理をしない
+        if (IsCardMoveNow) { return; }
+        IsCardMoveNow = true;
+        DOVirtual.DelayedCall(fireMaxTime, () => { IsCardMoveNow = false; });
+
         AudioSystem.AudioControl.Instance.SE.CardSePlayOneShot(gunInCards[0].state.SE);
 
-        //カードを廃棄して空のカードを生成する
+        //カードのシステム処理を行う
         CardAction(_enemy);
 
         //デバフ減少
         plState.ATWeaken.Value = Mathf.Clamp(plState.ATWeaken.Value - 1, 0, 9999);
         plState.DFWeaken.Value = Mathf.Clamp(plState.DFWeaken.Value - 1, 0, 9999);
 
-        ProgressTurn(0);
+        
+        Player.instance.AttackAnim();
 
-        return;
-        //// エネミーのターン経過処理
-        //
+        ProgressTurn(gunInCards[0].state.AP);
 
-        ////プレイヤーの攻撃アニメーション
-        //Player.instance.AttackAnim();
     }
 
     /// <summary>
@@ -313,56 +300,15 @@ public class FightManager : SingletonMonoBehaviour<FightManager>
                 actEnemy.Add(_enemy);
             }
         }
-
         // 敵を行動させる
         if (!_flg) actEnemy[0].AttackAnimation();
     }
-
-    /// <summary>
-    /// プレイヤーの被ダメージ処理
-    /// </summary>
-    /// <param name="_damage"></param>
-    public void ReceiveDamage(int _damage)
-    {
-        int dmg = _damage;
-        // 防御デバフが存在する場合、値の補正を行う
-        if (plState.DFWeaken.Value > 0)
-        {
-            dmg *= player.Rate.DF;
-            dmg /= 100;
-        }
-
-        // 防御バフがある場合、ダメージ減算
-        if (dmg <= plState.Def.Value)
-        {
-            plState.Def.Value -= dmg;
-        }
-        else
-        {
-            bandMana.playerHP.Value -= dmg - plState.Def.Value;
-        }
-    }
-
-    /// <summary>
-    /// プレイヤーの被デバフ処理
-    /// </summary>
-    /// <param name="_atk"></param>
-    /// <param name="_def"></param>
-    public void ReceiveWeaken(int _atk, int _def)
-    {
-        plState.ATWeaken.Value += _atk;
-        plState.DFWeaken.Value += _def;
-    }
-
 
     // ターゲット再指定
     public void SetTarget(int _id)
     {
         targetId = _id;
     }
-
-
-
     #endregion
 
     #region Card
@@ -429,7 +375,7 @@ public class FightManager : SingletonMonoBehaviour<FightManager>
 
         AudioSystem.AudioControl.Instance.SE.PlaySeOneShot(SEList.Reload);
 
-        //    ProgressTurn(reloadCost);
+        ProgressTurn(reloadCost);
     }
 
     /// <summary>
@@ -462,47 +408,7 @@ public class FightManager : SingletonMonoBehaviour<FightManager>
 
         AudioSystem.AudioControl.Instance.SE.PlaySeOneShot(SEList.Cocking);
 
-        //return;
-        //// ターン処理が実行可能かチェック
-        //if (!playerTurn) return;
-
-        //// コッキング中は再度処理しない
-        //if (cocking) return;
-
-        
-
-        ////gunInCards.Move(0, 5);
-        //ProgressTurn(cockingCost);
-        //cocking = true;
-    }
-    /// <summary>
-    /// 捨て札にあるスキルを再度山に戻す
-    /// </summary>
-    public void ResetTrush()
-    {
-        // トラッシュリストをシャッフルしてデッキに入れる
-        trashInCards = trashInCards.OrderBy(a => Guid.NewGuid()).ToList();
-
-        foreach (var _cards in trashInCards)
-        {
-            deckInCards.Add(_cards);
-        }
-
-        //トラッシュのカードをなくす
-        trashInCards.Clear();
-    }
-
-    /// <summary>
-    /// 弾丸の能力を使用する
-    /// </summary>
-    /// <param name="target"></param>
-    /// <param name="allTarget"></param>
-    void CardSkill(int target = 0, bool allTarget = false)
-    {
-        if (enemyObjects.Count <= 0) { Debug.LogError("敵が存在しない状態でスキルを発動しています"); return; }
-        //敵にダメージなり与える処理
-        enemyObjects[target].ReceiveDamage(gunInCards[0].state.Damage);//敵へ攻撃処理
-        plState.Def.Value += gunInCards[0].state.buff[(int)BuffEnum.Bf_Diffence];//プレイヤーへ防御追加
+        ProgressTurn(cockingCost);
     }
     #endregion
 

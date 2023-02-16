@@ -61,7 +61,6 @@ namespace Enemy
         }
         [SerializeField] TwState tw;
 
-        //[SerializeField] Image body;
         [SerializeField] SpriteRenderer sBody;
 
         [SerializeField] Text actText;
@@ -69,12 +68,6 @@ namespace Enemy
 
         private void Start()
         {
-            if (state == null)
-            {
-                Debug.LogError("エネミーはイニシャライズされずに生成されました");
-                Destroy(this.gameObject);
-                return;
-            }
             //死亡処理
             gameState.hp.Where(x => x <= 0).Subscribe(x => {
 
@@ -92,9 +85,10 @@ namespace Enemy
                     fight.SetTarget(fight.targetId - 1);
                 }
 
+                //削除処理
                 fight.enemyObjects.Remove(this);
                 
-                transform.Find("UI").gameObject.SetActive(false);
+                //transform.Find("UI").gameObject.SetActive(false);
 
                 sBody.DOColor(new Color(1, 1, 1, 0), 1.0f).OnComplete(() => {
                     DOVirtual.DelayedCall(3.0f, () => Destroy(gameObject));
@@ -165,7 +159,6 @@ namespace Enemy
                 atk /= 100;
             }
             
-            //TODO とりあえず攻撃と防御処理だけ作成
             Player.instance.ReceiveDamage(atk);//攻撃
 
             // バフ系処理
@@ -198,7 +191,7 @@ namespace Enemy
             if (_damage <= 0) return 0;
 
             // 防御デバフ計算  割合増加
-            int dmg = (_damage);
+            int dmg = _damage;
             if (gameState.DFWeaken.Value > 0) {
                 dmg *= gameState.Rate.DF;
                 dmg = (int)((float)dmg/100.0f);
@@ -237,6 +230,11 @@ namespace Enemy
             gameState.DFWeaken.Value += _weak;
         }
 
+        /// <summary>
+        /// ターン経過処理
+        /// </summary>
+        /// <param name="_progressTurn"></param>
+        /// <returns></returns>
         public bool ProgressTurn(int _progressTurn)
         {
             if (gameState.stan.Value > 0) {
@@ -268,21 +266,20 @@ namespace Enemy
             if (tw.damageTw != null) tw.damageTw.Kill();
         }
 
-
         public void AttackAnimation()
         {
             if (tw.damageTw != null) {
                 tw.damageTw.OnComplete(() => {
-                    AtkAnim();
+                    AttackAnim();
                 });
             }
             else {
-                AtkAnim();
+                AttackAnim();
             }
 
         }
 
-        void AtkAnim()
+        void AttackAnim()
         {
             float _delay = 0;
             if (tw.damageTw != null) {
@@ -291,20 +288,25 @@ namespace Enemy
 
             // TweenAnimationの作成
             Sequence sequence = DOTween.Sequence()
-                .Append(DOVirtual.DelayedCall(_delay, () => {
+                .Append(
+                DOVirtual.DelayedCall(_delay, () => {
+                    //行動までのターン数を設定する
                     actText.text = CacheData.instance.enemyActivePattern[state.pattern[gameState.currentIdx]].name;
                     actText.gameObject.SetActive(true);
                 }))
-                .Append(transform.DOLocalMoveX(transform.localPosition.x - tw.atkMove, tw.atkTime).SetDelay(tw.atkTextTime).SetLoops(2, LoopType.Yoyo))
-                .AppendCallback(() => { Player.instance.ReceiveAnim(); Action(); })
+                .Append(
+                //攻撃アニメ
+                transform.DOLocalMoveX(transform.localPosition.x - tw.atkMove, tw.atkTime).SetDelay(tw.atkTextTime).SetLoops(2, LoopType.Yoyo))
+                .AppendCallback(() => { 
+                //攻撃の処理を行う
+                    Action(); 
+                })
                 .OnComplete(() => {
                     actText.gameObject.SetActive(false);
                     FightManager.instance.actEnemy.Remove(this);
                     countDown.Change();
                 });
         }
-
-
 
         public void DamageAnimation()
         {
@@ -314,10 +316,7 @@ namespace Enemy
             tw.damageTw = transform.DOShakePosition(tw.damageTime, tw.damageShake, 30, 1, false, true)
                 .SetLoops(2, LoopType.Yoyo).OnComplete(() => tw.damageTw = null);
 
-
             transform.GetChild(0).GetComponent<SpriteRenderer>().DOColor(new Color(1, 0, 0, 1), tw.damageTime).SetLoops(2, LoopType.Yoyo);
-
-            //sBody.DOColor(Color.red, tw.damageTime / 6f).SetLoops(2, LoopType.Yoyo);
         }
     }
 }

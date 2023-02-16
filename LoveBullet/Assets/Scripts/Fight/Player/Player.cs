@@ -96,6 +96,12 @@ public class Player : SingletonMonoBehaviour<Player>
             bandMana.playerHP.Value -= dmg;
         }
         state.Def.Value = Mathf.Clamp(state.Def.Value - _damage, 0, 9999);
+
+        //UŒ‚‚ðŽó‚¯‚½ê‡‚Ì‚Ýƒ_ƒ[ƒW‚ðŽó‚¯‚é
+        if (dmg > 0)
+        {
+            ReceiveAnim();
+        }
     }
 
     public void AttackAnim()
