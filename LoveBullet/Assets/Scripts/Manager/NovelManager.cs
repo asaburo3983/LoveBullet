@@ -11,6 +11,7 @@ public class NovelManager : SingletonMonoBehaviour<NovelManager>
     CacheScenario cs;
     public ReactiveProperty<bool> isNovel = new ReactiveProperty<bool>();
 
+    [System.Serializable]
     public enum NovelMode
     {
         Novel,

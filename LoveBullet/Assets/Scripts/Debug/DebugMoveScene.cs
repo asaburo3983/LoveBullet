@@ -35,5 +35,9 @@ public class DebugMoveScene : MonoBehaviour
     {
         SceneManager.LoadScene("End");
     }
+    public void ReloadScene()
+    {
+        SceneManager.LoadScene("Title");
+    }
 
 }

@@ -26,7 +26,7 @@ public class DeckListManager : SingletonMonoBehaviour<DeckListManager>
 
     [SerializeField] Transform cardsParent;
 
-    public List<Card.Card> deckList=new List<Card.Card>();
+    public static List<Card.Card> deckList=new List<Card.Card>();
 
     [SerializeField] float canvasFadeSpeed;
     [SerializeField] Vector2 cardOriginPos;
@@ -50,26 +50,31 @@ public class DeckListManager : SingletonMonoBehaviour<DeckListManager>
         canvasGroup = deckListCanvas.GetComponent<CanvasGroup>();
 
         DisableCanvas();
+        Debug.Log(deckList.Count);
     }
     List<GameObject> cardsOBJ=new List<GameObject>();
     void Start()
+    {
+
+        cardsPos.Subscribe(x => MoveCards()).AddTo(this);
+        CardCreate();
+    }
+    void CardCreate()
     {
         //カードを生成する
         cardNum = deckList.Count;
         cardColumn = cardNum / 6;
 
-        for(int i = 0; i < cardNum; i++)
+        for (int i = 0; i < cardNum; i++)
         {
             var pos = new Vector3(cardOriginPos.x + ((i % 6) * cardDistX), cardOriginPos.y - i / 6 * cardDistY, 0);
-            var obj=Instantiate(cardPrefab, pos, Quaternion.identity, cardsParent);
-           
+            var obj = Instantiate(cardPrefab, pos, Quaternion.identity, cardsParent);
+
             cardsOBJ.Add(obj);
             viewCard.Add(obj.GetComponent<Card.CanvasCard>());
             viewCard[i].powerUp.deckListID = i;
             viewCard[i].Initialize(deckList[i].state);
         }
-
-        cardsPos.Subscribe(x => MoveCards()).AddTo(this);
 
     }
     private void Update()
@@ -142,6 +147,8 @@ public class DeckListManager : SingletonMonoBehaviour<DeckListManager>
         deckListCanvas.SetActive(true);
 
         DOTween.To(() => canvasGroup.alpha, (x) => canvasGroup.alpha = x, 1.0f, canvasFadeSpeed);
+
+        //カードを生成する
 
         //カードのポジションをセット
         for (int i = 0; i < cardNum; i++)

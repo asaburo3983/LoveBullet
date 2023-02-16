@@ -23,7 +23,7 @@ public class FightManager : SingletonMonoBehaviour<FightManager>
     Player.InGameState plState;
 
     [Header("その他ルール系")]
-    [SerializeField, ReadOnly] int floor;
+    public static int floor;
     [SerializeField] int reloadCost = 1;
     [SerializeField] int cockingCost = 1;
     [SerializeField, ReadOnly] bool playerTurn = true;
@@ -101,16 +101,17 @@ public class FightManager : SingletonMonoBehaviour<FightManager>
         InstantiateGunInCards();
 
         //戦闘終了処理
-        //isEndFight.Where(x => x == true).Subsucribe(x => { FloorClear(); }).AddTo(this);
+        isEndFight.Where(x => x == true).Subscribe(x => { FloorClear(); }).AddTo(this);
     }
     private void Update()
     {
         if (enemyObjects.Count <= 0)
         {
             //エネミーがすべていなくなった際に階層クリアを行う
-            //isEndFight.value = true;
+            isEndFight.Value = true;
         }
-    }
+       
+        }
     void FloorStart()
     {
 
@@ -120,12 +121,10 @@ public class FightManager : SingletonMonoBehaviour<FightManager>
         //クリア演出を行う
         endFight.SetActive(true);
         var canvasGroup = endFight.GetComponent<CanvasGroup>();
-        DOTween.To(() => canvasGroup.alpha, (x) => canvasGroup.alpha = x, 1.0f, screenFadeTime).OnComplete(() => { 
+        DOTween.To(() => canvasGroup.alpha, (x) => canvasGroup.alpha = x, 1.0f, screenFadeTime).OnComplete(() => {
             //数秒後リザルトを表示する
-
+            DOVirtual.DelayedCall(0.5f, () => ResultManager.instance.EnableCanvas()).OnComplete(()=>{ endFight.SetActive(false); });
         });
-
-        floor++;//階層を上げる
 
         //クリア演出後リザルトを表示する
     }
@@ -290,7 +289,7 @@ public class FightManager : SingletonMonoBehaviour<FightManager>
         IsCardMoveNow = true;
         DOVirtual.DelayedCall(fireMaxTime, () => { IsCardMoveNow = false; });
 
-        AudioSystem.AudioControl.Instance.SE.CardSePlayOneShot(gunInCards[0].state.SE);
+        //AudioSystem.AudioControl.Instance.SE.CardSePlayOneShot(gunInCards[0].state.SE);
 
         //カードのシステム処理を行う
         CardAction(_enemy);
@@ -340,7 +339,7 @@ public class FightManager : SingletonMonoBehaviour<FightManager>
     void ShuffleDeck()
     {
         //デッキリストをシャッフルしてデッキに入れる
-        deckInCards = DeckListManager.instance.deckList.OrderBy(a => Guid.NewGuid()).ToList();
+        deckInCards = DeckListManager.deckList.OrderBy(a => Guid.NewGuid()).ToList();
     }
 
     /// <summary>
