@@ -70,19 +70,19 @@ public class ResultManager : SingletonMonoBehaviour<ResultManager>
     public void MoveNovel_Novel()
     {
         //‚Æ‚è‚ ‚¦‚¸ˆÚ“®
-        NovelManager.instance.novelMode = NovelManager.NovelMode.Novel;
+        NovelManager.novelMode = NovelManager.NovelMode.Novel;
         SceneManager.LoadScene("Novel");
     }
     public void MoveNovel_Rest()
     {
         //‚Æ‚è‚ ‚¦‚¸ˆÚ“®
-        NovelManager.instance.novelMode = NovelManager.NovelMode.Rest;
+        NovelManager.novelMode = NovelManager.NovelMode.Rest;
         SceneManager.LoadScene("Novel");
     }
     public void MoveNovel_Shop()
     {
         //‚Æ‚è‚ ‚¦‚¸ˆÚ“®
-        NovelManager.instance.novelMode = NovelManager.NovelMode.Shop;
+        NovelManager.novelMode = NovelManager.NovelMode.Shop;
         SceneManager.LoadScene("Novel");
     }
 

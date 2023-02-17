@@ -219,8 +219,8 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: -1942494485
-  m_SortingOrder: 1
+  m_SortingLayerID: -990311141
+  m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &1201655585932090050
 MonoBehaviour:
@@ -2832,6 +2832,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1201655586722215486}
   - component: {fileID: 1201655586722215487}
+  - component: {fileID: 705129084}
   m_Layer: 0
   m_Name: CacheData
   m_TagString: Untagged
@@ -2868,6 +2869,18 @@ MonoBehaviour:
   cardStates: []
   enemyStates: []
   enemyActivePattern: []
+--- !u!114 &705129084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1201655586722215457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 405b63a696130fb40bf6432376dbe4db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1201655586732322052
 GameObject:
   m_ObjectHideFlags: 0
@@ -3059,6 +3072,13 @@ MonoBehaviour:
     value: 0
   feelGreen:
     value: 0
+  hpObj: {fileID: 1201655586228530566}
+  unstabeObj: {fileID: 1201655586601171612}
+  feelRedObj: {fileID: 1201655587832744104}
+  feelBlueObj: {fileID: 1201655587507462515}
+  feelGreenObj: {fileID: 1201655586751939167}
+  beatBigSize: {x: 1.5, y: 1.5, z: 1.5}
+  beatSpeed: 0.01
 --- !u!1 &1201655586751939166
 GameObject:
   m_ObjectHideFlags: 0
@@ -7239,7 +7259,6 @@ MonoBehaviour:
   sliderSpeed: 0.5
   cardsMoveSpeed: 0.5
   cardsParent: {fileID: 1201655587030385868}
-  deckList: []
   canvasFadeSpeed: 0.5
   cardOriginPos: {x: 530, y: 590}
   cardDistX: 230
@@ -7990,6 +8009,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1201655587560709994}
     m_Modifications:
+    - target: {fileID: 8434137615799588664, guid: 390d906bd2ab47844bc013fc7b766933, type: 3}
+      propertyPath: databaseName.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8434137615799588664, guid: 390d906bd2ab47844bc013fc7b766933, type: 3}
+      propertyPath: databaseName.Array.data[5]
+      value: Tatie.db
+      objectReference: {fileID: 0}
+    - target: {fileID: 8434137615799588664, guid: 390d906bd2ab47844bc013fc7b766933, type: 3}
+      propertyPath: databaseName.Array.data[6]
+      value: DropObject.db
+      objectReference: {fileID: 0}
+    - target: {fileID: 8434137615799588664, guid: 390d906bd2ab47844bc013fc7b766933, type: 3}
+      propertyPath: databaseName.Array.data[7]
+      value: Chapter1.db
+      objectReference: {fileID: 0}
     - target: {fileID: 8434137615799588666, guid: 390d906bd2ab47844bc013fc7b766933, type: 3}
       propertyPath: m_Name
       value: Database

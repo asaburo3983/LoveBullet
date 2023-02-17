@@ -120,6 +120,7 @@ public class Player : SingletonMonoBehaviour<Player>
             .Append(transform.DOMoveX(receiveMovePosX, receiveMoveSpeed).SetLoops(2, LoopType.Yoyo))
             .Join(transform.GetChild(0).GetComponent<SpriteRenderer>().DOColor(new Color(1, 0, 0, 1), 0.1f).SetLoops(2, LoopType.Yoyo))
             .OnComplete(() => seq = null);
+
     }
 
 

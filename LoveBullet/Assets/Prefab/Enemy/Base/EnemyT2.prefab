@@ -473,9 +473,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '0
-
-'
+  m_Text: 
 --- !u!114 &4092526596960794407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1383,9 +1381,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '0
-
-'
+  m_Text: 
 --- !u!114 &1167275147255351505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1510,9 +1506,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '0
-
-'
+  m_Text: 
 --- !u!114 &3851694890174299318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2018,6 +2012,10 @@ MonoBehaviour:
   sBody: {fileID: 7223251405316090678}
   actText: {fileID: 4314427711002008086}
   countDown: {fileID: 6326248290924522274}
+  actionEffect:
+  - {fileID: 2963384185496000649, guid: ed2467819b988974ca6582e3ec939a23, type: 3}
+  - {fileID: 7782413633492180700, guid: 5412748673cac8f4280f217978a63206, type: 3}
+  - {fileID: 34871585530208821, guid: 8451a398e1cbc124f9a7178e664ec09a, type: 3}
 --- !u!1 &5017720995143693531
 GameObject:
   m_ObjectHideFlags: 0
@@ -2099,9 +2097,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '0
-
-'
+  m_Text: 
 --- !u!114 &8233636257158730636
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2550,9 +2546,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '0
-
-'
+  m_Text: 
 --- !u!114 &5178256767315295682
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -32,7 +32,8 @@ public class FightManager : SingletonMonoBehaviour<FightManager>
     [Header("敵処理系")]
     public GameObject enemyPrefab;
     [SerializeField] List<Transform> enemyStartPos;//エネミー初期位置
-    [SerializeField] List<Transform> enemyAddventPos;//エネミー定位置
+    [SerializeField] Transform enemyAddventPos;//エネミー定位置
+    [SerializeField] float enemyAddventMoveTime;
     List<Enemy.Enemy.State> enemysState = new List<Enemy.Enemy.State>();
     public List<Enemy.Enemy> enemyObjects = new List<Enemy.Enemy>();
     public int targetId = 0;
@@ -49,7 +50,7 @@ public class FightManager : SingletonMonoBehaviour<FightManager>
     [SerializeField] List<Transform> cardBasePos;//カード定位置
     [SerializeField] Transform cardReloadPos;//リロードじ移動位置
     [SerializeField] float reloadMoveSpeed;
-    [SerializeField] float cardInstatiateDelay;
+    [SerializeField, Tooltip("カードの移動後にカードを生成するまでの時間")] float cardInstatiateDelay;
 
     [SerializeField] float fireMaxTime;
     [SerializeField] float reloadMaxTime;
@@ -58,9 +59,15 @@ public class FightManager : SingletonMonoBehaviour<FightManager>
 
     [Header("スクリーン描画系")]
     ReactiveProperty<bool> isEndFight = new ReactiveProperty<bool>();
+    [SerializeField] GameObject startFight;
     [SerializeField] GameObject endFight;
     [SerializeField] float screenFadeTime;
 
+    [Header("リザルト表示系")]
+    [SerializeField] float resultDrawTime;
+
+    [Header("エフェクト")]
+    [SerializeField] List<GameObject> cardEffect;
     #region InitFunction
 
     private void Awake()
@@ -90,7 +97,7 @@ public class FightManager : SingletonMonoBehaviour<FightManager>
         }).AddTo(this);
 
         //戦闘開始演出
-
+        FloorStart();
 
         //エネミー出現　演出込
         AdventEnemys();
@@ -114,7 +121,13 @@ public class FightManager : SingletonMonoBehaviour<FightManager>
         }
     void FloorStart()
     {
-
+        //ゲーム開始演出を行う
+        startFight.SetActive(true);
+        var canvasGroup = startFight.GetComponent<CanvasGroup>();
+        DOTween.To(() => canvasGroup.alpha, (x) => canvasGroup.alpha = x, 0.0f, screenFadeTime).OnComplete(() =>
+        {
+            startFight.SetActive(false);
+        });
     }
     void FloorClear()
     {
@@ -123,7 +136,7 @@ public class FightManager : SingletonMonoBehaviour<FightManager>
         var canvasGroup = endFight.GetComponent<CanvasGroup>();
         DOTween.To(() => canvasGroup.alpha, (x) => canvasGroup.alpha = x, 1.0f, screenFadeTime).OnComplete(() => {
             //数秒後リザルトを表示する
-            DOVirtual.DelayedCall(0.5f, () => ResultManager.instance.EnableCanvas()).OnComplete(()=>{ endFight.SetActive(false); });
+            DOVirtual.DelayedCall(resultDrawTime, () => ResultManager.instance.EnableCanvas()).OnComplete(()=>{ endFight.SetActive(false); });
         });
 
         //クリア演出後リザルトを表示する
@@ -244,7 +257,10 @@ public class FightManager : SingletonMonoBehaviour<FightManager>
         plState.Def_Never.Value += cardState.buff[(int)BuffEnum.Bf_Diffence_Never];//永続防御強化
 
         bandMana.playerHP.Value += cardState.buff[(int)BuffEnum.Bf_Heal];//回復処理
-
+        if(bandMana.playerHP.Value> bandMana.playerMaxHP.Value)
+        {
+            bandMana.playerHP.Value = bandMana.playerMaxHP.Value;
+        }
         // 強制リロード
         if (cardState.Reload > 0)
         {
@@ -266,7 +282,7 @@ public class FightManager : SingletonMonoBehaviour<FightManager>
                 cards.RemoveAt(0);
                 //カードデータの削除
                 //カード生成
-                DOVirtual.DelayedCall(1, () =>
+                DOVirtual.DelayedCall(cardInstatiateDelay, () =>
                 {
                     InstantiateGunInCard(5, true,false);
                 });
@@ -278,19 +294,48 @@ public class FightManager : SingletonMonoBehaviour<FightManager>
             });
         }
     }
+
+    void CardEffect()
+    {
+        var _enemy = enemyObjects[targetId];
+        var playerPos = player.transform.GetChild(0).position;
+        var enemyPos = _enemy.transform.GetChild(0).position;
+        //エフェクトの表示
+        //敵の位置に攻撃エフェクトを表示
+        if (gunInCards[0].state.Damage > 0)
+        {
+            Instantiate(cardEffect[0], enemyPos, Quaternion.identity);
+        }
+        //自身の位置に防御エフェクトを表示
+        if (gunInCards[0].state.buff[(int)BuffEnum.Bf_Diffence] > 0)
+        {
+            Instantiate(cardEffect[1], playerPos, Quaternion.identity);
+        }
+        //特殊エフェクトの表示
+        if(gunInCards[0].state.buff[(int)BuffEnum.Bf_Diffence] <= 0 && gunInCards[0].state.Damage <= 0)
+        {
+            Instantiate(cardEffect[2], playerPos, Quaternion.identity);
+        }
+
+    }
     /// <summary>
     /// 攻撃処理
     /// </summary>
     /// <param name="_enemy"></param>
-    void Fire(Enemy.Enemy _enemy)
+    public void Fire()
     {
+        var _enemy = enemyObjects[targetId];
         //カードの移動中は処理をしない
-        if (IsCardMoveNow) { return; }
+        if (IsCardMoveNow || playerTurn == false) { return; }
         IsCardMoveNow = true;
         DOVirtual.DelayedCall(fireMaxTime, () => { IsCardMoveNow = false; });
 
-        //AudioSystem.AudioControl.Instance.SE.CardSePlayOneShot(gunInCards[0].state.SE);
+        AudioSystem.AudioControl.Instance.SE.CardSePlayOneShot(gunInCards[0].state.SE);
 
+        //ターン経過処理
+        ProgressTurn(gunInCards[0].state.AP);
+        //エフェクトの表示を行う
+        CardEffect();
         //カードのシステム処理を行う
         CardAction(_enemy);
 
@@ -298,10 +343,11 @@ public class FightManager : SingletonMonoBehaviour<FightManager>
         plState.ATWeaken.Value = Mathf.Clamp(plState.ATWeaken.Value - 1, 0, 9999);
         plState.DFWeaken.Value = Mathf.Clamp(plState.DFWeaken.Value - 1, 0, 9999);
 
-        
+
+
         Player.instance.AttackAnim();
 
-        ProgressTurn(gunInCards[0].state.AP);
+      
 
     }
 
@@ -343,20 +389,13 @@ public class FightManager : SingletonMonoBehaviour<FightManager>
     }
 
     /// <summary>
-    /// 現在ターゲットIDへの攻撃処理
-    /// </summary>
-    public void Fire()
-    {
-        Fire(enemyObjects[targetId]);
-    }
-    /// <summary>
     /// リボルバーをリロードする
     /// </summary>
     /// <param name="bulletNum"></param>
     public void Reload(int bulletNum = 6)
     {
         //リロード中はリロードできないようにする
-        if (IsCardMoveNow) { return; }
+        if (IsCardMoveNow || playerTurn == false) { return; }
         IsCardMoveNow = true;
         DOVirtual.DelayedCall(reloadMaxTime, () => { IsCardMoveNow = false; });
         //山札の数が６枚以下の場合捨て札を山に加える
@@ -386,7 +425,7 @@ public class FightManager : SingletonMonoBehaviour<FightManager>
             });
         }
         //カード生成
-         DOVirtual.DelayedCall(1, () => { 
+         DOVirtual.DelayedCall(cardInstatiateDelay, () => { 
             
             InstantiateGunInCards(); 
         
@@ -403,7 +442,7 @@ public class FightManager : SingletonMonoBehaviour<FightManager>
     /// </summary>
     public void Cocking()
     {
-        if (IsCardMoveNow) { return; }
+        if (IsCardMoveNow || playerTurn == false) { return; }
         IsCardMoveNow = true;
         DOVirtual.DelayedCall(cockingMaxTime, () => { IsCardMoveNow = false; });
 
@@ -415,7 +454,7 @@ public class FightManager : SingletonMonoBehaviour<FightManager>
             cards.RemoveAt(0);
             //カードデータの削除
             //カード生成
-            DOVirtual.DelayedCall(1, () =>
+            DOVirtual.DelayedCall(cardInstatiateDelay, () =>
             {
                 InstantiateGunInCard(5, gunInCards[0]);
             });
@@ -453,7 +492,8 @@ public class FightManager : SingletonMonoBehaviour<FightManager>
             if (enemyId == -1) continue;
             enemysState.Add(Enemy.Enemy.GetEnemyState(enemyId));
             //敵生成
-            var enemy = Instantiate(enemyPrefab, enemyAddventPos[enemyCount].position, Quaternion.identity);
+            var enemy = Instantiate(enemyPrefab, enemyAddventPos.position, Quaternion.identity);
+            enemy.transform.DOMove(enemyStartPos[enemyCount].position, enemyAddventMoveTime);//登場時の移動処理
             var script = enemy.GetComponent<Enemy.Enemy>();
             script.Initialize(enemysState[enemyCount]);
             script.fieldID = enemyCount;//ターゲット指定用のIDを代入

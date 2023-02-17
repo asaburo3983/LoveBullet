@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CacheScenario : SingletonMonoBehaviour<CacheScenario>
+public class CacheData_Novel : SingletonMonoBehaviour<CacheData_Novel>
 {
     Database.Load loadDB;
 
@@ -24,7 +24,7 @@ public class CacheScenario : SingletonMonoBehaviour<CacheScenario>
 
     void CacheTatie()
     {
-        var db = loadDB.GetDatabase((Database.Value)0);
+        var db = loadDB.GetDatabase(Database.Value.Tatie);
         var cmd = "SELECT * FROM Tatie";
         var table = db.ExecuteQuery(cmd);
 
@@ -39,7 +39,7 @@ public class CacheScenario : SingletonMonoBehaviour<CacheScenario>
     }
     void CacheScenario1()
     {
-        var db = loadDB.GetDatabase((Database.Value)1);
+        var db = loadDB.GetDatabase(Database.Value.Chapter1);
         var cmd = "SELECT * FROM Chapter1";
         var table = db.ExecuteQuery(cmd);
 
@@ -63,7 +63,7 @@ public class CacheScenario : SingletonMonoBehaviour<CacheScenario>
     }
     void CacheDropObject()
     {
-        var db = loadDB.GetDatabase((Database.Value)2);
+        var db = loadDB.GetDatabase(Database.Value.DropObject);
         var cmd = "SELECT * FROM DropObject";
         var table = db.ExecuteQuery(cmd);
 

@@ -93,6 +93,7 @@ public class OptionManager : SingletonMonoBehaviour<OptionManager>
             masterVolume = masterVolSlider.value;
             bgmVolume = bgmVolSlider.value;
             seVolume = seVolSlider.value;
+            
         }
         else
         {
@@ -104,7 +105,12 @@ public class OptionManager : SingletonMonoBehaviour<OptionManager>
     }
     void SetChangeData()
     {
-        Debug.LogError("オプションの値が適応されていません OptionManger");
+        Debug.LogError("オプションの値が適応されていません　テキストスピードと戦闘スピード OptionManger");
+        //音量の値を適応させる
+        AudioSystem.AudioControl.Instance.VolumeSetting.MasterVolume = masterVolume;
+        AudioSystem.AudioControl.Instance.VolumeSetting.BGMVolume = bgmVolume;
+        AudioSystem.AudioControl.Instance.VolumeSetting.SEVolume = seVolume;
+
     }
 
 }

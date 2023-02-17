@@ -8,7 +8,7 @@ using DG.Tweening;
 public class NovelManager : SingletonMonoBehaviour<NovelManager>
 {
 
-    CacheScenario cs;
+    CacheData_Novel cs;
     public ReactiveProperty<bool> isNovel = new ReactiveProperty<bool>();
 
     [System.Serializable]
@@ -19,7 +19,8 @@ public class NovelManager : SingletonMonoBehaviour<NovelManager>
         Shop,
         MAX,
     }
-    [SerializeField] public NovelMode novelMode;
+    [SerializeField] public static NovelMode novelMode;
+    [SerializeField] NovelMode debugStartNovelMode;
     [SerializeField] public int chapterNum;
     public void SetNovelMode(NovelMode nm, int chapter = -1)
     {
@@ -84,14 +85,17 @@ public class NovelManager : SingletonMonoBehaviour<NovelManager>
     
     private void Awake()
     {
-        SingletonCheck(this);
+        if (SingletonCheck(this))
+        {
+            novelMode = debugStartNovelMode;
+        }
     }
 
 
     // Start is called before the first frame update
     void Start()
     {
-        cs = CacheScenario.instance;
+        cs = CacheData_Novel.instance;
         textRectL = textL.gameObject.GetComponent<RectTransform>();
         textRectR = textR.gameObject.GetComponent<RectTransform>();
         textRectC = textC.gameObject.GetComponent<RectTransform>();
@@ -269,7 +273,7 @@ public class NovelManager : SingletonMonoBehaviour<NovelManager>
     }
     public void NovelStart()
     {
-        cs = CacheScenario.instance;
+        cs = CacheData_Novel.instance;
         isNovel.Value = true;
         
         Love.PlayerLove.instance.move = false;

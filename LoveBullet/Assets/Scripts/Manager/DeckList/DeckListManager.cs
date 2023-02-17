@@ -44,6 +44,8 @@ public class DeckListManager : SingletonMonoBehaviour<DeckListManager>
     {
         if(SingletonCheck(this, true))
         {
+            //ゲーム開始時は消しておく
+            deckList.Clear();
             //初期デッキの作成
             InitializeStartDeck();
         }
@@ -51,6 +53,7 @@ public class DeckListManager : SingletonMonoBehaviour<DeckListManager>
 
         DisableCanvas();
         Debug.Log(deckList.Count);
+
     }
     List<GameObject> cardsOBJ=new List<GameObject>();
     void Start()

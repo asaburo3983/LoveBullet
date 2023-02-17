@@ -27,7 +27,7 @@ public class DebugMoveScene : MonoBehaviour
     public void MoveLove()
     {
         SceneManager.LoadScene("Love");
-        NovelManager.instance.novelMode = loveMode;
+        NovelManager.novelMode = loveMode;
         NovelManager.instance.chapterNum = loveChapter;
     
     }

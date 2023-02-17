@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Main/Title.unity
     guid: 3227c48e64965df45bdfc490916c2eb7
   - enabled: 1
-    path: Assets/Scenes/Main/Love.unity
+    path: Assets/Scenes/Main/Novel.unity
     guid: f9de0048fe6ef47478313f56d1d65c6e
   - enabled: 1
     path: Assets/Scenes/Main/Fight.unity

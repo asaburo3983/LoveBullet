@@ -66,6 +66,8 @@ namespace Enemy
         [SerializeField] Text actText;
         [SerializeField] FightEnemy.CountDown countDown;
 
+        [Header("エフェクト")]
+        [SerializeField] List<GameObject> actionEffect;
         private void Start()
         {
             //死亡処理
@@ -183,8 +185,32 @@ namespace Enemy
             // 行動までのターン設定
             var act = CacheData.instance.enemyActivePattern[state.pattern[gameState.currentIdx]];
             gameState.turn.Value = act.Turn + Random.Range(0, act.Fluctuation);
-        }
 
+            //エフェクトの表示
+            ActionEffect(atk, actiovePattern.buff[(int)BuffEnum.Bf_Diffence]);
+        }
+        void ActionEffect(int damage,int diffence)
+        {
+            var playerPos = Player.instance.transform.GetChild(0).position;
+            var enemyPos = transform.GetChild(0).position;
+            //エフェクトの表示
+            //敵の位置に攻撃エフェクトを表示
+            if (damage > 0)
+            {
+                Instantiate(actionEffect[0], playerPos, Quaternion.identity);
+            }
+            //自身の位置に防御エフェクトを表示
+            if (diffence > 0)
+            {
+                Instantiate(actionEffect[1], enemyPos, Quaternion.identity);
+            }
+            //特殊エフェクトの表示
+            if (diffence <= 0 && damage <= 0)
+            {
+                Instantiate(actionEffect[2], enemyPos, Quaternion.identity);
+            }
+
+        }
 
         public int ReceiveDamage(int _damage)
         {
