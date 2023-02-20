@@ -180,15 +180,20 @@ namespace AudioSystem
         /// </summary>
         private void Play(int _idx)
         {
-            audioSource.Stop();
-
-            if (_idx >= 0)
+            
+            if (_idx >= 0&& bgmSourceList.Count>0)
             {
+                audioSource.Stop();
+
                 var bgmAsset = bgmSourceList[_idx];
 
                 //再生開始
                 audioSource.time = 0f;
                 audioSource.PlayBGM(bgmAsset.bgm);
+            }
+            else
+            {
+                Debug.LogWarning("BGMリストがないです");
             }
         }
 

@@ -18,6 +18,7 @@ public class NovelCameraMove : MonoBehaviour
     {
         
         IsCamPosRight.Subscribe(x => CamMove(x)).AddTo(this);
+        cam = Camera.main;
     }
 
     // Update is called once per frame

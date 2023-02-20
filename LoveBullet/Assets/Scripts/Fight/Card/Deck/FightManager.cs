@@ -330,7 +330,7 @@ public class FightManager : SingletonMonoBehaviour<FightManager>
         IsCardMoveNow = true;
         DOVirtual.DelayedCall(fireMaxTime, () => { IsCardMoveNow = false; });
 
-        AudioSystem.AudioControl.Instance.SE.CardSePlayOneShot(gunInCards[0].state.SE);
+        //AudioSystem.AudioControl.Instance.SE.CardSePlayOneShot(gunInCards[0].state.SE);
 
         //É^Å[Éìåoâﬂèàóù
         ProgressTurn(gunInCards[0].state.AP);
@@ -432,7 +432,7 @@ public class FightManager : SingletonMonoBehaviour<FightManager>
         });
 
 
-        AudioSystem.AudioControl.Instance.SE.PlaySeOneShot(SEList.Reload);
+        //AudioSystem.AudioControl.Instance.SE.PlaySeOneShot(SEList.Reload);
 
         ProgressTurn(reloadCost);
     }
@@ -506,4 +506,18 @@ public class FightManager : SingletonMonoBehaviour<FightManager>
     }
 
     #endregion
+
+
+    #region Debug
+    public void AllDeathEnemys()
+    {
+        foreach (var _eObj in enemyObjects)
+        {
+            _eObj.ReceiveDamage(99999);
+        }
+    }
+
+    #endregion
+
+
 }

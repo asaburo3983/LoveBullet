@@ -20,6 +20,7 @@ public class FollowWorldUI : MonoBehaviour
 
 
         var targetScreenPos = Camera.main.WorldToScreenPoint(followUI.position);
+        targetScreenPos = followUI.position;
         rect.position = targetScreenPos+adjustPos;
      
     }

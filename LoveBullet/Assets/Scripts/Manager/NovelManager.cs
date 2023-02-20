@@ -22,6 +22,7 @@ public class NovelManager : SingletonMonoBehaviour<NovelManager>
     [SerializeField] public static NovelMode novelMode;
     [SerializeField] NovelMode debugStartNovelMode;
     [SerializeField] public int chapterNum;
+
     public void SetNovelMode(NovelMode nm, int chapter = -1)
     {
         novelMode = nm;
@@ -87,7 +88,7 @@ public class NovelManager : SingletonMonoBehaviour<NovelManager>
     {
         if (SingletonCheck(this))
         {
-            novelMode = debugStartNovelMode;
+            //novelMode = debugStartNovelMode;
         }
     }
 

@@ -16,11 +16,11 @@ public class HealObject : BaseDropObject
     }
     private void OnDestroy()
     {
+        var bandManager = BandManager.instance;
         //HPの回復処理を記述
-        //var pGameState = Player.instance.gameState;
-        //var heal = pGameState.maxHP.Value * healPer / 100.0f;
-        //Player.instance.gameState.hp.Value += (int)heal;
+        bandManager.HealHP((int)(bandManager.playerMaxHP.Value * healPer / 100.0f));
 
+        //エフェクトと音を鳴らす
     }
     protected void OnTriggerEnter2D(Collider2D collision)
     {

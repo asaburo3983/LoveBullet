@@ -14,11 +14,15 @@ public class NovelBand : MonoBehaviour
     [SerializeField] float needTime;
 
     // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         nm = NovelManager.instance;
         nm.isNovel.Subscribe(x => { MoveUI(x); }).AddTo(this);
         rect = GetComponent<RectTransform>();
+
+    }
+    void Start()
+    {
     }
 
     void MoveUI(bool isNovel)

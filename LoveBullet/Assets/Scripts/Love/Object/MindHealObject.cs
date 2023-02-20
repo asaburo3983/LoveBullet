@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MindHealObject : BaseDropObject
 {
+    [SerializeField] int heal;
     // Start is called before the first frame update
     override protected void Start()
     {
@@ -15,7 +16,8 @@ public class MindHealObject : BaseDropObject
     }
     private void OnDestroy()
     {
-        //不安定度回復処理の追記
+        //不安定度回復処理
+        BandManager.instance.HealMind(heal);
     }
     protected void OnTriggerEnter2D(Collider2D collision)
     {
