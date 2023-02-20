@@ -15,7 +15,16 @@ namespace Database
         Enemy = 1,
         EnemyActionPattern = 2,
         EnemyAddventPattern=3,
-        Party = 4
+        Party = 4,
+
+        Tatie=5,
+        DropObject=6,
+
+        Chapter1=7,
+        Chapter2=8,
+        Chapter3=9,
+        Chapter4=10,
+        Chapter5=11,
 
     }
     public class Load : SingletonMonoBehaviour<Load>

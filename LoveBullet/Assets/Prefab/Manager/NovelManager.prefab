@@ -45,7 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isNovel:
     value: 0
-  novelMode: 2
+  novelMode: 0
   chapterNum: 0
   modeState:
     playerStartPos: 0

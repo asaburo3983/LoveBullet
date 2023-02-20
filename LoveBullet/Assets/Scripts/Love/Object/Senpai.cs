@@ -9,7 +9,7 @@ public class Senpai : MonoBehaviour
     void Start()
     {
         //ノベルモードのときはスクリプトを作動しないようにする
-        if (NovelManager.instance.novelMode == NovelManager.NovelMode.Novel)
+        if (NovelManager.novelMode == NovelManager.NovelMode.Novel)
         {
             Destroy(gameObject);
         }

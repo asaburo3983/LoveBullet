@@ -74,3 +74,12 @@ TagManager:
   - name: Text
     uniqueID: 3840185785
     locked: 0
+  - name: Canvas1
+    uniqueID: 101276839
+    locked: 0
+  - name: Canvas2
+    uniqueID: 3304656155
+    locked: 0
+  - name: Canvas3
+    uniqueID: 2352472811
+    locked: 0

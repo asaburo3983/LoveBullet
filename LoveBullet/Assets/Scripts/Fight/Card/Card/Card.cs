@@ -29,6 +29,7 @@ namespace Card
         [System.Serializable]
         public class State
         {
+            
             public string name;
             public int id;
             public GENRE genre;
@@ -54,7 +55,17 @@ namespace Card
             public int Effect;
             public List<int> value = new List<int>();
         }
-        protected State state;
+        public State state;
+
+        public struct PowerUp
+        {
+            public int deckListID;
+            public int AP;
+            public int AT;
+            public int DF;
+        }
+        public PowerUp powerUp;
+
         public State STATE => state;
 
         [System.Serializable]
@@ -78,22 +89,28 @@ namespace Card
         /// <param name="_state"></param>
         public void Initialize(State _state)
         {
+            SetState(_state);
+            SetTexture_Image();
+        }
+        public void SetState(State _state)
+        {
             state = _state;
 
-            //とりあえずテキスト代入
-            Rough.SetText(ui.name, state.name);
-            Rough.SetText(ui.explanation,state.explanation);
-            Rough.SetText(ui.AP, state.AP);
-            Rough.SetText(ui.AT, state.Damage);
-            Rough.SetText(ui.DF, state.buff[(int)BuffEnum.Bf_Diffence]);
-
-            //Rough.SetText(ui.ATWeaken, state.ATWeaken);
-            //Rough.SetText(ui.DFWeaken, state.DFWeaken);
-
-
-            SetTexture();
+            SetText();
         }
-        void SetTexture()
+        public void SetPowerUp(PowerUp _powerUp)
+        {
+            powerUp = _powerUp;
+        }
+        public void SetText()
+        {
+            Rough.SetText(ui.name, state.name);
+            Rough.SetText(ui.explanation, state.explanation);
+            Rough.SetText(ui.AP, state.AP + powerUp.AP);
+            Rough.SetText(ui.AT, state.Damage + powerUp.AT);
+            Rough.SetText(ui.DF, state.buff[(int)BuffEnum.Bf_Diffence] + powerUp.DF);
+        }
+        void SetTexture_Image()
         {
             string framePath = "none";
             if (state.Damage > 0)

@@ -5,10 +5,22 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Test/Onoda/Onoda_LoveTest.unity
     guid: d5936957f5b872b45958f73fee3b4adf
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Fight.unity
     guid: 081a53f16ac8b994ba385b6cbc0daa59
+  - enabled: 1
+    path: Assets/Scenes/Main/Title.unity
+    guid: 3227c48e64965df45bdfc490916c2eb7
+  - enabled: 1
+    path: Assets/Scenes/Main/Novel.unity
+    guid: f9de0048fe6ef47478313f56d1d65c6e
+  - enabled: 1
+    path: Assets/Scenes/Main/Fight.unity
+    guid: 71d0da4ab592bcc4dbd95c95d33687ff
+  - enabled: 1
+    path: Assets/Scenes/Main/End.unity
+    guid: d1f0fa29fcb79ea4a9606c59e1772b90
   m_configObjects: {}

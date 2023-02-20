@@ -10,11 +10,11 @@ public class CommandMove : MonoBehaviour
 
     float originePosX;
 
-    Card.Fight fight;
+    FightManager fight;
     void Start()
     {
         originePosX = transform.position.x;
-        fight = Card.Fight.instance;
+        fight = FightManager.instance;
     }
 
     public void Fire()

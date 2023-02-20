@@ -27,8 +27,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 3.76, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 5445456797297718928}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -45,136 +44,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyAddventPos: []
-  startDeckGenre: 0
-  startDecksId: 010000000100000001000000020000000700000008000000
-  deckList: []
   deckInCards: []
-  GunInCard: []
   trashInCards: []
-  card: {fileID: 0}
-  explanationCardNum: 0
   floor: 0
   reloadCost: 1
   cockingCost: 1
   playerTurn: 1
-  enemyBase: {fileID: 1952692010194144954, guid: 3ca6c3a4941cfec4098d7780c7dd4ed9, type: 3}
+  enemyPrefab: {fileID: 0}
   enemyObjects: []
   targetId: 0
---- !u!1001 &3717084488136548643
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 7408744993327031505}
-    m_Modifications:
-    - target: {fileID: 8649051753724529856, guid: 1266813eda3b2df4681f182f8a544691, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 400
-      objectReference: {fileID: 0}
-    - target: {fileID: 8649051753724529856, guid: 1266813eda3b2df4681f182f8a544691, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 400
-      objectReference: {fileID: 0}
-    - target: {fileID: 8649051753724529858, guid: 1266813eda3b2df4681f182f8a544691, type: 3}
-      propertyPath: m_Color.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8649051753724529858, guid: 1266813eda3b2df4681f182f8a544691, type: 3}
-      propertyPath: m_Color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8649051754414266191, guid: 1266813eda3b2df4681f182f8a544691, type: 3}
-      propertyPath: m_Name
-      value: FightCanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 8649051754414266291, guid: 1266813eda3b2df4681f182f8a544691, type: 3}
-      propertyPath: m_Pivot.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8649051754414266291, guid: 1266813eda3b2df4681f182f8a544691, type: 3}
-      propertyPath: m_Pivot.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8649051754414266291, guid: 1266813eda3b2df4681f182f8a544691, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8649051754414266291, guid: 1266813eda3b2df4681f182f8a544691, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8649051754414266291, guid: 1266813eda3b2df4681f182f8a544691, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8649051754414266291, guid: 1266813eda3b2df4681f182f8a544691, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8649051754414266291, guid: 1266813eda3b2df4681f182f8a544691, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8649051754414266291, guid: 1266813eda3b2df4681f182f8a544691, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8649051754414266291, guid: 1266813eda3b2df4681f182f8a544691, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8649051754414266291, guid: 1266813eda3b2df4681f182f8a544691, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8649051754414266291, guid: 1266813eda3b2df4681f182f8a544691, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8649051754414266291, guid: 1266813eda3b2df4681f182f8a544691, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8649051754414266291, guid: 1266813eda3b2df4681f182f8a544691, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8649051754414266291, guid: 1266813eda3b2df4681f182f8a544691, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8649051754414266291, guid: 1266813eda3b2df4681f182f8a544691, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8649051754414266291, guid: 1266813eda3b2df4681f182f8a544691, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8649051754414266291, guid: 1266813eda3b2df4681f182f8a544691, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8649051754414266291, guid: 1266813eda3b2df4681f182f8a544691, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8649051754414266291, guid: 1266813eda3b2df4681f182f8a544691, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8649051754414266291, guid: 1266813eda3b2df4681f182f8a544691, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8649051754414266291, guid: 1266813eda3b2df4681f182f8a544691, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 1266813eda3b2df4681f182f8a544691, type: 3}
---- !u!224 &5445456797297718928 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 8649051754414266291, guid: 1266813eda3b2df4681f182f8a544691, type: 3}
-  m_PrefabInstance: {fileID: 3717084488136548643}
-  m_PrefabAsset: {fileID: 0}

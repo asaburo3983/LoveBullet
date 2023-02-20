@@ -462,10 +462,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 88fa8e0ee853cae4bb47f6a6f55ef91e, type: 3}
-    m_FontSize: 14
+    m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 0
     m_MaxSize: 40
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -473,9 +473,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '0
-
-'
+  m_Text: 
 --- !u!114 &4092526596960794407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -614,6 +612,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 334f142233e119b4e90cae157b161f5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mode: 0
 --- !u!1 &1718718825603268813
 GameObject:
   m_ObjectHideFlags: 0
@@ -1371,20 +1370,18 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 88fa8e0ee853cae4bb47f6a6f55ef91e, type: 3}
-    m_FontSize: 14
+    m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 0
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '0
-
-'
+  m_Text: 
 --- !u!114 &1167275147255351505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1498,20 +1495,18 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 88fa8e0ee853cae4bb47f6a6f55ef91e, type: 3}
-    m_FontSize: 14
+    m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 0
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '0
-
-'
+  m_Text: 
 --- !u!114 &3851694890174299318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1981,6 +1976,7 @@ MonoBehaviour:
     hpFluctuationPlus: 0
     pattern: 
     value: 
+  fieldID: 0
   gameState:
     maxHP:
       value: 0
@@ -2004,8 +2000,8 @@ MonoBehaviour:
       value: 0
     currentIdx: 0
     Rate:
-      AT: 0
-      DF: 0
+      AT: 75
+      DF: 150
   tw:
     damageTime: 0.1
     damageShake: 0.1
@@ -2016,6 +2012,10 @@ MonoBehaviour:
   sBody: {fileID: 7223251405316090678}
   actText: {fileID: 4314427711002008086}
   countDown: {fileID: 6326248290924522274}
+  actionEffect:
+  - {fileID: 2963384185496000649, guid: ed2467819b988974ca6582e3ec939a23, type: 3}
+  - {fileID: 7782413633492180700, guid: 5412748673cac8f4280f217978a63206, type: 3}
+  - {fileID: 34871585530208821, guid: 8451a398e1cbc124f9a7178e664ec09a, type: 3}
 --- !u!1 &5017720995143693531
 GameObject:
   m_ObjectHideFlags: 0
@@ -2086,20 +2086,18 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 88fa8e0ee853cae4bb47f6a6f55ef91e, type: 3}
-    m_FontSize: 14
+    m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 0
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '0
-
-'
+  m_Text: 
 --- !u!114 &8233636257158730636
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2238,6 +2236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 334f142233e119b4e90cae157b161f5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mode: 0
 --- !u!1 &5784146377079544271
 GameObject:
   m_ObjectHideFlags: 0
@@ -2262,7 +2261,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5784146377079544271}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.61, y: -0.06, z: 0}
+  m_LocalPosition: {x: -0.61, y: 0.25, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_Children:
   - {fileID: 629746635466357243}
@@ -2465,6 +2464,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 334f142233e119b4e90cae157b161f5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mode: 0
 --- !u!1 &8386071273113915800
 GameObject:
   m_ObjectHideFlags: 0
@@ -2535,20 +2535,18 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 88fa8e0ee853cae4bb47f6a6f55ef91e, type: 3}
-    m_FontSize: 14
+    m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 0
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '0
-
-'
+  m_Text: 
 --- !u!114 &5178256767315295682
 MonoBehaviour:
   m_ObjectHideFlags: 0

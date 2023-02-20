@@ -29,8 +29,6 @@ public class Player : SingletonMonoBehaviour<Player>
     [System.Serializable]
     public struct InGameState
     {
-        public IntReactiveProperty maxHP;
-        public IntReactiveProperty hp;
         public IntReactiveProperty Atk;
         public IntReactiveProperty Atk_Never;
         public IntReactiveProperty Def;
@@ -53,33 +51,57 @@ public class Player : SingletonMonoBehaviour<Player>
     [SerializeField] float receiveMovePosX;
     [SerializeField] float receiveMoveSpeed;
 
+    BandManager bandMana;
+    private void Awake()
+    {
+        SingletonCheck(this);
+    }
+    private void Start()
+    {
+        bandMana = BandManager.instance;
+        bandMana.playerHP.Pairwise().Subscribe(x => {
+            // 0以上から0以下になった場合死亡処理
+            if (x.Current <= 0 && x.Previous > 0)
+            {
+                Debug.Log("死亡処理　未作成");
+            }
+        }).AddTo(this);
+    }
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
     /// <summary>
     /// DF管理
     /// </summary>
-    public static void ResetDF()
+    public void ResetDF()
     {
         instance.gameState.Def.Value = 0;
     }
-    public static void PlusDF(int _value)
+    public void PlusDF(int _value)
     {
         instance.gameState.Def.Value += _value;
     }
-    public static void MinusDF(int _value)
+    public void MinusDF(int _value)
     {
         instance.gameState.Def.Value -= _value;
     }
-    /// <summary>
-    /// プレイヤーにダメージを与える処理
-    /// </summary>
-    /// <param name="_damage"></param>
-    public static void ReceiveDamage(int _damage)
+    public void ReceiveDamage(int _damage)
     {
         var state = instance.gameState;
         var dmg = _damage - state.Def.Value;
         if (dmg > 0) {
-            state.hp.Value -= dmg;
+            bandMana.playerHP.Value -= dmg;
         }
         state.Def.Value = Mathf.Clamp(state.Def.Value - _damage, 0, 9999);
+
+        //攻撃を受けた場合のみダメージを受ける
+        if (dmg > 0)
+        {
+            ReceiveAnim();
+        }
     }
 
     public void AttackAnim()
@@ -98,28 +120,9 @@ public class Player : SingletonMonoBehaviour<Player>
             .Append(transform.DOMoveX(receiveMovePosX, receiveMoveSpeed).SetLoops(2, LoopType.Yoyo))
             .Join(transform.GetChild(0).GetComponent<SpriteRenderer>().DOColor(new Color(1, 0, 0, 1), 0.1f).SetLoops(2, LoopType.Yoyo))
             .OnComplete(() => seq = null);
-    }
 
-    private void Start()
-    {
-        instance.gameState.hp.Pairwise().Subscribe(x => {
-            // 0以上から0以下になった場合死亡処理
-            if (x.Current <= 0 && x.Previous > 0) {
-                Debug.Log("死亡処理　未作成");
-            }
-        }).AddTo(this);
     }
 
 
-    private void Awake()
-    {
-        SingletonCheck(this);
-        gameState.maxHP.Value = gameState.hp.Value;
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
