@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4238152280295305190}
   - component: {fileID: 3766076054188969867}
-  - component: {fileID: 174560427925576252}
+  - component: {fileID: 6084604944300234741}
   - component: {fileID: 6980688491263069490}
   m_Layer: 0
   m_Name: STrushObject
@@ -84,7 +84,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &174560427925576252
+--- !u!114 &6084604944300234741
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -93,12 +93,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8188318975870001766}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5740993523d852943866eb16833226d6, type: 3}
+  m_Script: {fileID: 11500000, guid: 80f7af4cccee0e9468286787f88d14de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  favorability: 2
+  favorability: 0
   amount: 10
-  healPer: 25
 --- !u!61 &6980688491263069490
 BoxCollider2D:
   m_ObjectHideFlags: 0
