@@ -385,6 +385,7 @@ GameObject:
   - component: {fileID: 1890962326}
   - component: {fileID: 1890962325}
   - component: {fileID: 3070932155573979180}
+  - component: {fileID: 1890962329}
   m_Layer: 0
   m_Name: NovelDebugCanvas
   m_TagString: Untagged
@@ -497,6 +498,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 712c8445723bc78439c8dc395dab37d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1890962329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1890962323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc41c72ca106e3f45964ca1be743f9c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debug: 1
+  debugNovelMode: 1
+  chapterNum: 0
 --- !u!1 &1201655585901619900
 GameObject:
   m_ObjectHideFlags: 0
