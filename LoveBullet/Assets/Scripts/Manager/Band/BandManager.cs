@@ -25,6 +25,7 @@ public class BandManager : SingletonMonoBehaviour<BandManager>
     [SerializeField] Vector3 beatBigSize;
     [SerializeField] float beatSpeed;
 
+    //[SerializeField] static NovelManager.NovelMode novelMode;
     private void Awake()
     {
         SingletonCheck(this, true);
@@ -54,10 +55,30 @@ private void Start()
     {
         
     }
+    Tween heartBeatTW;
     void HeartBeatAnim(int oldNum,int nowNum,Transform objT)
     {
+        if (heartBeatTW != null) { heartBeatTW.Kill(true); }
         var beatNum = Mathf.Abs((oldNum - nowNum)*2);
-        objT.DOScale(beatBigSize, beatSpeed).SetLoops(beatNum, LoopType.Yoyo);
+        heartBeatTW = objT.DOScale(beatBigSize, beatSpeed).SetLoops(beatNum, LoopType.Yoyo).OnComplete(() => heartBeatTW = null);
+    }
+
+    public void HealHP(int heal)
+    {
+        playerHP.Value += heal;
+        if (playerHP.Value > playerMaxHP.Value)
+        {
+            playerHP.Value = playerMaxHP.Value;
+        }
+
+    }
+    public void HealMind(int heal)
+    {
+        unstable.Value -= heal;
+        if (unstable.Value < 0)
+        {
+            unstable.Value = 0;
+        }
     }
 
 }

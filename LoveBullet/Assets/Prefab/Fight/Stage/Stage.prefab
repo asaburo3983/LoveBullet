@@ -1217,6 +1217,7 @@ GameObject:
   - component: {fileID: 7427685732850133472}
   - component: {fileID: 7427685732850133475}
   - component: {fileID: 7427685732850133474}
+  - component: {fileID: 1073187566}
   m_Layer: 0
   m_Name: CanvasUI
   m_TagString: Untagged
@@ -1254,7 +1255,7 @@ Canvas:
   m_GameObject: {fileID: 7427685732850133484}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -1263,7 +1264,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: -454781511
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &7427685732850133475
@@ -1306,6 +1307,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &1073187566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7427685732850133484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 712c8445723bc78439c8dc395dab37d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7427685732866163819
 GameObject:
   m_ObjectHideFlags: 0
@@ -1545,7 +1558,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 0
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}

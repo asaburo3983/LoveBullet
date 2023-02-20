@@ -71,15 +71,33 @@ TagManager:
   - name: UI
     uniqueID: 1227070839
     locked: 0
-  - name: Text
+  - name: TextCanvas
     uniqueID: 3840185785
     locked: 0
-  - name: Canvas1
+  - name: FightCanvas
     uniqueID: 101276839
     locked: 0
-  - name: Canvas2
+  - name: ResultCanvas
     uniqueID: 3304656155
     locked: 0
-  - name: Canvas3
+  - name: BandCanvas
     uniqueID: 2352472811
+    locked: 0
+  - name: NovelText
+    uniqueID: 918015985
+    locked: 0
+  - name: NovelBandCanvas
+    uniqueID: 1208932075
+    locked: 0
+  - name: OptionCanvas
+    uniqueID: 3852457873
+    locked: 0
+  - name: NovelCanvas
+    uniqueID: 143053273
+    locked: 0
+  - name: ScreenCanvas
+    uniqueID: 3287250437
+    locked: 0
+  - name: Debug
+    uniqueID: 1855142443
     locked: 0
