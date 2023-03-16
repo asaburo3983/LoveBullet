@@ -348,6 +348,18 @@ PrefabInstance:
       propertyPath: LayerName
       value: NovelText
       objectReference: {fileID: 0}
+    - target: {fileID: 277767854, guid: 1153e4d906536df459b5221ab59c64aa, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 277767854, guid: 1153e4d906536df459b5221ab59c64aa, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 277767854, guid: 1153e4d906536df459b5221ab59c64aa, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.21
+      objectReference: {fileID: 0}
     - target: {fileID: 826531895, guid: 1153e4d906536df459b5221ab59c64aa, type: 3}
       propertyPath: LayerName
       value: NovelText
@@ -355,6 +367,18 @@ PrefabInstance:
     - target: {fileID: 943023226, guid: 1153e4d906536df459b5221ab59c64aa, type: 3}
       propertyPath: LayerName
       value: NovelText
+      objectReference: {fileID: 0}
+    - target: {fileID: 1186615649, guid: 1153e4d906536df459b5221ab59c64aa, type: 3}
+      propertyPath: m_LocalScale.x
+      value: -0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 1186615649, guid: 1153e4d906536df459b5221ab59c64aa, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 1186615649, guid: 1153e4d906536df459b5221ab59c64aa, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.21
       objectReference: {fileID: 0}
     - target: {fileID: 4904588147937506, guid: 1153e4d906536df459b5221ab59c64aa, type: 3}
       propertyPath: m_Pivot.x
