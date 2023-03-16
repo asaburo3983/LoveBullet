@@ -4,9 +4,6 @@ using UnityEngine;
 using UniRx;
 public class STrushObject : ShopObject
 {
-    [SerializeField] float healPer;
-
-
     // Start is called before the first frame update
     override protected void Start()
     {
@@ -24,6 +21,7 @@ public class STrushObject : ShopObject
     protected void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
+
         {
             touch.Value = true;
         }

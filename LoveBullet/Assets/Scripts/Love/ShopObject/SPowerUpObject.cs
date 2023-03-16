@@ -4,7 +4,6 @@ using UnityEngine;
 using UniRx;
 public class SPowerUpObject : ShopObject
 {
-    [SerializeField] float healPer;
     // Start is called before the first frame update
     override protected void Start()
     {
@@ -17,7 +16,7 @@ public class SPowerUpObject : ShopObject
     private void OnDestroy()
     {
         //TODO　カード強化処理を作成
-
+        DeckListManager.instance.EnableCanvas_PowerUp();
     }
     protected void OnTriggerEnter2D(Collider2D collision)
     {

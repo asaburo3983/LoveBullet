@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6932366905872876320}
   - component: {fileID: 6625915128623424927}
-  - component: {fileID: 8375171652655556762}
   - component: {fileID: 6707767884637278714}
+  - component: {fileID: 2303250085472141832}
   m_Layer: 0
   m_Name: SPowerUpObject
   m_TagString: Untagged
@@ -84,21 +84,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8375171652655556762
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4622049407970853300}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5740993523d852943866eb16833226d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  favorability: 1
-  amount: 10
-  healPer: 25
 --- !u!61 &6707767884637278714
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -125,3 +110,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.56, y: 2.56}
   m_EdgeRadius: 0
+--- !u!114 &2303250085472141832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4622049407970853300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b6e1f0d68a7ae64aa4e67072e3a6921, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  favorability: 1
+  amount: 10
