@@ -203,6 +203,7 @@ public class FightManager : SingletonMonoBehaviour<FightManager>
 
     #endregion
 
+
     #region Action
 
     void CardAction(Enemy.Enemy _enemy)
@@ -345,9 +346,7 @@ public class FightManager : SingletonMonoBehaviour<FightManager>
 
 
 
-        Player.instance.AttackAnim();
-
-      
+        Player.instance.ShotAnim();
 
     }
 
@@ -433,6 +432,8 @@ public class FightManager : SingletonMonoBehaviour<FightManager>
 
 
         //AudioSystem.AudioControl.Instance.SE.PlaySeOneShot(SEList.Reload);
+
+        player.ReloadAnim();
 
         ProgressTurn(reloadCost);
     }

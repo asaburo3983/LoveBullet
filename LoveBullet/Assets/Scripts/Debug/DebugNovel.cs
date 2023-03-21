@@ -13,7 +13,7 @@ public class DebugNovel : MonoBehaviour
         if (debug)
         {
             NovelManager.novelMode = debugNovelMode;
-            NovelManager.instance.chapterNum = chapterNum;
+            NovelManager.chapterNum = chapterNum;
         }
     }
     // Start is called before the first frame update

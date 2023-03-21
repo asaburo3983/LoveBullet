@@ -16,24 +16,29 @@ public class NovelBand : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
+        rect = GetComponent<RectTransform>();
         nm = NovelManager.instance;
         nm.isNovel.Subscribe(x => { MoveUI(x); }).AddTo(this);
-        rect = GetComponent<RectTransform>();
-
     }
     void Start()
     {
+       
+       
+        
     }
 
+    Tween bandTW;
     void MoveUI(bool isNovel)
     {
         if (isNovel)
         {
-            rect.DOAnchorPos(endPos, needTime);
+            if(bandTW!=null)bandTW.Kill();
+            bandTW=rect.DOAnchorPos(endPos, needTime);
         }
         else
         {
-            rect.DOAnchorPos(startPos, needTime);
+            if (bandTW != null) bandTW.Kill();
+            bandTW = rect.DOAnchorPos(startPos, needTime);
         }
     }
     // Update is called once per frame

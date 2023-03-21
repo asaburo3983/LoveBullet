@@ -95,6 +95,9 @@ TagManager:
   - name: NovelCanvas
     uniqueID: 143053273
     locked: 0
+  - name: TitleCanvas
+    uniqueID: 3071596587
+    locked: 0
   - name: ScreenCanvas
     uniqueID: 3287250437
     locked: 0

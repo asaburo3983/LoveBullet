@@ -21,7 +21,7 @@ public class NovelManager : SingletonMonoBehaviour<NovelManager>
     }
     [SerializeField] public static NovelMode novelMode;
     [SerializeField] NovelMode debugStartNovelMode;
-    [SerializeField] public int chapterNum;
+    [SerializeField] public static int chapterNum;
 
     public void SetNovelMode(NovelMode nm, int chapter = -1)
     {
@@ -49,6 +49,8 @@ public class NovelManager : SingletonMonoBehaviour<NovelManager>
     [SerializeField] ModeState modeState;
 
     //テキスト系
+    [Header("テキスト関連")]
+    bool stopInputForNextPage=false;
     int page =0;
     [SerializeField] TextMesh textL;
     [SerializeField] TextMesh textR;
@@ -65,6 +67,12 @@ public class NovelManager : SingletonMonoBehaviour<NovelManager>
     RectTransform textRectL;
     RectTransform textRectR;
     RectTransform textRectC;
+    [SerializeField] float tatieFadeSpeed;
+    [SerializeField] float tatieColorAnEmphasis = 0.75f;
+    [SerializeField] Vector3 tatieLOrigineSize;
+    [SerializeField] Vector3 tatieROrigineSize;
+    [SerializeField] float tatieSizeEmphasis;
+
     [SerializeField] float textMoveTime=0.5f;
 
     string[] cacheTextL = new string[2];
@@ -79,11 +87,20 @@ public class NovelManager : SingletonMonoBehaviour<NovelManager>
     float canViewTextNum = 0;
 
     //立ち絵
+    [Header("立ち絵関連")]
     Sprite tatieL;
     Sprite tatieR;
     [SerializeField]SpriteRenderer tatieLObj;
     [SerializeField]SpriteRenderer tatieRObj;
-    
+
+    [Header("画面エフェクト用オブジェクト登録")]
+    [SerializeField] GameObject goFight;
+    [SerializeField] GameObject jessicaIntro;
+    [SerializeField] GameObject hakuaiIntro;
+    [Header("画面エフェクト用パラメータ")]
+    [SerializeField] float introFadeSpeed;
+    [SerializeField] float introViewTime;
+
     private void Awake()
     {
         if (SingletonCheck(this))
@@ -184,7 +201,12 @@ public class NovelManager : SingletonMonoBehaviour<NovelManager>
     // Update is called once per frame
     void Update()
     {
-        NextPage();
+        //ノベル時に入力が行われた際にページを捲る
+        if (isNovel.Value && stopInputForNextPage == false && InputSystem.instance.WasPressThisFlame("Player", "Fire"))
+        {
+            NextPage();
+        }
+        //テキストのフェード
         if (startText)
         {
             textAlpha += Time.deltaTime * fadeSpeed;
@@ -196,26 +218,7 @@ public class NovelManager : SingletonMonoBehaviour<NovelManager>
             }
 
             CharacterFeed();
-
         }
-
-        //// エフェクトデバッグ用
-        //if(Input.GetKeyDown(KeyCode.Alpha1)) // 左画像の揺れ
-        //{
-        //    CinematicsManager.Instance.PlayCinematicEffect(1, tatieLObj, -1, tatieRObj);
-        //}
-        //if(Input.GetKeyDown(KeyCode.Alpha2)) // 点滅
-        //{
-        //    CinematicsManager.Instance.PlayCinematicEffect(2, tatieLObj, -1, tatieRObj);
-        //}
-        //if(Input.GetKeyDown(KeyCode.Alpha3)) // 右画像の揺れ
-        //{
-        //    CinematicsManager.Instance.PlayCinematicEffect(-1, tatieLObj, 1, tatieRObj);
-        //}
-        //if (Input.GetKeyDown(KeyCode.Alpha4)) // 点滅（右を使って変更があるかどうか確認)
-        //{
-        //    CinematicsManager.Instance.PlayCinematicEffect(-1, tatieLObj, 2, tatieRObj);
-        //}
     }
 
     void CharacterFeed()
@@ -366,6 +369,7 @@ public class NovelManager : SingletonMonoBehaviour<NovelManager>
         
     }
 
+
     void InsertImage(int _page)
     {
         var headStr = "Texture/Love/Tatie/";
@@ -374,12 +378,13 @@ public class NovelManager : SingletonMonoBehaviour<NovelManager>
         var textureNumR = cs.chapter1[_page].charaImageR;
         if (textureNumL != 0)
         {
-                foreach(var taties in cs.tatie)
+            foreach(var taties in cs.tatie)
             {
                 if (taties.number == textureNumL)
                 {
                     string[] words = taties.textureName.Split('.');
                     tatieL = Resources.Load<Sprite>(headStr + words[0]);
+                    break;
                 }
             }
         }
@@ -395,38 +400,143 @@ public class NovelManager : SingletonMonoBehaviour<NovelManager>
                 {
                     string[] words = taties.textureName.Split('.');
                     tatieR = Resources.Load<Sprite>(headStr + words[0]);
+                    break;
                 }
             }
         }
 
         tatieLObj.sprite = tatieL;
         tatieRObj.sprite = tatieR;
-
-
+    }
+    enum NovelEffectNum
+    {
+        GoFight=3,
+        Intro_Jessica=4,
+        Intro_Hakuai=5
 
     }
-
     void InsertEffect(int _page)
     {
-        // エフェクト発生
+        // エフェクト発生 わかりにくいので直接書き込むことにする
+
         var effectNumL = cs.chapter1[_page].effectL;
         var effectNumR = cs.chapter1[_page].effectR;
 
-        if (effectNumL <= 0) { effectNumL = -1; }
-        if (effectNumR <= 0) { effectNumR = -1; }
+        switch (effectNumL)
+        {
+            case (int)NovelEffectNum.GoFight:
+                break;
+            case (int)NovelEffectNum.Intro_Jessica:
+                //イントロ表示から非表示、ページ更新まで
+                jessicaIntro.SetActive(true);
+                stopInputForNextPage = true;
+                Sequence sequenceJ = DOTween.Sequence().OnStart(() => { })
+                .Append(jessicaIntro.GetComponent<CanvasGroup>().DOFade(1, introFadeSpeed))
+                .Append(DOVirtual.DelayedCall(introViewTime, () => { }))
+                .Append(jessicaIntro.GetComponent<CanvasGroup>().DOFade(0, introFadeSpeed))
+                .Append(DOVirtual.DelayedCall(0.01f, () => { jessicaIntro.SetActive(false); }))
+                .Append(DOVirtual.DelayedCall(0.01f, () => { stopInputForNextPage = false; NextPage(); }))
+                ;
+                break;
+            case (int)NovelEffectNum.Intro_Hakuai:
+                //イントロ表示から非表示、ページ更新まで
+                hakuaiIntro.SetActive(true);
+                stopInputForNextPage = true;
+                Sequence sequenceH = DOTween.Sequence().OnStart(() => { })
+                .Append(hakuaiIntro.GetComponent<CanvasGroup>().DOFade(1, introFadeSpeed))
+                .Append(DOVirtual.DelayedCall(introViewTime, () => { }))
+                .Append(hakuaiIntro.GetComponent<CanvasGroup>().DOFade(0, introFadeSpeed))
+                .Append(DOVirtual.DelayedCall(0.01f, () => { hakuaiIntro.SetActive(false); }))
+                .Append(DOVirtual.DelayedCall(0.01f, () => { stopInputForNextPage = false; NextPage(); }))
+                ;
+                break;
+        }
+        //if (effectNumL <= 0) { effectNumL = -1; }
+        //if (effectNumR <= 0) { effectNumR = -1; }
 
-        CinematicsManager.Instance.PlayCinematicEffect(effectNumL, tatieLObj, effectNumR, tatieRObj);
+        //CinematicsManager.Instance.PlayCinematicEffect(effectNumL, tatieLObj, effectNumR, tatieRObj);
+    }
+
+    /// <summary>
+    /// 画像の強調を行う（明るく見せる＆スケールを調整）
+    /// </summary>
+    /// <param name="_page"></param>
+    void InsertImageEmphasis(int _page)
+    {
+
+        var nowPageData = cs.chapter1[_page];
+        string posString = nowPageData.position;
+        //位置情報がない場合前のポジションを参照する
+        var minusCount = 1;
+        while (posString == "")
+        {
+            posString = cs.chapter1[_page - minusCount].position;
+            minusCount++;
+            if (minusCount > 50) { posString = ""; break; }
+        }
+
+        Color LColor = Color.white;
+        Color RColor = Color.white;
+        Vector3 LSize = tatieLOrigineSize;
+        Vector3 RSize = tatieROrigineSize;
+
+        //文字の表記場所によるカラーの制御
+        switch (posString)
+        {
+            case "L":
+                //画像を少し大きく表示してA値を１に設定
+                RColor = new Color(tatieColorAnEmphasis, tatieColorAnEmphasis, tatieColorAnEmphasis, 1);
+                LColor = Color.white;
+
+                RSize = tatieROrigineSize;
+                LSize = tatieSizeEmphasis * tatieLOrigineSize;
+                break;
+            case "R":
+                RColor = Color.white;
+                LColor = new Color(tatieColorAnEmphasis, tatieColorAnEmphasis, tatieColorAnEmphasis, 1);
+
+                RSize = tatieSizeEmphasis * tatieROrigineSize;
+                LSize = tatieLOrigineSize;
+                break;
+        }
+        //画像がセットされていない場合A値を０殻にしてフェードさせる
+        if (tatieLObj.sprite == null)
+        {
+            var col = Color.white;
+            col.a = 0;
+            tatieLObj.color = col;
+        }
+        if (tatieRObj.sprite == null)
+        {
+            var col = Color.white;
+            col.a = 0;
+            tatieRObj.color = col;
+        }
+        var textureNumL = cs.chapter1[_page].charaImageL;
+        var textureNumR = cs.chapter1[_page].charaImageR;
+        //実際にカラーを変異させる　真ん中に文字が表示される場合は過去のカラーをそのままにする
+        //テクスチャが設定されていない状態から表示する場合に問題が起きるのでIFの戦闘にテクスチャ確認をシている
+        if (textureNumL != 0 || posString != "C")
+        {
+            tatieLObj.transform.DOScale(LSize, tatieFadeSpeed);
+            tatieLObj.DOColor(LColor, tatieFadeSpeed);
+        }
+        if (textureNumR != 0 || posString != "C")
+        {
+            tatieRObj.transform.DOScale(RSize, tatieFadeSpeed);
+            tatieRObj.DOColor(RColor, tatieFadeSpeed);
+        }
     }
     void NextPage()
     {
-        if (isNovel.Value && InputSystem.instance.WasPressThisFlame("Player", "Fire"))
-        {
 
+            InsertImageEmphasis(page);
             InsertImage(page);
+            
+
             InsertEffect(page);
             InsertText(page);
-            
-        }
+
     }
     void InputEvent()
     {

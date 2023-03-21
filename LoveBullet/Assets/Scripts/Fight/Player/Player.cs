@@ -52,6 +52,10 @@ public class Player : SingletonMonoBehaviour<Player>
     [SerializeField] float receiveMoveSpeed;
 
     BandManager bandMana;
+
+    [Header("プレイヤーアニメ")]
+    [SerializeField] Animator anim;
+
     private void Awake()
     {
         SingletonCheck(this);
@@ -104,13 +108,28 @@ public class Player : SingletonMonoBehaviour<Player>
         }
     }
 
-    public void AttackAnim()
+    public void IdleAnim()
     {
+        anim.SetInteger("AnimeNum", 0);
+    }
+    public void ShotAnim()
+    {
+        anim.SetInteger("AnimeNum", 1);
+
         // プレイヤーアニメーション
         if (fireTw != null) fireTw.Kill(true);
         var pi = Player.instance;
         fireTw = Player.instance.transform.DOMoveX(attackMovePosX, attackMoveSpeed).SetLoops(2, LoopType.Yoyo).OnComplete(() => fireTw = null);
     }
+    public void ReloadAnim()
+    {
+        anim.SetInteger("AnimeNum", 2);
+    }
+    public void DeadAnim()
+    {
+        anim.SetInteger("AnimeNum", 3);
+    }
+
     // 被ダメアニメーション
     Sequence seq;
     public void ReceiveAnim()
