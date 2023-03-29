@@ -25,7 +25,7 @@ namespace Love
 
         private void Awake()
         {
-            SingletonCheck(this);
+            SingletonCheck(this,false);
 
            
         }

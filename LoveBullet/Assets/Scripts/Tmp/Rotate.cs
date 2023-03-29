@@ -22,6 +22,10 @@ namespace Anything
             if(stop==false)
                 transform.Rotate(new Vector3(rotaXSpeed, rotaYSpeed, rotaZSpeed) * Time.deltaTime);
         }
+        public void ChangeStop()
+        {
+            stop = !stop;
+        }
         public void StopRotate()
         {
             stop = true;

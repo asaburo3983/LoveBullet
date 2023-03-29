@@ -5,6 +5,8 @@ using UniRx;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
+
 public class NovelManager : SingletonMonoBehaviour<NovelManager>
 {
 
@@ -75,6 +77,10 @@ public class NovelManager : SingletonMonoBehaviour<NovelManager>
 
     [SerializeField] float textMoveTime=0.5f;
 
+    public bool autoMode = false;
+    [SerializeField] float autoWaitTime;
+    ReactiveProperty<bool> autoNextPage = new ReactiveProperty<bool>();
+
     string[] cacheTextL = new string[2];
     string[] cacheTextR = new string[2];
     string[] cacheTextC = new string[2];
@@ -83,7 +89,8 @@ public class NovelManager : SingletonMonoBehaviour<NovelManager>
     int[] textLengthR = new int[2];
     int[] textLengthC = new int[2];
 
-    public float textSpeed = 5.0f;
+    public static float textSpeed = 5.0f;
+
     float canViewTextNum = 0;
 
     //立ち絵
@@ -100,12 +107,21 @@ public class NovelManager : SingletonMonoBehaviour<NovelManager>
     [Header("画面エフェクト用パラメータ")]
     [SerializeField] float introFadeSpeed;
     [SerializeField] float introViewTime;
+    [SerializeField] float goFightViewTime;
 
     private void Awake()
     {
         if (SingletonCheck(this))
         {
             //novelMode = debugStartNovelMode;
+
+            //オートページめくりを登録
+            autoNextPage.Subscribe(x =>
+            {
+                if(x==true)
+                DOVirtual.DelayedCall(autoWaitTime, () => { NextPage(); autoNextPage.Value = false; });
+            }
+            ).AddTo(this);
         }
     }
 
@@ -217,62 +233,70 @@ public class NovelManager : SingletonMonoBehaviour<NovelManager>
                 textC.color = new Color(textColor.r, textColor.g, textColor.b, textAlpha);
             }
 
-            CharacterFeed();
+            CharacterFeeds();
         }
     }
 
-    void CharacterFeed()
+    public void ChangeAutoMode()
+    {
+        autoMode= !autoMode;
+    }
+    /// <summary>
+    /// 文字送りを行う
+    /// </summary>
+    void CharacterFeeds()
     {
         //テキスト送り処理
+
+        //表示するテキスト数を加算
         canViewTextNum += (Time.deltaTime * textSpeed);
 
-        if (cacheTextL[0] != null)
+        CharacterFeed(textL, cacheTextL, textLengthL);
+        CharacterFeed(textR, cacheTextR, textLengthR);
+        CharacterFeed(textC, cacheTextC, textLengthC);
+
+    }
+    void CharacterFeed(TextMesh textMesh, string[] cacheText,int[] textLength)
+    {
+        //文字が存在するときのみ処理を行う
+        if (cacheText[0] != null)
         {
-            //canViewTextNumは文字列の個数以下にしないといけない
+            //表示文字数が描画する文字数を超えていた場合同数にする
             var maxText = (int)canViewTextNum;
-            if (maxText > textLengthL[0]) { maxText = textLengthL[0]; }
+            if (maxText > textLength[0]) { maxText = textLength[0]; }
 
-            var text = cacheTextL[0].Substring(0, maxText);
-            textL.text = text;
+            //文字列を描画用テキストに代入する
+            var text = cacheText[0].Substring(0, maxText);
+            textMesh.text = text;
 
-            if (canViewTextNum > textLengthL[0] && cacheTextL[1] != null)
+            //２行以上テキストがある場合同じ処理を行う
+            if (canViewTextNum > textLength[0] && cacheText[1] != null)
             {
-                int maxText2 = (int)canViewTextNum - textLengthL[0];
-                if (maxText2 > textLengthL[1]) { maxText2 = textLengthL[1]; }
-                textL.text = text + cacheTextL[1].Substring(0, maxText2);
+                int maxText2 = (int)canViewTextNum - textLength[0];
+                if (maxText2 > textLength[1]) { maxText2 = textLength[1]; }
+                textMesh.text = text + cacheText[1].Substring(0, maxText2);
+
+                //テキストオート処理を行う
+                if (maxText2 >= textLength[1])
+                {
+                    AutoNextPage();
+                }
+            }
+            //テキストが１行の場合でオートが作動中の場合　テキストオート処理を行う
+            else
+            {
+                if (maxText >= textLength[0])
+                {
+                    AutoNextPage();
+                }
             }
         }
-        if (cacheTextR[0] != null)
+    }
+    void AutoNextPage()
+    {
+        if (isNovel.Value && stopInputForNextPage == false&&autoMode)
         {
-            //canViewTextNumは文字列の個数以下にしないといけない
-            var maxText = (int)canViewTextNum;
-            if (maxText > textLengthR[0]) { maxText = textLengthR[0]; }
-
-            var text = cacheTextR[0].Substring(0, maxText);
-            textR.text = text;
-
-            if (canViewTextNum > textLengthR[0] && cacheTextR[1] != null)
-            {
-                int maxText2 = (int)canViewTextNum - textLengthR[0];
-                if (maxText2 > textLengthR[1]) { maxText2 = textLengthR[1]; }
-                textR.text = text + cacheTextR[1].Substring(0, maxText2);
-            }
-        }
-        if (cacheTextC[0] != null)
-        {
-            //canViewTextNumは文字列の個数以下にしないといけない
-            var maxText = (int)canViewTextNum;
-            if (maxText > textLengthC[0]) { maxText = textLengthC[0]; }
-
-            var text = cacheTextC[0].Substring(0, maxText);
-            textC.text = text;
-
-            if (canViewTextNum > textLengthC[0] && cacheTextC[1] != null)
-            {
-                int maxText2 = (int)canViewTextNum - textLengthC[0];
-                if (maxText2 > textLengthC[1]) { maxText2 = textLengthC[1]; }
-                textC.text = text + cacheTextC[1].Substring(0, maxText2);
-            }
+            autoNextPage.Value = true;
         }
     }
     public void NovelStart()
@@ -425,6 +449,14 @@ public class NovelManager : SingletonMonoBehaviour<NovelManager>
         switch (effectNumL)
         {
             case (int)NovelEffectNum.GoFight:
+                //戦闘開始スチル表示からシーン移動まで
+                goFight.SetActive(true);
+                stopInputForNextPage = true;
+                Sequence sequenceG = DOTween.Sequence().OnStart(() => { })
+                .Append(goFight.GetComponent<CanvasGroup>().DOFade(1, introFadeSpeed))
+                .Append(DOVirtual.DelayedCall(goFightViewTime, () => { }))
+                .Append(DOVirtual.DelayedCall(0.01f, () => { /*シーン移動*/SceneManager.LoadScene("Fight"); }))
+                ;
                 break;
             case (int)NovelEffectNum.Intro_Jessica:
                 //イントロ表示から非表示、ページ更新まで

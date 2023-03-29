@@ -511,7 +511,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 1
-  debugNovelMode: 1
+  debugNovelMode: 0
   chapterNum: 0
 --- !u!1 &1201655585901619900
 GameObject:
@@ -888,7 +888,7 @@ Canvas:
   m_GameObject: {fileID: 1201655586069523378}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 6351509615239713049}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -2996,7 +2996,7 @@ Canvas:
   m_GameObject: {fileID: 1201655586644074240}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 6351509615239713049}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -3067,7 +3067,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1201655586644074240}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 712c8445723bc78439c8dc395dab37d5, type: 3}
   m_Name: 
@@ -3634,11 +3634,11 @@ MonoBehaviour:
   playerMaxHP:
     value: 70
   unstable:
-    value: 0
+    value: 10
   feelRed:
-    value: 0
+    value: 10
   feelBlue:
-    value: 0
+    value: 10
   feelGreen:
     value: 0
   hpObj: {fileID: 1201655586228530566}
@@ -6836,8 +6836,14 @@ MonoBehaviour:
   masterVolume: 0
   bgmVolume: 0
   seVolume: 0
-  fightSpeed: 0
-  textSpeed: 0
+  fightSpeedNum: 0
+  textSpeedNum: 0
+  textSpeedList:
+  - 9
+  - 11
+  - 13
+  - 15
+  - 17
   optionCanvas: {fileID: 1201655586069523378}
   masterVolSlider: {fileID: 1201655586466959713}
   seVolSlider: {fileID: 1201655586217624032}

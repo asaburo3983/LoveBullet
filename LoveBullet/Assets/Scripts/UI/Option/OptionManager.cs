@@ -11,8 +11,9 @@ public class OptionManager : SingletonMonoBehaviour<OptionManager>
     public float bgmVolume;
     public float seVolume;
 
-    public int fightSpeed;
-    public int textSpeed;
+    public int fightSpeedNum;
+    public int textSpeedNum;
+    [SerializeField] List<float> textSpeedList = new List<float>();
 
     public GameObject optionCanvas;
     [SerializeField] Slider masterVolSlider;
@@ -24,10 +25,10 @@ public class OptionManager : SingletonMonoBehaviour<OptionManager>
 
     [SerializeField] List<Transform> fightButton;
     [SerializeField] List<Transform> textButton;
-
     CanvasGroup canvasGroup;
     [SerializeField] float canvasFeadSpeed;
     
+
     private void Awake()
     {
         SingletonCheck(this, true);
@@ -36,8 +37,8 @@ public class OptionManager : SingletonMonoBehaviour<OptionManager>
         seVolume = 0.5f;
         SetSlider(true);
 
-        fightSpeed = 3;
-        textSpeed = 3;
+        fightSpeedNum = 3;
+        textSpeedNum = 3;
         canvasGroup=optionCanvas.GetComponent<CanvasGroup>();
 
         
@@ -45,6 +46,9 @@ public class OptionManager : SingletonMonoBehaviour<OptionManager>
     void Start()
     {
         DisableCanvas();
+        //データを先んじて入れておく
+        textSpeedNum = 3;
+        SetChangeData();
     }
     private void Update()
     {
@@ -78,12 +82,12 @@ public class OptionManager : SingletonMonoBehaviour<OptionManager>
 
     public void SetFightSpeed(int sp)
     {
-        fightSpeed = sp;
+        fightSpeedNum = sp;
         checkFight.transform.position = fightButton[sp - 1].position;
     }
     public void SetTextSpeed(int sp)
     {
-        textSpeed = sp;
+        textSpeedNum = sp;
         checkText.transform.position = textButton[sp - 1].position;
     }
     void SetSlider(bool sliderToValue)
@@ -111,6 +115,8 @@ public class OptionManager : SingletonMonoBehaviour<OptionManager>
         AudioSystem.AudioControl.Instance.VolumeSetting.BGMVolume = bgmVolume;
         AudioSystem.AudioControl.Instance.VolumeSetting.SEVolume = seVolume;
 
+        //テキストスピードを設定する
+        NovelManager.textSpeed = textSpeedList[textSpeedNum - 1];
     }
 
 }
